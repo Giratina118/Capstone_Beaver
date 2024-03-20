@@ -11,6 +11,9 @@ TagManager:
   - ResourceAction
   - Dam
   - Tower
+  - Inventory
+  - Item
+  - Stone
   layers:
   - Default
   - TransparentFX

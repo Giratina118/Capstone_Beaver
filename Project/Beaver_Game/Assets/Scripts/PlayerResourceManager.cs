@@ -7,7 +7,7 @@ public class PlayerResourceManager : MonoBehaviour
 {
     public ResourceManager resourceManager;
     public TMP_Text[] playerResourceCountTexts;
-    public int[] playerResourceCountInts = new int[3] {0, 0, 0};
+    public int[] playerResourceCountInts = new int[4] {0, 0, 0, 0};
 
     public void PlayerResourceCountChange(int resourceNum, int resourceVariation)
     {

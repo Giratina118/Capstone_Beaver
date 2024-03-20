@@ -6,7 +6,7 @@ using UnityEngine;
 public class ResourceManager : MonoBehaviour
 {
     public TMP_Text[] resourceCountTexts;
-    public int[] resourceCountInts = new int[3] {0, 0, 0};
+    public int[] resourceCountInts = new int[4] {0, 0, 0, 0};
 
 
     public void StorageResourceCountChange(int resource1Variation, int resource2Variation, int resource3Variation)
