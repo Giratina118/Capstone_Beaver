@@ -21974,6 +21974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d320337d98cc5344ba4ef81653f0b3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cinemachineVirtualCamera: {fileID: 1429269437}
 --- !u!4 &1964780558
 Transform:
   m_ObjectHideFlags: 0
