@@ -71,7 +71,7 @@ public class PrisonManager : MonoBehaviour
         prisonTimerText.text = "";
         inventorySlotGroup = GameObject.Find("InventorySlots").gameObject.GetComponent<InventorySlotGroup>();
         escapePrisonButton = GameObject.Find("EscapePrisonButton").gameObject.GetComponent<Button>();
-        escapePrisonButton.gameObject.SetActive(false);
+        //escapePrisonButton.gameObject.SetActive(false);
     }
 
     void Update()
