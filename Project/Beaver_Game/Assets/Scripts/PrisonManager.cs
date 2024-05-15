@@ -29,7 +29,7 @@ public class PrisonManager : MonoBehaviour
 
     public void CaughtByRope()
     {
-        prisonTimerText.gameObject.SetActive(true);
+        //prisonTimerText.gameObject.SetActive(true);
         caughtCount++;
         prisonTimer = inPrisonTime + (caughtCount - 1) * 10.0f;
         inPrison = true;
@@ -57,13 +57,20 @@ public class PrisonManager : MonoBehaviour
             keyCount--;
         }
 
-        mapImage.gameObject.SetActive(true);
-        prisonTimerText.gameObject.SetActive(false);
+        mapImage.gameObject.transform.position = Vector3.zero;
+        //mapImage.gameObject.SetActive(true);
+        //prisonTimerText.gameObject.SetActive(false);
+        prisonTimerText.text = "";
     }
 
     void Start()
     {
         escapePrisonButton.gameObject.SetActive(false);
+        mapImage = GameObject.Find("MapImages").GetComponent<RectTransform>();
+        prisonTimerText = GameObject.Find("PrisonTimer").gameObject.GetComponent<TMP_Text>();
+        prisonTimerText.text = "";
+        inventorySlotGroup = GameObject.Find("InventorySlots").gameObject.GetComponent<InventorySlotGroup>();
+        escapePrisonButton = GameObject.Find("EscapePrisonButton").gameObject.GetComponent<Button>();
     }
 
     void Update()

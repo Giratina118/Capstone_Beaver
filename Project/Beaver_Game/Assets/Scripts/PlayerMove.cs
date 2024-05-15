@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class PlayerMove : MonoBehaviour
     public bool leftRightChange = false;
     public RopeManager ropeManager;
     Animator animator;
+
 
 
     void SetClawPos()
@@ -37,10 +39,16 @@ public class PlayerMove : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+        ropeManager = this.transform.GetChild(0).GetComponent<RopeManager>();
     }
 
     void Update()
     {
+        if (!this.GetComponent<PhotonView>().IsMine)
+        {
+            return;
+        }
+
         float moveX = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
         float moveY = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;
 

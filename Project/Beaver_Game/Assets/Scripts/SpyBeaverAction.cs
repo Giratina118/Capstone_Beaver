@@ -87,7 +87,8 @@ public class SpyBeaverAction : MonoBehaviour
 
     void Start()
     {
-
+        inventorySlotGroup = GameObject.Find("InventorySlots").gameObject.GetComponent<InventorySlotGroup>();
+        //buildComunicationButton
     }
 
     void Update()

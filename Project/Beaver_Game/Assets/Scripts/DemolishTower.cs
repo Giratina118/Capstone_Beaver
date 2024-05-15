@@ -70,7 +70,11 @@ public class DemolishTower : MonoBehaviour
 
     void Start()
     {
-        
+        demolishTowerButton = GameObject.Find("DemolishTowerButton").GetComponent<Button>();
+        getResourceManager = GameObject.Find("GetResourceBackground").GetComponent<GetResourceManager>();
+        timerManager = GameObject.Find("Timer").GetComponent<TimerManager>();
+
+
     }
 
     void Update()
