@@ -129,6 +129,10 @@ public class InMapAction : MonoBehaviour
 
     void Start()
     {
+        productionImage = GameObject.Find("ProductionImage");
+        getResourceManager = GameObject.Find("GetResourceBackground").GetComponent<GetResourceManager>();
+        actionButtonImage = GameObject.Find("ActionButton").GetComponent<Button>();
+        storageSlotGroup = GameObject.Find("StorageSlots").GetComponent<InventorySlotGroup>();
 
     }
 

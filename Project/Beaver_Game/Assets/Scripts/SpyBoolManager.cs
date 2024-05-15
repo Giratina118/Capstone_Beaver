@@ -39,6 +39,7 @@ public class SpyBoolManager : MonoBehaviour
     void Start()
     {
         spyAction = GetComponent<SpyBeaverAction>();
+        buildTowerButton = GameObject.Find("SpyChangeButton").GetComponent<Button>();
     }
 
     void Update()

@@ -15,7 +15,8 @@ public class EscapeMapClick : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         player.transform.position = escapeTransform.position;
         this.gameObject.GetComponent<Image>().color = Color.white;
-        this.transform.parent.gameObject.SetActive(false);
+        this.transform.parent.position = new Vector3(0.0f, -1200.0f, 0.0f);
+        //this.transform.parent.gameObject.SetActive(false);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

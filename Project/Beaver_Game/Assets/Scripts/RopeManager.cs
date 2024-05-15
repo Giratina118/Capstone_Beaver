@@ -20,7 +20,8 @@ public class RopeManager : MonoBehaviour
 
     void Start()
     {
-        throwRopeButton.gameObject.SetActive(false);
+        throwRopeButton = GameObject.Find("ThrowRopeButton").GetComponent<Button>();
+        //throwRopeButton.gameObject.SetActive(false);
     }
 
     void Update()
