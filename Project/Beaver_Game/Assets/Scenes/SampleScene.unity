@@ -9324,6 +9324,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 04ed4fe1340cd5345ac2de5fd4cc8c2b, type: 3}
   - {fileID: 21300000, guid: fee0c443459db3a44b08c817612c3812, type: 3}
   beaverWorkAnimator: {fileID: 919936229}
+  networkManager: {fileID: 1964780557}
 --- !u!1 &858365814
 GameObject:
   m_ObjectHideFlags: 0
@@ -10552,7 +10553,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 855200012}
         m_TargetAssemblyTypeName: GetResourceManager, Assembly-CSharp
-        m_MethodName: OnClickButtonInGetResource
+        m_MethodName: CloseGetResourceScreen
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -21366,7 +21367,7 @@ GameObject:
   - component: {fileID: 1964780558}
   - component: {fileID: 1964780557}
   m_Layer: 0
-  m_Name: NetworkManagerEmpty
+  m_Name: NetworkManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

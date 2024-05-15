@@ -5,17 +5,17 @@ using UnityEngine.UI;
 
 public class DemolishTower : MonoBehaviour
 {
-    private bool onTower = false;
-    private GameObject tower = null;
-    public Button demolishTowerButton;
-    public GetResourceManager getResourceManager;
-    public TimerManager timerManager;
+    private bool onTower = false;   // 타워 위에 있는지 여부
+    private GameObject tower = null;    // 현재 접하고 있는 타워
+    public Button demolishTowerButton;  // 타워 철거 버튼
+    public GetResourceManager getResourceManager;   // 타워 철거 후 자원 돌려받기 위함
+    public TimerManager timerManager;   // 타워 철거에 따른 시간 복구 위함
 
     [SerializeField]
     private float increaseTime = 20.0f;
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision) // 타워 위에 있으면 버튼 활성화
     {
         if (collision.gameObject.tag == "Tower")
         {
@@ -29,7 +29,7 @@ public class DemolishTower : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)  // 타워 위에 없으면 버튼 비활성화
     {
         if (collision.gameObject.tag == "Tower")
         {
@@ -42,7 +42,7 @@ public class DemolishTower : MonoBehaviour
         }
     }
 
-    public void OnClickDemolishTowerButton()
+    public void OnClickDemolishTowerButton()    // 터워 위에 있다면 파괴
     {
         if (onTower)
         {
@@ -62,8 +62,8 @@ public class DemolishTower : MonoBehaviour
                 }
             }
 
-            timerManager.TowerTime(-increaseTime);
-            GameObject.Destroy(tower);
+            timerManager.TowerTime(-increaseTime);  // 시간 복구
+            GameObject.Destroy(tower);  // 타워 파괴
         }
     }
 
