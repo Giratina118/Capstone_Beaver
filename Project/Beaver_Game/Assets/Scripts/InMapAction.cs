@@ -9,7 +9,7 @@ public class InMapAction : MonoBehaviour
 {
     public GameObject productionImage;
     public GetResourceManager getResourceManager;
-    public Button actionButtonImage;
+    public Button actionButton;
     private string tagName = "";
     private GameObject damGameObject = null;
     
@@ -23,15 +23,15 @@ public class InMapAction : MonoBehaviour
         if (collision.gameObject.transform.tag == "Forest" || collision.gameObject.transform.tag == "Mud" || collision.gameObject.transform.tag == "Stone" || collision.gameObject.transform.tag == "Dump" 
             || collision.gameObject.transform.tag == "Storage" || collision.gameObject.transform.tag == "Dam" || collision.gameObject.tag == "ProductionCenter")
         {
-            Color buttonColor = actionButtonImage.GetComponent<Image>().color;
+            Color buttonColor = actionButton.gameObject.GetComponent<Image>().color;
             buttonColor.a = 200;
-            actionButtonImage.GetComponent<Image>().color = buttonColor;
+            actionButton.gameObject.GetComponent<Image>().color = buttonColor;
 
             // 위치한 곳에 따라 버튼 그림 바뀌게
 
             tagName = collision.gameObject.tag;
             Debug.Log(tagName);
-            actionButtonImage.interactable = true;
+            actionButton.interactable = true;
 
             if (collision.gameObject.transform.tag == "Dam")
             {
@@ -50,13 +50,13 @@ public class InMapAction : MonoBehaviour
         if (collision.gameObject.transform.tag == "Mud" || collision.gameObject.transform.tag == "Forest" || collision.gameObject.transform.tag == "Stone" || collision.gameObject.transform.tag == "Dump" 
             || collision.gameObject.transform.tag == "Storage" || collision.gameObject.transform.tag == "Dam" || collision.gameObject.tag == "ProductionCenter")
         {
-            Color buttonColor = actionButtonImage.GetComponent<Image>().color;
+            Color buttonColor = actionButton.GetComponent<Image>().color;
             buttonColor.a = 100;
-            actionButtonImage.GetComponent<Image>().color = buttonColor;
+            actionButton.GetComponent<Image>().color = buttonColor;
 
             tagName = "";
             Debug.Log(tagName);
-            actionButtonImage.interactable = false;
+            actionButton.interactable = false;
 
             if (collision.gameObject.transform.tag == "Dam")
             {
@@ -131,9 +131,10 @@ public class InMapAction : MonoBehaviour
     {
         productionImage = GameObject.Find("ProductionImage");
         getResourceManager = GameObject.Find("GetResourceBackground").GetComponent<GetResourceManager>();
-        actionButtonImage = GameObject.Find("ActionButton").GetComponent<Button>();
+        actionButton = GameObject.Find("ActionButton").GetComponent<Button>();
         storageSlotGroup = GameObject.Find("StorageSlots").GetComponent<InventorySlotGroup>();
 
+        actionButton.onClick.AddListener(OnClickActionButton);
     }
 
     void Update()

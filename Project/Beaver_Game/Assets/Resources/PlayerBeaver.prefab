@@ -217,7 +217,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6709447133410685461}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -355,7 +355,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -400,7 +400,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   productionImage: {fileID: 0}
   getResourceManager: {fileID: 0}
-  actionButtonImage: {fileID: 0}
+  actionButton: {fileID: 0}
   storageSlotGroup: {fileID: 0}
 --- !u!114 &3870594720627731928
 MonoBehaviour:

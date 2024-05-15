@@ -65,12 +65,13 @@ public class PrisonManager : MonoBehaviour
 
     void Start()
     {
-        escapePrisonButton.gameObject.SetActive(false);
+        
         mapImage = GameObject.Find("MapImages").GetComponent<RectTransform>();
         prisonTimerText = GameObject.Find("PrisonTimer").gameObject.GetComponent<TMP_Text>();
         prisonTimerText.text = "";
         inventorySlotGroup = GameObject.Find("InventorySlots").gameObject.GetComponent<InventorySlotGroup>();
         escapePrisonButton = GameObject.Find("EscapePrisonButton").gameObject.GetComponent<Button>();
+        escapePrisonButton.gameObject.SetActive(false);
     }
 
     void Update()
