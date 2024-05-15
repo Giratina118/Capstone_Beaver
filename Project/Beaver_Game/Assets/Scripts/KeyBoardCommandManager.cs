@@ -13,9 +13,21 @@ public class KeyBoardCommandManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            inventoryObj.SetActive(!inventoryObj.activeSelf);
+            if (inventoryObj.transform.localPosition != Vector3.zero)
+            {
+                inventoryObj.transform.localPosition = Vector3.zero;
+            }
+            else
+            {
+                inventoryObj.transform.localPosition = new Vector3(2000, 0, 0);
+            }
+
+            if (inventoryObj.transform.GetChild(1).localPosition == new Vector3(-350.0f, 0.0f, 0.0f))
+            {
+                inventoryObj.transform.GetChild(1).localPosition = new Vector3(2000.0f, 0.0f, 0.0f);
+            }
         }
     }
 }

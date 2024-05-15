@@ -8,7 +8,11 @@ public class DemolishTower : MonoBehaviour
     private bool onTower = false;
     private GameObject tower = null;
     public Button demolishTowerButton;
+    public GetResourceManager getResourceManager;
+    public TimerManager timerManager;
 
+    [SerializeField]
+    private float increaseTime = 20.0f;
 
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -42,11 +46,23 @@ public class DemolishTower : MonoBehaviour
     {
         if (onTower)
         {
+            /*
             for (int i = 0; i < 3; i++)
             {
                 this.GetComponent<PlayerResourceManager>().PlayerResourceCountChange(i, tower.GetComponent<TowerInfo>().requiredResourceOfTowers[i] / 2);
             }
-            
+            */
+
+            for (int i = 0; i < 4; i++)
+            {
+                getResourceManager.GetResourceActive(i, tower.gameObject.transform);
+                for (int j = 0; j < tower.GetComponent<TowerInfo>().requiredResourceOfTowers[i] / 2; j++)
+                {
+                    getResourceManager.OnClickButtonInGetResource();
+                }
+            }
+
+            timerManager.TowerTime(-increaseTime);
             GameObject.Destroy(tower);
         }
     }

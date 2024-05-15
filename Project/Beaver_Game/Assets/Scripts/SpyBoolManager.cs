@@ -11,6 +11,10 @@ public class SpyBoolManager : MonoBehaviour
     public Button buildTowerButton;
     SpyBeaverAction spyAction;
 
+    public bool isSpy()
+    {
+        return is_Spy;
+    }
 
     public void OnClickSpyChangeButton()    // test
     {
@@ -28,7 +32,7 @@ public class SpyBoolManager : MonoBehaviour
         else
         {
             spyAction.enabled = false;
-            buildTowerButton.gameObject.SetActive(false);
+            buildTowerButton.gameObject.SetActive(false);;
         }
     }
 
