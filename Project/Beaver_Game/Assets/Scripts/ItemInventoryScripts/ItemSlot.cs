@@ -7,27 +7,22 @@ using UnityEngine.UI;
 
 public class ItemSlot : MonoBehaviour, IDropHandler
 {
-    public bool storageSlot = false;
-    private InventorySlotGroup playerInventory = null;
-    public GameObject equipItem = null;
-
+    public bool storageSlot = false;    // 창고의 슬롯인지 여부
+    private InventorySlotGroup playerInventory = null;  // 인벤토리
+    public GameObject equipItem = null; // 장착한 아이템(인벤토리가 아닌 맵 상의 플레이어가 장비하고 있는 오브젝트)
     public int equipSlotType = 0;   // 1: 머리, 2: 손 도구, 3: 다리 등..  itemInfo의 itemCategory와 숫자가 같도록, 0은 아이템 장착 슬롯이 아님을 의미
+    private int clawNum = 18;   // 손톱 장비의 번호
 
-    private int clawNum = 18;
-
-    public void OnDrop(PointerEventData eventData)
+    public void OnDrop(PointerEventData eventData)  // 이 슬롯에 아이템을 드래그해서 놓으면 인식
     {
-        if (eventData.pointerDrag == null || eventData.pointerDrag.GetComponent<ItemDrag>().dropped)
+        if (eventData.pointerDrag == null || eventData.pointerDrag.GetComponent<ItemDrag>().dropped)    // 드래그 앤 드롭에서 오류 방지
         {
             return;
         }
-            
         if (equipSlotType != 0 && eventData.pointerDrag.GetComponent<ItemDrag>().itemPrefab.GetComponent<ItemInfo>().itemCategory != equipSlotType) // 장착슬롯에는 그에 해당하는 아이템만 들어가도록
         {
             return;
         }
-
-
 
         if (this.transform.childCount > 0)  // 해당 슬롯에 아이템이 있는 경우
         {
@@ -36,28 +31,27 @@ public class ItemSlot : MonoBehaviour, IDropHandler
                 return;
             }
 
-
             if (this.transform.GetChild(0).gameObject.GetComponent<ItemDrag>().itemIndexNumber == eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().itemIndexNumber)    // 드래그한 아이템과 같을 경우
             {
                 this.transform.GetChild(0).gameObject.GetComponent<ItemCount>().ShowItemCount(eventData.pointerDrag.gameObject.GetComponent<ItemCount>().count);    // 슬롯의 아이템 수 변경(드래그한 수 더하기)
                 eventData.pointerDrag.GetComponent<ItemDrag>().ItemDrop(this.transform.position, this.transform, true);
 
-                if (storageSlot)
+                if (storageSlot)    // 창고 슬롯인 경우 창고와 개인 인벤토리 양쪽에 자원 수 갱신
                 {
                     this.transform.parent.gameObject.GetComponent<InventorySlotGroup>().NowResourceCount();
                     playerInventory.NowResourceCount();
                 }
             }
-            else if (eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().keepItemCount < 1 && !storageSlot)
+            else if (eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().keepItemCount < 1 && !storageSlot)   // 아이템을 우클릭으로 나누지 않았을때(드래그 한 아이템과 다른 아이템인 경우)
             {
+                // 드래그 한 아이템과 현재 슬롯의 아이템 교환
                 this.transform.GetChild(0).GetComponent<ItemDrag>().ItemChange(eventData.pointerDrag.GetComponent<ItemDrag>().normalPos, eventData.pointerDrag.GetComponent<ItemDrag>().normalParent);
                 eventData.pointerDrag.GetComponent<ItemDrag>().ItemDrop(this.transform.position, this.transform, false);
             }
-            else
+            else    // 나머지의 경우 다시 원래대로 돌리기
             {
                 eventData.pointerDrag.gameObject.GetComponent<ItemCount>().ShowItemCount(eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().keepItemCount);
             }
-            
         }
         else    // 해당 슬롯에 아이템이 없는 경우
         {
@@ -69,12 +63,11 @@ public class ItemSlot : MonoBehaviour, IDropHandler
                 Destroy(eventData.pointerDrag.GetComponent<ItemDrag>().normalParent.gameObject.GetComponent<ItemSlot>().equipItem);
             }
 
-
-            if (eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().normalPos == this.transform.position)
+            if (eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().normalPos == this.transform.position) // 원래 있던 슬롯에 그대로 둔 경우 다시 되돌리기
             {
                 eventData.pointerDrag.gameObject.GetComponent<ItemCount>().ShowItemCount(eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().keepItemCount);
             }
-            else
+            else    // 원래 있던 슬롯이 아니면 도구 옮기기
             {
                 eventData.pointerDrag.GetComponent<ItemDrag>().ItemDrop(this.transform.position, this.transform, false);   // 드래그한 도구를 현재 슬롯으로 옮기기
             }

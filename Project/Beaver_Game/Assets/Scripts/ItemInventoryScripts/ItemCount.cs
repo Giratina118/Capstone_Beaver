@@ -7,8 +7,8 @@ public class ItemCount : MonoBehaviour
 {
     // 인벤토리, 창고 등에서의 아이템 수를 관리
 
-    public int count;
-    private TMP_Text countText;
+    public int count;   // 아이템 수
+    private TMP_Text countText; // 아이템 수 출력하는 텍스트
     
 
     public int ItemCountHalf()  // 아이템 숫자 반으로 나누기, 마우스 오른쪽 버튼을 통해 인벤토리에서 들고있는 아이템 수를 반으로 할때 사용
@@ -20,7 +20,7 @@ public class ItemCount : MonoBehaviour
         return temp;
     }
 
-    public void ShowItemCount(int addCount) // 현재 해당 아이템의 수 출력
+    public void ShowItemCount(int addCount) // 해당 아이템의 수 출력
     {
         count += addCount;
         countText.text = count.ToString();

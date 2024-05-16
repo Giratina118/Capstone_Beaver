@@ -5,13 +5,13 @@ using UnityEngine.EventSystems;
 
 public class ThrowAwayItem : MonoBehaviour, IDropHandler
 {
-    public GameObject copyItemImage;
-    public PrisonManager prisonManager;
+    public GameObject copyItemImage;    // 예비 이미지
+    public PrisonManager prisonManager; // 감옥(열쇠 수 관리)
 
 
-    public void OnDrop(PointerEventData eventData)
+    public void OnDrop(PointerEventData eventData)  // 아이템 버리기
     {
-        copyItemImage.transform.position = new Vector3(2100.0f, 1200.0f, 0.0f);
+        copyItemImage.transform.position = new Vector3(2100.0f, 1200.0f, 0.0f); // 예비 아이템 치움
 
 
         if (eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().itemIndexNumber == 4) // 로프 버릴때 0개면 버튼 비활성화 하기
@@ -27,7 +27,7 @@ public class ThrowAwayItem : MonoBehaviour, IDropHandler
             }
         }
 
-        if (eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().normalParent.gameObject.GetComponent<ItemSlot>().equipSlotType > 0)
+        if (eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().normalParent.gameObject.GetComponent<ItemSlot>().equipSlotType > 0)   // 장비된 아이템이었다면 필드의 아이템도 삭제
         {
             Destroy(eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().normalParent.gameObject.GetComponent<ItemSlot>().equipItem);
         }
@@ -41,7 +41,7 @@ public class ThrowAwayItem : MonoBehaviour, IDropHandler
             Destroy(eventData.pointerDrag);
         }
 
-        this.gameObject.transform.parent.GetComponent<InventorySlotGroup>().NowResourceCount();
+        this.gameObject.transform.parent.GetComponent<InventorySlotGroup>().NowResourceCount(); // 아이템 수 갱신
     }
 
     void Start()

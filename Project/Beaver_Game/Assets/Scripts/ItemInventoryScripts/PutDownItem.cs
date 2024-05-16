@@ -5,20 +5,18 @@ using UnityEngine.EventSystems;
 
 public class PutDownItem : MonoBehaviour, IDropHandler
 {
-    public Transform playerPos;
-    public GameObject copyItemImage;
+    public Transform playerPos; // 플레이어 위치(아이템 내려놓을때 사용)
+    public GameObject copyItemImage;    // 예비 아이템
 
 
-
-    public void OnDrop(PointerEventData eventData)
+    public void OnDrop(PointerEventData eventData)  // 아이템 내려놓기
     {
+        // 필드에 아이템 생성
         GameObject newResource = Instantiate(eventData.pointerDrag.GetComponent<ItemDrag>().itemPrefab.gameObject);
         newResource.transform.position = playerPos.position + Vector3.down * 2;
         newResource.GetComponent<ItemCollisionManager>().itemCount = eventData.pointerDrag.GetComponent<ItemCount>().count;
 
-        copyItemImage.transform.position = new Vector3(2100.0f, 1200.0f, 0.0f);
-
-
+        copyItemImage.transform.position = new Vector3(2100.0f, 1200.0f, 0.0f); // 예비 아이템 치우기
 
 
         if (eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().itemIndexNumber == 4) // 로프 내려놓을때 0개면 버튼 비활성화 하기
@@ -34,12 +32,12 @@ public class PutDownItem : MonoBehaviour, IDropHandler
             }
         }
 
-        if (eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().normalParent.gameObject.GetComponent<ItemSlot>().equipSlotType > 0)
+        if (eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().normalParent.gameObject.GetComponent<ItemSlot>().equipSlotType > 0)   // 장비되어있던 아이템이라면
         {
-            Destroy(eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().normalParent.gameObject.GetComponent<ItemSlot>().equipItem);
+            Destroy(eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().normalParent.gameObject.GetComponent<ItemSlot>().equipItem);  // 필드에 장비하고 있던 것도 삭제
         }
 
-        if (eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().keepItemCount > 0)    // 만약 수를 나눈 상태라면
+        if (eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().keepItemCount > 0)    // 만약 수를 나눈 상태라면 원래 있던 위치에 나눠뒀던 수만큼 되돌리기
         {
             eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().ItemDrop(this.transform.position, this.transform, true);  // 앞의 두 변수는 뒤가 true면 안 쓰임
         }
@@ -49,7 +47,7 @@ public class PutDownItem : MonoBehaviour, IDropHandler
         }
 
 
-        this.gameObject.transform.parent.GetComponent<InventorySlotGroup>().NowResourceCount();
+        this.gameObject.transform.parent.GetComponent<InventorySlotGroup>().NowResourceCount(); // 인벤토리의 이미지 갱신
     }
 
     void Start()

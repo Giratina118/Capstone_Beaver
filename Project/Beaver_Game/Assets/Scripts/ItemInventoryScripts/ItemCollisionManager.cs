@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class ItemCollisionManager : MonoBehaviour
 {
-    private InventorySlotGroup inventorySlotGroup;
-    private Button throwRopeButton;
+    private InventorySlotGroup inventorySlotGroup;  // 인벤토리
+    private Button throwRopeButton; // 로프 던지기 버튼
     [SerializeField]
-    private Button escapePrisonButton;
-    private GameObject itemImage;
-    private ItemIndex itemIndex;
-    public int itemCount = 1;
+    private Button escapePrisonButton;  // 감옥 탈출 버튼
+    private GameObject itemImage;   // 인벤토리용 아이템 아이콘
+    private ItemIndex itemIndex;    // 아이템 도감
+    public int itemCount = 1;   // 아이템 수
 
 
     
@@ -34,7 +34,7 @@ public class ItemCollisionManager : MonoBehaviour
                     inventorySlotGroup.itemSlots[i].gameObject.transform.GetChild(0).gameObject.GetComponent<ItemCount>().ShowItemCount(itemCount); // 아이템 수 더하기
                     addInventory = true;    // 아이템을 더했다는 체크
 
-                    if (this.gameObject.GetComponent<ItemInfo>().itemName == "Key")
+                    if (this.gameObject.GetComponent<ItemInfo>().itemName == "Key") // 열쇠의 경우 따로 카운트도 더하기
                     {
                         collision.gameObject.GetComponent<PrisonManager>().keyCount++;
                     }
@@ -62,18 +62,18 @@ public class ItemCollisionManager : MonoBehaviour
             newItemImage.GetComponent<ItemCount>().ShowItemCount(itemCount);    // 연결한 TMP를 통해 생성한 아이템의 수 보여주기
 
 
-            if (this.gameObject.GetComponent<ItemInfo>().itemName == "Rope")
+            if (this.gameObject.GetComponent<ItemInfo>().itemName == "Rope")    // 로프를 획득하면 로프 던지기 버튼 활성화
             {
                 throwRopeButton.gameObject.SetActive(true);
             }
-            else if (this.gameObject.GetComponent<ItemInfo>().itemName == "Key")
+            else if (this.gameObject.GetComponent<ItemInfo>().itemName == "Key")    // 열쇠를 획득하면 감옥 탈출 버튼 활성화
             {
                 collision.gameObject.GetComponent<PrisonManager>().keyCount++;
                 escapePrisonButton.gameObject.SetActive(true);
             }
         }
 
-        inventorySlotGroup.NowResourceCount();
+        inventorySlotGroup.NowResourceCount();  // 인벤토리의 자원 수 갱신
 
         // 아이템을 주웠을 경우(기존의 자원에 더했거나 새로 빈 칸에 만들었을때) 바닥의 아이템 삭제
         if (addInventory || findEmptySlot)
@@ -93,7 +93,6 @@ public class ItemCollisionManager : MonoBehaviour
         }
         else if (this.gameObject.GetComponent<ItemInfo>().itemName == "Key")
         {
-            Debug.Log("11111");
             escapePrisonButton = GameObject.Find("PlayerBeaver").GetComponent<PrisonManager>().escapePrisonButton;
         }
 
