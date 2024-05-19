@@ -32,6 +32,7 @@ public class GetResourceManager : MonoBehaviour
 
     public void OnClickButtonInGetResource()    // 자원 채취 버튼 클릭
     {
+        Debug.Log(itemIndex.items[getResourceNum].gameObject.name);
         networkManager.CreateResource(itemIndex.items[getResourceNum].gameObject.name, resourceItemPos.position);   // 자원 생성
         /*
         GameObject newResource = PhotonNetwork.Instantiate(itemIndex.items[getResourceNum].gameObject.name, Vector3.zero, Quaternion.identity);

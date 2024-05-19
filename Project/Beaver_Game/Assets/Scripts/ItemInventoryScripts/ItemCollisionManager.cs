@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,8 +18,15 @@ public class ItemCollisionManager : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D collision) // 아이템 획득(줍기)
     {
-        if (!this.enabled || collision.gameObject.tag != "Player")
+        if (!this.enabled || collision.gameObject.tag != "Player" || !collision.gameObject.GetComponent<PhotonView>().IsMine)
+        {
+            if (!collision.gameObject.GetComponent<PhotonView>().IsMine)    // 다른 사람이 아이템을 획득한 경우 삭제
+            {
+                Destroy(this.gameObject);
+            }
             return;
+        }
+            
 
         int emptySlotNum = 0;
         bool findEmptySlot = false;

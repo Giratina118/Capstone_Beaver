@@ -469,7 +469,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inPrisonTime: 30
   mapImage: {fileID: 0}
-  escapePosSelect: 0
   prisonTimerText: {fileID: 0}
   keyCount: 0
   inventorySlotGroup: {fileID: 0}

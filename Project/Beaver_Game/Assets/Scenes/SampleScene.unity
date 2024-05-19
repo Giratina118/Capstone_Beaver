@@ -6295,7 +6295,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 855200012}
         m_TargetAssemblyTypeName: GetResourceManager, Assembly-CSharp
-        m_MethodName: OnClickCancleButton
+        m_MethodName: CloseGetResourceScreen
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10553,7 +10553,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 855200012}
         m_TargetAssemblyTypeName: GetResourceManager, Assembly-CSharp
-        m_MethodName: CloseGetResourceScreen
+        m_MethodName: OnClickButtonInGetResource
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
