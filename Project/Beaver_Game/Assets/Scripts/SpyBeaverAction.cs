@@ -89,8 +89,15 @@ public class SpyBeaverAction : MonoBehaviour
 
     void Start()
     {
-        inventorySlotGroup = GameObject.Find("InventorySlots").gameObject.GetComponent<InventorySlotGroup>();
-        //buildComunicationButton
+        inventorySlotGroup = GameObject.Find("InventorySlots").GetComponent<InventorySlotGroup>();
+        timerManager = GameObject.Find("Timer").GetComponent<TimerManager>();
+        buildComunicationButton = GameObject.Find("BuildTowerButton").GetComponent<Button>();
+        cnavasGaugesTransform = GameObject.Find("Gauges").transform;
+        gameWinManager = GameObject.Find("GameOverManager").GetComponent<GameWinManager>();
+        towerParentTransfotm = GameObject.Find("Towers").transform;
+        escapePrisonButton = GameObject.Find("EscapePrisonButton");
+
+        buildComunicationButton.onClick.AddListener(OnClickBuildOrRadioComunicationButton);
     }
 
     void Update()

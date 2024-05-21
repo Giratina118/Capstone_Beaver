@@ -29,10 +29,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     
 
-    public void CreateResource(string resourceName, Vector3 resourcePos)    // 자원 채취칸에서 버튼 누르면 자원 아이템 필드에 생성
+    public void CreateItem(string itemName, Vector3 createPos)    // 자원 채취칸에서 버튼 누르면 자원 아이템 필드에 생성
     {
-        GameObject newResource = PhotonNetwork.Instantiate(resourceName, resourcePos, Quaternion.identity);
+        GameObject newItem = PhotonNetwork.Instantiate(itemName, createPos, Quaternion.identity);
         //newResource.transform.position = resourcePos;
+    }
+
+
+    public void StorageResource()
+    {
+        //PhotonNetwork.
     }
 
 }

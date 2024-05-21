@@ -1,10 +1,11 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventorySlotGroup : MonoBehaviour
+public class InventorySlotGroup : MonoBehaviourPunCallbacks
 {
     public List<ItemSlot> itemSlots = new List<ItemSlot>();     // 아이템 도감
     public int[] resourceCountInts = new int[4] { 0, 0, 0, 0 }; // 기본 자원(진흙, 나무, 돌, 철)의 수
@@ -21,6 +22,12 @@ public class InventorySlotGroup : MonoBehaviour
         }
     }
 
+    public void StorageResourceCount()
+    {
+        photonView.RPC("NowResourceCount", RpcTarget.All);
+    }
+
+    [PunRPC]
     public void NowResourceCount()   // 인벤토리 내 자원 숫자 세기
     {
         for (int i = 0; i < resourceCountInts.Length; i++)  // 기본 자원 개수 센거 0으로 초기화

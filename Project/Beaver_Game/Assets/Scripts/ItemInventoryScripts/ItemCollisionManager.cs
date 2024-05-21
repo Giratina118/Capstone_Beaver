@@ -13,14 +13,14 @@ public class ItemCollisionManager : MonoBehaviour
     private GameObject itemImage;   // 인벤토리용 아이템 아이콘
     private ItemIndex itemIndex;    // 아이템 도감
     public int itemCount = 1;   // 아이템 수
-
+    private NetworkManager networkManager;
 
     
     private void OnTriggerEnter2D(Collider2D collision) // 아이템 획득(줍기)
     {
         if (!this.enabled || collision.gameObject.tag != "Player" || !collision.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            if (!collision.gameObject.GetComponent<PhotonView>().IsMine)    // 다른 사람이 아이템을 획득한 경우 삭제
+            if (collision.gameObject.GetComponent<PhotonView>() != null && !collision.gameObject.GetComponent<PhotonView>().IsMine)    // 다른 사람이 아이템을 획득한 경우 삭제
             {
                 Destroy(this.gameObject);
             }
@@ -85,7 +85,11 @@ public class ItemCollisionManager : MonoBehaviour
 
         // 아이템을 주웠을 경우(기존의 자원에 더했거나 새로 빈 칸에 만들었을때) 바닥의 아이템 삭제
         if (addInventory || findEmptySlot)
+        {
+            //PhotonNetwork.Destroy(this.gameObject);
             Destroy(this.gameObject);
+        }
+            
     }
 
 
@@ -94,6 +98,7 @@ public class ItemCollisionManager : MonoBehaviour
         inventorySlotGroup = GameObject.Find("InventorySlots").GetComponent<InventorySlotGroup>();
         itemImage = GameObject.Find("ItemImage").gameObject;
         itemIndex = GameObject.Find("ItemManager").GetComponent<ItemIndex>();
+        networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
 
         if (this.gameObject.GetComponent<ItemInfo>().itemName == "Rope")
         {

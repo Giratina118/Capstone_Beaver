@@ -200,6 +200,7 @@ GameObject:
   - component: {fileID: 6253612726751076083}
   - component: {fileID: 3720599836109737735}
   - component: {fileID: 3774535135535695184}
+  - component: {fileID: -15347392520375333}
   - component: {fileID: 3855269668020987032}
   - component: {fileID: 2732417884237332088}
   m_Layer: 6
@@ -473,6 +474,18 @@ MonoBehaviour:
   keyCount: 0
   inventorySlotGroup: {fileID: 0}
   escapePrisonButton: {fileID: 0}
+--- !u!114 &-15347392520375333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6709447133410685461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fc03346ec15d314b9ed917c8a1031cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3855269668020987032
 MonoBehaviour:
   m_ObjectHideFlags: 0

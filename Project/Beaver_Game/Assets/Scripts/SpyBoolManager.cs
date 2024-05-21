@@ -10,6 +10,7 @@ public class SpyBoolManager : MonoBehaviour
 
     public Button buildTowerButton;
     SpyBeaverAction spyAction;
+    private Button spyChangeButton;
 
     public bool isSpy() // 스파이 여부 확인
     {
@@ -32,14 +33,18 @@ public class SpyBoolManager : MonoBehaviour
         else    // 스파이가 아니라면 스파이만 할 수 있는 행동 끄기
         {
             spyAction.enabled = false;
-            buildTowerButton.gameObject.SetActive(false);;
+            buildTowerButton.gameObject.SetActive(false);
         }
     }
 
     void Start()
     {
         spyAction = GetComponent<SpyBeaverAction>();
-        buildTowerButton = GameObject.Find("SpyChangeButton").GetComponent<Button>();
+        buildTowerButton = GameObject.Find("BuildTowerButton").GetComponent<Button>();
+        spyChangeButton = GameObject.Find("SpyChangeButton").GetComponent<Button>();
+        spyChangeButton.onClick.AddListener(OnClickSpyChangeButton);
+
+        //SpyManager(isSpy());
     }
 
     void Update()

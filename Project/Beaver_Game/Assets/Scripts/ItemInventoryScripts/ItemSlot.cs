@@ -38,7 +38,8 @@ public class ItemSlot : MonoBehaviour, IDropHandler
 
                 if (storageSlot)    // 창고 슬롯인 경우 창고와 개인 인벤토리 양쪽에 자원 수 갱신
                 {
-                    this.transform.parent.gameObject.GetComponent<InventorySlotGroup>().NowResourceCount();
+                    //this.transform.parent.gameObject.GetComponent<InventorySlotGroup>().NowResourceCount();
+                    this.transform.parent.gameObject.GetComponent<InventorySlotGroup>().StorageResourceCount();
                     playerInventory.NowResourceCount();
                 }
             }

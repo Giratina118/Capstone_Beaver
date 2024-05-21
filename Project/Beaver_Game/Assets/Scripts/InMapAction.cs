@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -16,8 +17,10 @@ public class InMapAction : MonoBehaviour
     public InventorySlotGroup storageSlotGroup; // 창고 인벤토리
 
 
+
     private void OnTriggerEnter2D(Collider2D collision) // 버튼 활성화
     {
+
         // 액션 버튼으로 상호작용 할 수 있는 곳에 위치했을 경우
         if (collision.gameObject.transform.tag == "Forest" || collision.gameObject.transform.tag == "Mud" || collision.gameObject.transform.tag == "Stone" || collision.gameObject.transform.tag == "Dump" 
             || collision.gameObject.transform.tag == "Storage" || collision.gameObject.transform.tag == "Dam" || collision.gameObject.tag == "ProductionCenter")
@@ -43,6 +46,7 @@ public class InMapAction : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)  // 버튼 비활성화
     {
+
         // 액션 버튼으로 상호작용 할 수 있는 곳에서 벗어났을 경우
         if (collision.gameObject.transform.tag == "Mud" || collision.gameObject.transform.tag == "Forest" || collision.gameObject.transform.tag == "Stone" || collision.gameObject.transform.tag == "Dump" 
             || collision.gameObject.transform.tag == "Storage" || collision.gameObject.transform.tag == "Dam" || collision.gameObject.tag == "ProductionCenter")
@@ -71,6 +75,7 @@ public class InMapAction : MonoBehaviour
 
     public void OnClickActionButton()   // 액션 버튼 클릭
     {
+
         switch (tagName)
         {
             // 자원 채취하는 곳 위에 있을 경우에는 자원 채취 화면 띄우고 자원에 따라 설정하기
