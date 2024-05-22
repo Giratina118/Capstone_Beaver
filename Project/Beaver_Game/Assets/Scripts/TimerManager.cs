@@ -1,10 +1,12 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TimerManager : MonoBehaviour
+public class TimerManager : MonoBehaviourPunCallbacks
 {
     [SerializeField]
     private float timer = 60.0f * 15.0f;   // 게임 타이머, 15분
@@ -14,6 +16,8 @@ public class TimerManager : MonoBehaviour
     private float timeSpeedRecoverTimer = 20.0f;    // 남은 통신 시간
     private TowerInfo nowTower; // 현재 위치한 전파탑의 정보(통신 시간 측정)
     public GameWinManager gameWinManager;   // 시간 다 되면 게임 종료
+
+    public PhotonView timerPhotonView;
 
     public float GetNowTime()   // 현재 시간 정보
     {
@@ -42,13 +46,16 @@ public class TimerManager : MonoBehaviour
         
     }
 
+    [PunRPC]
     public void TowerTime(float addTime)    // 타이머에 남은 시간 변화(전파탑 건설 시 감소, 철거 시 회복)
     {
         timer -= addTime;
-        ShowTimer();
+        timerPhotonView.RPC("ShowTimer", RpcTarget.All, timer);
+        //ShowTimer(timer);
     }
 
-    public void ShowTimer() // 타이머 텍스트로 보여줌
+    [PunRPC]
+    public void ShowTimer(float timer) // 타이머 텍스트로 보여줌
     {
         timerText.text = Mathf.FloorToInt(timer / 60.0f).ToString() + " : ";
         if (timer % 60.0f < 10)
@@ -59,17 +66,22 @@ public class TimerManager : MonoBehaviour
     void Start()
     {
         timerText = this.GetComponent<TMP_Text>();
+        timerPhotonView = this.GetComponent<PhotonView>();
     }
 
     void Update()
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
         timer -= timeSpeed * Time.deltaTime;    // 타이머 시간 흐름
-        ShowTimer();    // 타이머 텍스트로 보여주기
+        //ShowTimer();    // 타이머 텍스트로 보여주기
+        timerPhotonView.RPC("ShowTimer", RpcTarget.All, timer);
 
         if (timer <= 0) // 시간 다 되면 게임 종료
         {
             timer = 0.0f;
-            ShowTimer();
+            ShowTimer(timer);
             gameWinManager.TimeCheck();
         }
 

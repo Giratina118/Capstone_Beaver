@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -78,7 +79,22 @@ public class SpyBeaverAction : MonoBehaviour
 
             GameObject newTower = GameObject.Instantiate(towerInfo.gameObject, towerParentTransfotm);   // 타워 전설
             newTower.transform.position = this.transform.position;  // 타워 위치 조정
-            timerManager.TowerTime(decreaseTime);   // 타워 건설에 따른 시간 감소
+
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                timerManager.TowerTime(decreaseTime);
+                //timerManager.timerPhotonView.RPC("TowerTime", RpcTarget.All, decreaseTime);
+            }
+            else
+            {
+                timerManager.timerPhotonView.RPC("TowerTime", RpcTarget.MasterClient, decreaseTime);
+            }
+
+            
+            //timerManager.TowerTime(decreaseTime);   // 타워 건설에 따른 시간 감소
+
+
 
             GameObject newGauge = Instantiate(towerGaugePrefab, cnavasGaugesTransform); // 게이지 생성
             newTower.GetComponent<TowerInfo>().gauge = newGauge;    // 타워와 게이지를 연결

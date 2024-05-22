@@ -1,9 +1,10 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DemolishTower : MonoBehaviour
+public class DemolishTower : MonoBehaviourPunCallbacks
 {
     private bool onTower = false;   // 타워 위에 있는지 여부
     private GameObject tower = null;    // 현재 접하고 있는 타워
@@ -62,10 +63,21 @@ public class DemolishTower : MonoBehaviour
                 }
             }
 
-            timerManager.TowerTime(-increaseTime);  // 시간 복구
+            if (PhotonNetwork.IsMasterClient)
+            {
+                timerManager.TowerTime(-increaseTime);
+                //timerManager.timerPhotonView.RPC("TowerTime", RpcTarget.All, -increaseTime);
+            }
+            else
+            {
+                timerManager.timerPhotonView.RPC("TowerTime", RpcTarget.MasterClient, -increaseTime);
+            }
+
+            //timerManager.TowerTime(-increaseTime);  // 시간 복구
             GameObject.Destroy(tower);  // 타워 파괴
         }
     }
+
 
 
     void Start()
