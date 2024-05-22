@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SpyBeaverAction : MonoBehaviour
+public class SpyBeaverAction : MonoBehaviourPunCallbacks
 {
     public InventorySlotGroup inventorySlotGroup;   // 인벤토리
     public TowerInfo towerInfo;     // 타워 정보(건설할때 사용)
@@ -31,6 +31,11 @@ public class SpyBeaverAction : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision) // 타워 위에 있는지 확인, 위에 있다면 타워 정보 가져오기
     {
+        if (!this.GetComponent<PhotonView>().IsMine)    // 자신의 캐릭터만 움직이도록
+        {
+            return;
+        }
+
         if (collision.gameObject.tag == "Tower")    // 타워 위에 있을때
         {
             if (onTower)    // 하나의 타워에서 완전히 벗어나기 전에 다른 타워를 밟았을 경우 이 전에 밟고있던 타워의 통신 멈춤
@@ -40,7 +45,7 @@ public class SpyBeaverAction : MonoBehaviour
             }
 
             // 타워 위에 있으면 건설 버튼을 통신 버튼으로 바꿈, 나중에 text를 바꾸는 대신 글자가 써진 이미지만 button에서 바뀌게 하기
-            buildComunicationButton.gameObject.transform.GetChild(0).GetComponent<TMP_Text>().text = "Radio\nComuni\ncation";   
+            buildComunicationButton.gameObject.transform.GetChild(0).GetComponent<TMP_Text>().text = "Radio\nComuni\ncation";
 
             // 지금 밟은 타워로 타워 정보 설정
             onTower = true;
@@ -52,6 +57,11 @@ public class SpyBeaverAction : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)  // 타워에서 벗어나면 통신하던거 자동으로 종료
     {
+        if (!this.GetComponent<PhotonView>().IsMine)    // 자신의 캐릭터만 움직이도록
+        {
+            return;
+        }
+
         if (collision.gameObject.tag == "Tower")
         {
             buildComunicationButton.gameObject.transform.GetChild(0).GetComponent<TMP_Text>().text = "Build\nTower";    // 나중에 text를 바꾸는 대신 글자가 써진 이미지만 button에서 바뀌게 하기
@@ -65,6 +75,11 @@ public class SpyBeaverAction : MonoBehaviour
 
     public void OnClickBuildOrRadioComunicationButton()    // 타워 건설 또는 통신 버튼
     {
+        if (!this.GetComponent<PhotonView>().IsMine)    // 자신의 캐릭터만 움직이도록
+        {
+            return;
+        }
+
         if (onTower)    // 타워 위에 있으면 통신
         {
             if (nowTower.remainComunicationTime > 0.0f) // 타워에서 통신
@@ -77,7 +92,9 @@ public class SpyBeaverAction : MonoBehaviour
             inventorySlotGroup.UseResource(towerInfo.requiredResourceOfTowers); // 재료 사용
             inventorySlotGroup.NowResourceCount();  // 인벤토리 상태 갱신
 
-            GameObject newTower = GameObject.Instantiate(towerInfo.gameObject, towerParentTransfotm);   // 타워 전설
+            GameObject newTower = PhotonNetwork.Instantiate("TowerPrefab", this.gameObject.transform.position, Quaternion.identity);
+            //GameObject newTower = GameObject.Instantiate(towerInfo.gameObject, towerParentTransfotm);   // 타워 전설
+
             newTower.transform.position = this.transform.position;  // 타워 위치 조정
 
 
@@ -91,13 +108,16 @@ public class SpyBeaverAction : MonoBehaviour
                 timerManager.timerPhotonView.RPC("TowerTime", RpcTarget.MasterClient, decreaseTime);
             }
 
-            
             //timerManager.TowerTime(decreaseTime);   // 타워 건설에 따른 시간 감소
 
 
-
-            GameObject newGauge = Instantiate(towerGaugePrefab, cnavasGaugesTransform); // 게이지 생성
-            newTower.GetComponent<TowerInfo>().gauge = newGauge;    // 타워와 게이지를 연결
+            GameObject newGauge = PhotonNetwork.Instantiate("GaugePrefab", Vector3.zero, Quaternion.identity);
+            //newGauge.transform.SetParent(cnavasGaugesTransform);
+            //this.GetComponent<PhotonView>().RPC("SetGaugeofTower", RpcTarget.All, newGauge);
+            //newTower.GetComponent<TowerInfo>().cnavasGaugesTransform = this.cnavasGaugesTransform;
+            newTower.GetComponent<PhotonView>().RPC("SetGauge", RpcTarget.All, newGauge.GetComponent<PhotonView>().ViewID);
+            //GameObject newGauge = Instantiate(towerGaugePrefab, cnavasGaugesTransform); // 게이지 생성
+            //newTower.GetComponent<TowerInfo>().gauge = newGauge;    // 타워와 게이지를 연결
 
             gameWinManager.TowerCountCheck();   // 타워가 일정 수 이상 지어졌는지 확인
         }

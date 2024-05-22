@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -43,8 +44,13 @@ public class DemolishTower : MonoBehaviourPunCallbacks
         }
     }
 
-    public void OnClickDemolishTowerButton()    // 터워 위에 있다면 파괴
+    public void OnClickDemolishTowerButton()    // 타워 위에 있다면 파괴
     {
+        if (!this.GetComponent<PhotonView>().IsMine)
+        {
+            return;
+        }
+
         if (onTower)
         {
             /*
@@ -74,10 +80,19 @@ public class DemolishTower : MonoBehaviourPunCallbacks
             }
 
             //timerManager.TowerTime(-increaseTime);  // 시간 복구
-            GameObject.Destroy(tower);  // 타워 파괴
+            //Destroy(tower);  // 타워 파괴
+            this.photonView.RPC("DestroyTower", RpcTarget.All, tower.GetComponent<PhotonView>().ViewID);
         }
     }
 
+    [PunRPC]
+    public void DestroyTower(int towerViewID)
+    {
+        GameObject targetTower = PhotonView.Find(towerViewID).gameObject;
+        //GameObject towerGauge = PhotonView.Find(gaugeViewID).gameObject;
+        Destroy(tower.GetComponent<TowerInfo>().gauge);
+        Destroy(tower);
+    }
 
 
     void Start()
