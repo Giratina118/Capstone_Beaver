@@ -28,17 +28,19 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         cinemachineVirtualCamera.LookAt = CreatedBeaver.transform;
     }
     
-
+    /*
     public void CreateItem(string itemName, Vector3 createPos)    // 자원 채취칸에서 버튼 누르면 자원 아이템 필드에 생성
     {
         GameObject newItem = PhotonNetwork.Instantiate(itemName, createPos, Quaternion.identity);
         //newResource.transform.position = resourcePos;
     }
+    */
 
-
+    /*
     public void StorageResource()
     {
         //PhotonNetwork.
     }
+    */
 
 }

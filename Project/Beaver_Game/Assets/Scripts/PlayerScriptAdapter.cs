@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerScriptAdapter : MonoBehaviour
+public class PlayerScriptAdapter : MonoBehaviourPunCallbacks
 {
     /*
     // InMapAction
@@ -97,6 +98,11 @@ public class PlayerScriptAdapter : MonoBehaviour
         throwRopeButton = GameObject.Find("ThrowRopeButton").GetComponent<Button>();
         */
 
+
+        if (!this.gameObject.GetPhotonView().IsMine)
+        {
+            return;
+        }
 
         mapImages = GameObject.Find("MapImagePieces").GetComponent<MapImages>();
         mapImages.player = this.gameObject;

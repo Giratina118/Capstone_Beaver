@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GetResourceManager : MonoBehaviour
+public class GetResourceManager : MonoBehaviourPunCallbacks
 {
     public ItemIndex itemIndex; // 아이템 목록
     private int getResourceNum = 0; // 아이템 번호
@@ -32,8 +32,9 @@ public class GetResourceManager : MonoBehaviour
 
     public void OnClickButtonInGetResource()    // 자원 채취 버튼 클릭
     {
-        Debug.Log(itemIndex.items[getResourceNum].gameObject.name);
-        networkManager.CreateItem(itemIndex.items[getResourceNum].gameObject.name, resourceItemPos.position);   // 자원 생성
+        //networkManager.CreateItem(itemIndex.items[getResourceNum].gameObject.name, resourceItemPos.position);   // 자원 생성
+        PhotonNetwork.Instantiate(itemIndex.items[getResourceNum].gameObject.name, resourceItemPos.position, Quaternion.identity);
+
         /*
         GameObject newResource = PhotonNetwork.Instantiate(itemIndex.items[getResourceNum].gameObject.name, Vector3.zero, Quaternion.identity);
         newResource.transform.position = resourceItemPos.position;

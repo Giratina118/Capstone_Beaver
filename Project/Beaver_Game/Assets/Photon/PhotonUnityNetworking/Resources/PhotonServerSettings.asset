@@ -46,6 +46,9 @@ MonoBehaviour:
   - SetGaugeofTower
   - SetGauge
   - DestroyTower
+  - SetDropItemCount
+  - equipItemSet
+  - equipItemDestroy
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

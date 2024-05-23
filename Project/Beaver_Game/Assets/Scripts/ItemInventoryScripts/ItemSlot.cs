@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -5,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemSlot : MonoBehaviour, IDropHandler
+public class ItemSlot : MonoBehaviourPunCallbacks, IDropHandler
 {
     public bool storageSlot = false;    // 창고의 슬롯인지 여부
     private InventorySlotGroup playerInventory = null;  // 인벤토리
@@ -61,7 +62,8 @@ public class ItemSlot : MonoBehaviour, IDropHandler
 
                 // 장착되어있던 아이템 효과 지우는 함수 만들기
 
-                Destroy(eventData.pointerDrag.GetComponent<ItemDrag>().normalParent.gameObject.GetComponent<ItemSlot>().equipItem);
+                //Destroy(eventData.pointerDrag.GetComponent<ItemDrag>().normalParent.gameObject.GetComponent<ItemSlot>().equipItem);
+                eventData.pointerDrag.GetComponent<ItemDrag>().normalParent.gameObject.GetComponent<ItemSlot>().equipItem.GetPhotonView().RPC("equipItemDestroy", RpcTarget.All);
             }
 
             if (eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().normalPos == this.transform.position) // 원래 있던 슬롯에 그대로 둔 경우 다시 되돌리기
@@ -84,14 +86,32 @@ public class ItemSlot : MonoBehaviour, IDropHandler
                 // 장착되어있던 아이템 효과 지우는 함수 만들기
 
                 Destroy(equipItem);
+                equipItem.GetPhotonView().RPC("equipItemDestroy", RpcTarget.All);
             }
 
+            Transform itemNormalTransform = eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().itemPrefab.gameObject.transform;
+            //Vector3 playerPos = this.transform.parent.GetComponent<ItemEquipManager>().player.transform.position;
+            GameObject playerObject = this.transform.parent.GetComponent<ItemEquipManager>().player;
+            /*
+            int setItemPosX = 1;
+            if (playerObject.GetComponent<PlayerMove>().leftRightChange)
+            {
+                setItemPosX = -1;
+            }
+                */
+            Vector3 newEquipItemPos = playerObject.transform.position + new Vector3(itemNormalTransform.localPosition.x * playerObject.transform.localScale.x, itemNormalTransform.localPosition.y * playerObject.transform.localScale.y, 0.0f);
+
             // 새로 장착한 아이템을 캐릭터의 자식으로 생성
-            equipItem = Instantiate(eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().itemPrefab.gameObject, this.transform.parent.GetComponent<ItemEquipManager>().player.transform);
-            equipItem.transform.localScale = Vector3.one;
-            equipItem.GetComponent<ItemCollisionManager>().enabled = false;
-            equipItem.GetComponent<SpriteRenderer>().sortingOrder = 11; // 캐릭터보다 위에 보이게 하기 위해서 조정(캐릭터는 10)
-            equipItem.layer = 7;    // 장착한 아이템이 인벤토리의 아이템 장착화면에 보이도록 Layer를 7(EquipItem)으로 변경
+            equipItem = PhotonNetwork.Instantiate(eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().itemPrefab.gameObject.name, newEquipItemPos, Quaternion.identity);
+            //equipItem.transform.SetParent(this.transform.parent.GetComponent<ItemEquipManager>().player.transform);
+            //equipItem.GetPhotonView().ViewID
+            equipItem.GetPhotonView().RPC("equipItemSet", RpcTarget.All, playerObject.GetPhotonView().ViewID);
+
+            //equipItem = Instantiate(eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().itemPrefab.gameObject, this.transform.parent.GetComponent<ItemEquipManager>().player.transform);
+            //equipItem.transform.localScale = Vector3.one;
+            //equipItem.GetComponent<ItemCollisionManager>().enabled = false;
+            //equipItem.GetComponent<SpriteRenderer>().sortingOrder = 11; // 캐릭터보다 위에 보이게 하기 위해서 조정(캐릭터는 10)
+            //equipItem.layer = 7;    // 장착한 아이템이 인벤토리의 아이템 장착화면에 보이도록 Layer를 7(EquipItem)으로 변경
 
             if (equipItem.GetComponent<ItemInfo>().GetItemIndexNumber() == clawNum)  // 손톱일 경우 크기 조정
             {

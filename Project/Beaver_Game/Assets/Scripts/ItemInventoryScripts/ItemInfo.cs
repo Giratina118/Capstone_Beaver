@@ -1,8 +1,10 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Profiling;
 using UnityEngine;
 
-public class ItemInfo : MonoBehaviour
+public class ItemInfo : MonoBehaviourPunCallbacks
 {
     [SerializeField]
     private int itemIndexNumber;    // 아이템 고유 번호(도감 번호)
@@ -15,6 +17,24 @@ public class ItemInfo : MonoBehaviour
     {
         return itemIndexNumber;
     }
+
+    [PunRPC]
+    public void equipItemSet(int equipPlayerViewID)
+    {
+        this.gameObject.GetComponent<ItemCollisionManager>().enabled = false;
+
+        this.transform.SetParent(PhotonView.Find(equipPlayerViewID).gameObject.transform);
+        this.transform.localScale = Vector3.one;
+        this.gameObject.GetComponent<SpriteRenderer>().sortingOrder = 11; // 캐릭터보다 위에 보이게 하기 위해서 조정(캐릭터는 10)
+        this.gameObject.layer = 7;    // 장착한 아이템이 인벤토리의 아이템 장착화면에 보이도록 Layer를 7(EquipItem)으로 변경
+    }
+
+    [PunRPC]
+    public void equipItemDestroy()
+    {
+        Destroy(this.gameObject);
+    }
+
 
     void Start()
     {

@@ -20,6 +20,10 @@ public class InMapAction : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision) // 버튼 활성화
     {
+        if (!this.GetComponent<PhotonView>().IsMine)
+        {
+            return;
+        }
 
         // 액션 버튼으로 상호작용 할 수 있는 곳에 위치했을 경우
         if (collision.gameObject.transform.tag == "Forest" || collision.gameObject.transform.tag == "Mud" || collision.gameObject.transform.tag == "Stone" || collision.gameObject.transform.tag == "Dump" 
@@ -46,6 +50,10 @@ public class InMapAction : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)  // 버튼 비활성화
     {
+        if (!this.GetComponent<PhotonView>().IsMine)
+        {
+            return;
+        }
 
         // 액션 버튼으로 상호작용 할 수 있는 곳에서 벗어났을 경우
         if (collision.gameObject.transform.tag == "Mud" || collision.gameObject.transform.tag == "Forest" || collision.gameObject.transform.tag == "Stone" || collision.gameObject.transform.tag == "Dump" 
@@ -75,6 +83,10 @@ public class InMapAction : MonoBehaviour
 
     public void OnClickActionButton()   // 액션 버튼 클릭
     {
+        if (!this.GetComponent<PhotonView>().IsMine)
+        {
+            return;
+        }
 
         switch (tagName)
         {

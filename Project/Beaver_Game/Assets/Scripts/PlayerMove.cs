@@ -14,9 +14,9 @@ public class PlayerMove : MonoBehaviour
 
     void EquippedItemPos()   // 손톱 아이템 위치
     {
-        if (this.transform.childCount > 3)  // 
+        if (this.transform.childCount > 2)  // 
         {
-            for (int i = 3; i < this.transform.childCount; i++)
+            for (int i = 2; i < this.transform.childCount; i++)
             {
                 // 나중에는 아이템별로 다 넣어서 위치 조정하기
                 if (this.transform.GetChild(i).gameObject.GetComponent<ItemInfo>().GetItemIndexNumber() == 18)  // 18번 아이템은 손톱, 현재 이것만 걷는거 따라서 위치 조정 함

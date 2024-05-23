@@ -18,7 +18,12 @@ public class ItemCollisionManager : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D collision) // 아이템 획득(줍기)
     {
-        if (!this.enabled || collision.gameObject.tag != "Player" || !collision.gameObject.GetComponent<PhotonView>().IsMine)
+        if (!this.enabled)
+        {
+            return;
+        }
+
+        if (collision.gameObject.tag != "Player" || !collision.gameObject.GetComponent<PhotonView>().IsMine)
         {
             if (collision.gameObject.GetComponent<PhotonView>() != null && !collision.gameObject.GetComponent<PhotonView>().IsMine)    // 다른 사람이 아이템을 획득한 경우 삭제
             {
@@ -90,6 +95,12 @@ public class ItemCollisionManager : MonoBehaviour
             Destroy(this.gameObject);
         }
             
+    }
+
+    [PunRPC]
+    public void SetDropItemCount(int dropItemViewID, int dropItemCount)
+    {
+        PhotonView.Find(dropItemViewID).GetComponent<ItemCollisionManager>().itemCount = dropItemCount;
     }
 
 
