@@ -71,11 +71,13 @@ public class InMapAction : MonoBehaviour
             {
                 if (this.gameObject.GetComponent<SpyBoolManager>().isSpy())
                 {
-                    damGameObject.GetComponent<DamManager>().obstract = 0.0f;
+                    //damGameObject.GetComponent<DamManager>().obstract = 0.0f;
+                    damGameObject.GetPhotonView().RPC("ObstructBuild", RpcTarget.All, false);
                 }
                 else
                 {
-                    damGameObject.GetComponent<DamManager>().accelerate = 0.0f;
+                    //damGameObject.GetComponent<DamManager>().accelerate = 0.0f;
+                    damGameObject.GetPhotonView().RPC("AccelerateBuild", RpcTarget.All, false);
                 }
             }
         }
@@ -118,11 +120,13 @@ public class InMapAction : MonoBehaviour
                     {
                         if (this.gameObject.GetComponent<SpyBoolManager>().isSpy()) // 스파이 비버는 댐 건설 방해
                         {
-                            damGameObject.GetComponent<DamManager>().ObstructBuild();
+                            damGameObject.GetPhotonView().RPC("ObstructBuild", RpcTarget.All, true);
+                            //damGameObject.GetComponent<DamManager>().ObstructBuild();
                         }
                         else    // 일반 비버는 댐 건설 가속
                         {
-                            damGameObject.GetComponent<DamManager>().AccelerateBuild();
+                            damGameObject.GetPhotonView().RPC("AccelerateBuild", RpcTarget.All, true);
+                            //damGameObject.GetComponent<DamManager>().AccelerateBuild();
                         }
                     }
                     else    // 댐 건설 시작 전이라면 댐 건설 시작

@@ -2,6 +2,7 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TowerInfo : MonoBehaviourPunCallbacks
 {
@@ -35,7 +36,12 @@ public class TowerInfo : MonoBehaviourPunCallbacks
         {
             gaugePhotonView.gameObject.SetActive(false);
         }
+    }
 
+    [PunRPC]
+    public void UpdateFillAmountofGauge(float remainTime)
+    {
+        gauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount = 1 - remainTime / 20.0f; // 통신 게이지, 수치가 점차 올라감, 최대가 1.0, 최소 0.0
     }
 
 

@@ -31,7 +31,7 @@ public class SpyBeaverAction : MonoBehaviourPunCallbacks
 
     private void OnTriggerEnter2D(Collider2D collision) // 타워 위에 있는지 확인, 위에 있다면 타워 정보 가져오기
     {
-        if (!this.GetComponent<PhotonView>().IsMine)    // 자신의 캐릭터만 움직이도록
+        if (!this.GetComponent<PhotonView>().IsMine || !this.enabled)    // 자신의 캐릭터만 움직이도록
         {
             return;
         }
@@ -41,7 +41,9 @@ public class SpyBeaverAction : MonoBehaviourPunCallbacks
             if (onTower)    // 하나의 타워에서 완전히 벗어나기 전에 다른 타워를 밟았을 경우 이 전에 밟고있던 타워의 통신 멈춤
             {
                 nowTower.gauge.SetActive(false);
-                timerManager.RadioComunicationTime(1.0f, nowTower);
+
+                timerManager.gameObject.GetPhotonView().RPC("RadioComunicationTime", RpcTarget.MasterClient, 1.0f, nowTower.gameObject.GetPhotonView().ViewID);
+                //timerManager.RadioComunicationTime(1.0f, nowTower);
             }
 
             // 타워 위에 있으면 건설 버튼을 통신 버튼으로 바꿈, 나중에 text를 바꾸는 대신 글자가 써진 이미지만 button에서 바뀌게 하기
@@ -51,13 +53,15 @@ public class SpyBeaverAction : MonoBehaviourPunCallbacks
             onTower = true;
             nowTower = collision.gameObject.GetComponent<TowerInfo>();
             nowTower.gauge.SetActive(true);
-            timerManager.SetTimeSpeedRecoverTimer(nowTower.remainComunicationTime);
+
+            timerManager.gameObject.GetPhotonView().RPC("SetTimeSpeedRecoverTimer", RpcTarget.MasterClient, nowTower.remainComunicationTime);
+            //timerManager.SetTimeSpeedRecoverTimer(nowTower.remainComunicationTime);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)  // 타워에서 벗어나면 통신하던거 자동으로 종료
     {
-        if (!this.GetComponent<PhotonView>().IsMine)    // 자신의 캐릭터만 움직이도록
+        if (!this.GetComponent<PhotonView>().IsMine || !this.enabled)    // 자신의 캐릭터만 움직이도록
         {
             return;
         }
@@ -69,7 +73,9 @@ public class SpyBeaverAction : MonoBehaviourPunCallbacks
             // 밟고 있던 타워 정보 지우기
             onTower = false;
             nowTower.gauge.SetActive(false);
-            timerManager.RadioComunicationTime(1.0f, nowTower);
+
+            timerManager.gameObject.GetPhotonView().RPC("RadioComunicationTime", RpcTarget.MasterClient, 1.0f, nowTower.gameObject.GetPhotonView().ViewID);
+            //timerManager.RadioComunicationTime(1.0f, nowTower);
         }
     }
 
@@ -84,7 +90,8 @@ public class SpyBeaverAction : MonoBehaviourPunCallbacks
         {
             if (nowTower.remainComunicationTime > 0.0f) // 타워에서 통신
             {
-                timerManager.RadioComunicationTime(2.0f, nowTower); // 시간 줄어드는 속도 빠르게
+                timerManager.gameObject.GetPhotonView().RPC("RadioComunicationTime", RpcTarget.MasterClient, 2.0f, nowTower.gameObject.GetPhotonView().ViewID);
+                //timerManager.RadioComunicationTime(2.0f, nowTower); // 시간 줄어드는 속도 빠르게
             }
         }
         else if (inventorySlotGroup.RequireResourceCountCheck(towerInfo.requiredResourceOfTowers))  // 타워 만들 재료가 충분하면 타워 건설

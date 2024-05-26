@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Photon.Pun;
 
-public class ItemCount : MonoBehaviour
+public class ItemCount : MonoBehaviourPunCallbacks
 {
     // 인벤토리, 창고 등에서의 아이템 수를 관리
 
@@ -20,6 +21,7 @@ public class ItemCount : MonoBehaviour
         return temp;
     }
 
+    [PunRPC]
     public void ShowItemCount(int addCount) // 해당 아이템의 수 출력
     {
         count += addCount;

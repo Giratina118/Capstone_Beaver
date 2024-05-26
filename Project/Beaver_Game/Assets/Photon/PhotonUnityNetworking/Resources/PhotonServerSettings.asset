@@ -49,6 +49,16 @@ MonoBehaviour:
   - SetDropItemCount
   - equipItemSet
   - equipItemDestroy
+  - RadioComunicationTime
+  - SetTimeSpeedRecoverTimer
+  - UpdateFillAmountofGauge
+  - UpdateStorageSlotResourceCount
+  - ShowItemCount
+  - TurnOnBuildGauge
+  - AccelerateBuild
+  - ObstructBuild
+  - SetDamCreateResource
+  - DamBuildComplete
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -24,13 +24,16 @@ public class TimerManager : MonoBehaviourPunCallbacks
         return timer;
     }
 
+    [PunRPC]
     public void SetTimeSpeedRecoverTimer(float towerTime)   // 전파탑의 남은 통신 시간 등록
     {
         timeSpeedRecoverTimer = towerTime;
     }
 
-    public void RadioComunicationTime(float speed, TowerInfo tower) // 통신을 통해 타이머 가속
+    [PunRPC]
+    public void RadioComunicationTime(float speed, int towerViweID) // 통신을 통해 타이머 가속
     {
+        TowerInfo tower = PhotonView.Find(towerViweID).gameObject.GetComponent<TowerInfo>();
         timeSpeed = speed;
         if (timeSpeed != 1.0f)  // 통신이 진행중이었다면 통신 멈추기
         {
@@ -87,13 +90,14 @@ public class TimerManager : MonoBehaviourPunCallbacks
 
         if (!basicTimeSpeedBool && nowTower.remainComunicationTime >= 0.0f) // 통신 중일 경우
         {
-            nowTower.gauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount = 1 - timeSpeedRecoverTimer / 20.0f; // 통신 게이지, 수치가 점차 올라감, 최대가 1.0, 최소 0.0
+            nowTower.gameObject.GetPhotonView().RPC("UpdateFillAmountofGauge", RpcTarget.All, timeSpeedRecoverTimer);
+            //nowTower.gauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount = 1 - timeSpeedRecoverTimer / 20.0f; // 통신 게이지, 수치가 점차 올라감, 최대가 1.0, 최소 0.0
 
             timeSpeedRecoverTimer -= Time.deltaTime;    // 전파탑의 남은 통신 제한 시감
 
             if (timeSpeedRecoverTimer <= 0.0f)  // 통신 중이었다가 해당 타워의 통신 제한 시간이 다 되면 통신 종료
             {
-                RadioComunicationTime(1.0f, nowTower);
+                RadioComunicationTime(1.0f, nowTower.gameObject.GetPhotonView().ViewID);
             }
         }
 

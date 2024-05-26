@@ -1,3 +1,4 @@
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
@@ -32,19 +33,27 @@ public class ItemSlot : MonoBehaviourPunCallbacks, IDropHandler
                 return;
             }
 
-            if (this.transform.GetChild(0).gameObject.GetComponent<ItemDrag>().itemIndexNumber == eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().itemIndexNumber)    // 드래그한 아이템과 같을 경우
+            if (this.transform.GetChild(0).gameObject.GetComponent<ItemDrag>().itemIndexNumber == eventData.pointerDrag.GetComponent<ItemDrag>().itemIndexNumber)    // 드래그한 아이템과 같을 경우
             {
-                this.transform.GetChild(0).gameObject.GetComponent<ItemCount>().ShowItemCount(eventData.pointerDrag.gameObject.GetComponent<ItemCount>().count);    // 슬롯의 아이템 수 변경(드래그한 수 더하기)
-                eventData.pointerDrag.GetComponent<ItemDrag>().ItemDrop(this.transform.position, this.transform, true);
+                //this.transform.GetChild(0).gameObject.GetComponent<ItemCount>().ShowItemCount(eventData.pointerDrag.GetComponent<ItemCount>().count);    // 슬롯의 아이템 수 변경(드래그한 수 더하기)
+                //eventData.pointerDrag.GetComponent<ItemDrag>().ItemDrop(this.transform.position, this.transform, true);
 
                 if (storageSlot)    // 창고 슬롯인 경우 창고와 개인 인벤토리 양쪽에 자원 수 갱신
                 {
-                    //this.transform.parent.gameObject.GetComponent<InventorySlotGroup>().NowResourceCount();
-                    this.transform.parent.gameObject.GetComponent<InventorySlotGroup>().StorageResourceCount();
+                    this.gameObject.GetPhotonView().RPC("UpdateStorageSlotResourceCount", RpcTarget.All, eventData.pointerDrag.GetComponent<ItemCount>().count);
+                    //this.transform.GetChild(0).gameObject.GetComponent<ItemCount>().ShowItemCount(eventData.pointerDrag.GetComponent<ItemCount>().count);    // 슬롯의 아이템 수 변경(드래그한 수 더하기)
+                    eventData.pointerDrag.GetComponent<ItemDrag>().ItemDrop(this.transform.position, this.transform, true);
                     playerInventory.NowResourceCount();
+                    //photonView.RPC("UpdateStorageSlotResourceCount", RpcTarget.All);
+                    
+                }
+                else
+                {
+                    this.transform.GetChild(0).gameObject.GetComponent<ItemCount>().ShowItemCount(eventData.pointerDrag.GetComponent<ItemCount>().count);    // 슬롯의 아이템 수 변경(드래그한 수 더하기)
+                    eventData.pointerDrag.GetComponent<ItemDrag>().ItemDrop(this.transform.position, this.transform, true);
                 }
             }
-            else if (eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().keepItemCount < 1 && !storageSlot)   // 아이템을 우클릭으로 나누지 않았을때(드래그 한 아이템과 다른 아이템인 경우)
+            else if (eventData.pointerDrag.GetComponent<ItemDrag>().keepItemCount < 1 && !storageSlot)   // 아이템을 우클릭으로 나누지 않았을때(드래그 한 아이템과 다른 아이템인 경우)
             {
                 // 드래그 한 아이템과 현재 슬롯의 아이템 교환
                 this.transform.GetChild(0).GetComponent<ItemDrag>().ItemChange(eventData.pointerDrag.GetComponent<ItemDrag>().normalPos, eventData.pointerDrag.GetComponent<ItemDrag>().normalParent);
@@ -52,7 +61,7 @@ public class ItemSlot : MonoBehaviourPunCallbacks, IDropHandler
             }
             else    // 나머지의 경우 다시 원래대로 돌리기
             {
-                eventData.pointerDrag.gameObject.GetComponent<ItemCount>().ShowItemCount(eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().keepItemCount);
+                eventData.pointerDrag.GetComponent<ItemCount>().ShowItemCount(eventData.pointerDrag.GetComponent<ItemDrag>().keepItemCount);
             }
         }
         else    // 해당 슬롯에 아이템이 없는 경우
@@ -66,9 +75,9 @@ public class ItemSlot : MonoBehaviourPunCallbacks, IDropHandler
                 eventData.pointerDrag.GetComponent<ItemDrag>().normalParent.gameObject.GetComponent<ItemSlot>().equipItem.GetPhotonView().RPC("equipItemDestroy", RpcTarget.All);
             }
 
-            if (eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().normalPos == this.transform.position) // 원래 있던 슬롯에 그대로 둔 경우 다시 되돌리기
+            if (eventData.pointerDrag.GetComponent<ItemDrag>().normalPos == this.transform.position) // 원래 있던 슬롯에 그대로 둔 경우 다시 되돌리기
             {
-                eventData.pointerDrag.gameObject.GetComponent<ItemCount>().ShowItemCount(eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().keepItemCount);
+                eventData.pointerDrag.GetComponent<ItemCount>().ShowItemCount(eventData.pointerDrag.GetComponent<ItemDrag>().keepItemCount);
             }
             else    // 원래 있던 슬롯이 아니면 도구 옮기기
             {
@@ -89,7 +98,7 @@ public class ItemSlot : MonoBehaviourPunCallbacks, IDropHandler
                 equipItem.GetPhotonView().RPC("equipItemDestroy", RpcTarget.All);
             }
 
-            Transform itemNormalTransform = eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().itemPrefab.gameObject.transform;
+            Transform itemNormalTransform = eventData.pointerDrag.GetComponent<ItemDrag>().itemPrefab.gameObject.transform;
             //Vector3 playerPos = this.transform.parent.GetComponent<ItemEquipManager>().player.transform.position;
             GameObject playerObject = this.transform.parent.GetComponent<ItemEquipManager>().player;
             /*
@@ -98,11 +107,11 @@ public class ItemSlot : MonoBehaviourPunCallbacks, IDropHandler
             {
                 setItemPosX = -1;
             }
-                */
+            */
             Vector3 newEquipItemPos = playerObject.transform.position + new Vector3(itemNormalTransform.localPosition.x * playerObject.transform.localScale.x, itemNormalTransform.localPosition.y * playerObject.transform.localScale.y, 0.0f);
 
             // 새로 장착한 아이템을 캐릭터의 자식으로 생성
-            equipItem = PhotonNetwork.Instantiate(eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().itemPrefab.gameObject.name, newEquipItemPos, Quaternion.identity);
+            equipItem = PhotonNetwork.Instantiate(eventData.pointerDrag.GetComponent<ItemDrag>().itemPrefab.gameObject.name, newEquipItemPos, Quaternion.identity);
             //equipItem.transform.SetParent(this.transform.parent.GetComponent<ItemEquipManager>().player.transform);
             //equipItem.GetPhotonView().ViewID
             equipItem.GetPhotonView().RPC("equipItemSet", RpcTarget.All, playerObject.GetPhotonView().ViewID);
@@ -123,6 +132,15 @@ public class ItemSlot : MonoBehaviourPunCallbacks, IDropHandler
 
         eventData.pointerDrag.GetComponent<ItemDrag>().dropped = true;
     }
+
+    [PunRPC]
+    public void UpdateStorageSlotResourceCount(int count)
+    {
+        this.transform.GetChild(0).gameObject.GetComponent<ItemCount>().ShowItemCount(count);    // 슬롯의 아이템 수 변경(드래그한 수 더하기)
+        //this.transform.parent.gameObject.GetComponent<InventorySlotGroup>().NowResourceCount();
+        this.transform.parent.gameObject.GetComponent<InventorySlotGroup>().StorageResourceCount();
+    }
+
 
 
     void Start()

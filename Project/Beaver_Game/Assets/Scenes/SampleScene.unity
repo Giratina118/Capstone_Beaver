@@ -2563,6 +2563,7 @@ GameObject:
   - component: {fileID: 268714072}
   - component: {fileID: 268714071}
   - component: {fileID: 268714070}
+  - component: {fileID: 268714073}
   m_Layer: 5
   m_Name: InventorySlot (2)
   m_TagString: Inventory
@@ -2644,6 +2645,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 268714068}
   m_CullTransparentMesh: 1
+--- !u!114 &268714073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 268714068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 5
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &271743921
 GameObject:
   m_ObjectHideFlags: 0
@@ -2733,6 +2756,7 @@ GameObject:
   - component: {fileID: 272023695}
   - component: {fileID: 272023694}
   - component: {fileID: 272023693}
+  - component: {fileID: 272023697}
   m_Layer: 5
   m_Name: StorageMudImage
   m_TagString: Untagged
@@ -2832,6 +2856,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 272023691}
   m_CullTransparentMesh: 1
+--- !u!114 &272023697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272023691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 10
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &281616150
 GameObject:
   m_ObjectHideFlags: 0
@@ -3495,6 +3541,7 @@ GameObject:
   - component: {fileID: 348111985}
   - component: {fileID: 348111987}
   - component: {fileID: 348111988}
+  - component: {fileID: 348111989}
   m_Layer: 0
   m_Name: Square (3)
   m_TagString: Dam
@@ -3638,6 +3685,28 @@ MonoBehaviour:
   obstract: 0
   accelerate: 0
   gameWinManager: {fileID: 296426528}
+--- !u!114 &348111989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 348111984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 15
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &348947826
 GameObject:
   m_ObjectHideFlags: 0
@@ -4089,6 +4158,7 @@ GameObject:
   - component: {fileID: 370310976}
   - component: {fileID: 370310975}
   - component: {fileID: 370310974}
+  - component: {fileID: 370310977}
   m_Layer: 0
   m_Name: Square (4)
   m_TagString: Dam
@@ -4232,6 +4302,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &370310977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 370310972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 14
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &371310187
 GameObject:
   m_ObjectHideFlags: 0
@@ -7107,6 +7199,7 @@ GameObject:
   - component: {fileID: 687763172}
   - component: {fileID: 687763171}
   - component: {fileID: 687763170}
+  - component: {fileID: 687763174}
   m_Layer: 5
   m_Name: StorageStoneImage
   m_TagString: Untagged
@@ -7206,6 +7299,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 687763168}
   m_CullTransparentMesh: 1
+--- !u!114 &687763174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 687763168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 9
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &695212907
 GameObject:
   m_ObjectHideFlags: 0
@@ -8357,6 +8472,7 @@ GameObject:
   - component: {fileID: 768759829}
   - component: {fileID: 768759828}
   - component: {fileID: 768759827}
+  - component: {fileID: 768759830}
   m_Layer: 5
   m_Name: InventorySlot (3)
   m_TagString: Inventory
@@ -8438,6 +8554,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 768759825}
   m_CullTransparentMesh: 1
+--- !u!114 &768759830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768759825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 6
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &780299316
 GameObject:
   m_ObjectHideFlags: 0
@@ -8850,6 +8988,7 @@ GameObject:
   - component: {fileID: 813110396}
   - component: {fileID: 813110398}
   - component: {fileID: 813110399}
+  - component: {fileID: 813110400}
   m_Layer: 0
   m_Name: Square (2)
   m_TagString: Dam
@@ -8993,6 +9132,28 @@ MonoBehaviour:
   obstract: 0
   accelerate: 0
   gameWinManager: {fileID: 296426528}
+--- !u!114 &813110400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813110395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 13
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &821175237
 GameObject:
   m_ObjectHideFlags: 0
@@ -9005,6 +9166,7 @@ GameObject:
   - component: {fileID: 821175238}
   - component: {fileID: 821175240}
   - component: {fileID: 821175241}
+  - component: {fileID: 821175242}
   m_Layer: 0
   m_Name: Square
   m_TagString: Dam
@@ -9148,6 +9310,28 @@ MonoBehaviour:
   obstract: 0
   accelerate: 0
   gameWinManager: {fileID: 296426528}
+--- !u!114 &821175242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 821175237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 12
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &852801605
 GameObject:
   m_ObjectHideFlags: 0
@@ -10270,6 +10454,7 @@ GameObject:
   - component: {fileID: 917570979}
   - component: {fileID: 917570978}
   - component: {fileID: 917570977}
+  - component: {fileID: 917570981}
   m_Layer: 5
   m_Name: StorageSteelImage
   m_TagString: Untagged
@@ -10369,6 +10554,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 917570975}
   m_CullTransparentMesh: 1
+--- !u!114 &917570981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 917570975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 8
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &919936227
 GameObject:
   m_ObjectHideFlags: 0
@@ -12402,6 +12609,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timer: 900
   gameWinManager: {fileID: 296426528}
+  timerPhotonView: {fileID: 0}
 --- !u!114 &1081463144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19333,6 +19541,7 @@ GameObject:
   - component: {fileID: 1738928988}
   - component: {fileID: 1738928987}
   - component: {fileID: 1738928986}
+  - component: {fileID: 1738928989}
   m_Layer: 5
   m_Name: InventorySlot
   m_TagString: Inventory
@@ -19414,6 +19623,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1738928984}
   m_CullTransparentMesh: 1
+--- !u!114 &1738928989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1738928984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 3
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1745997700
 GameObject:
   m_ObjectHideFlags: 0
@@ -19919,6 +20150,7 @@ GameObject:
   - component: {fileID: 1782665605}
   - component: {fileID: 1782665604}
   - component: {fileID: 1782665603}
+  - component: {fileID: 1782665607}
   m_Layer: 5
   m_Name: StorageWoodImage
   m_TagString: Untagged
@@ -20018,6 +20250,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1782665601}
   m_CullTransparentMesh: 1
+--- !u!114 &1782665607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782665601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 7
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1796374776
 GameObject:
   m_ObjectHideFlags: 0
@@ -21683,6 +21937,7 @@ GameObject:
   - component: {fileID: 1969583421}
   - component: {fileID: 1969583420}
   - component: {fileID: 1969583419}
+  - component: {fileID: 1969583422}
   m_Layer: 5
   m_Name: InventorySlot (1)
   m_TagString: Inventory
@@ -21764,6 +22019,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1969583417}
   m_CullTransparentMesh: 1
+--- !u!114 &1969583422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969583417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 4
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1980390178
 GameObject:
   m_ObjectHideFlags: 0
@@ -22691,6 +22968,7 @@ GameObject:
   - component: {fileID: 2059749284}
   - component: {fileID: 2059749286}
   - component: {fileID: 2059749287}
+  - component: {fileID: 2059749288}
   m_Layer: 0
   m_Name: Square (1)
   m_TagString: Dam
@@ -22834,6 +23112,28 @@ MonoBehaviour:
   obstract: 0
   accelerate: 0
   gameWinManager: {fileID: 296426528}
+--- !u!114 &2059749288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2059749283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 11
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2083329971
 GameObject:
   m_ObjectHideFlags: 0
