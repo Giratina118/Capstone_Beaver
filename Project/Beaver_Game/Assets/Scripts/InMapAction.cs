@@ -16,6 +16,7 @@ public class InMapAction : MonoBehaviour
     private Transform ResourcePos;  // 현재 접하고있는 곳의 위치
     public InventorySlotGroup storageSlotGroup; // 창고 인벤토리
 
+    GameObject onTriggerObject = null;
 
 
     private void OnTriggerEnter2D(Collider2D collision) // 버튼 활성화
@@ -36,6 +37,7 @@ public class InMapAction : MonoBehaviour
             actionButton.interactable = true;
 
             tagName = collision.gameObject.tag; // 위치한 곳의 태그 저장
+            onTriggerObject = collision.gameObject;
 
             if (collision.gameObject.transform.tag == "Dam")    // 댐에 위치해있을 경우 해당 댐의 정보 저장
             {
@@ -59,13 +61,7 @@ public class InMapAction : MonoBehaviour
         if (collision.gameObject.transform.tag == "Mud" || collision.gameObject.transform.tag == "Forest" || collision.gameObject.transform.tag == "Stone" || collision.gameObject.transform.tag == "Dump" 
             || collision.gameObject.transform.tag == "Storage" || collision.gameObject.transform.tag == "Dam" || collision.gameObject.tag == "ProductionCenter")
         {
-            // 버튼 비활성화
-            Color buttonColor = actionButton.GetComponent<Image>().color;
-            buttonColor.a = 100;
-            actionButton.GetComponent<Image>().color = buttonColor;
-            actionButton.interactable = false;
-
-            tagName = "";
+            
             
             if (collision.gameObject.transform.tag == "Dam")    // 댐에 있었을 경우 댐 건설의 가속, 감속을 원래대로 없앰
             {
@@ -80,6 +76,18 @@ public class InMapAction : MonoBehaviour
                     damGameObject.GetPhotonView().RPC("AccelerateBuild", RpcTarget.All, false);
                 }
             }
+
+            if (collision.gameObject == onTriggerObject)
+            {
+                // 버튼 비활성화
+                Color buttonColor = actionButton.GetComponent<Image>().color;
+                buttonColor.a = 100;
+                actionButton.GetComponent<Image>().color = buttonColor;
+                actionButton.interactable = false;
+
+                tagName = "";
+            }
+
         }
     }
 
@@ -116,6 +124,7 @@ public class InMapAction : MonoBehaviour
             case "Dam":
                 if (!damGameObject.GetComponent<DamManager>().buildComplete)    // 댐 완공 전일 경우에만 상호작용
                 {
+
                     if (damGameObject.GetComponent<DamManager>().buildNow)  // 댐 건설 중이라면
                     {
                         if (this.gameObject.GetComponent<SpyBoolManager>().isSpy()) // 스파이 비버는 댐 건설 방해

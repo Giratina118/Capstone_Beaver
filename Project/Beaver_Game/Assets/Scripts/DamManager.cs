@@ -8,6 +8,9 @@ using UnityEngine.UI;
 
 public class DamManager : MonoBehaviourPunCallbacks
 {
+    public Sprite[] damSprite = new Sprite[4];      // 댐 이미지들
+    private int degreeOfConstruction = 0;
+
     public int[] requiredResources = new int[4];    // 댐 건설에 필요한 자원 수 저장, 0: 나무, 1: 진흙, 2: 돌, 3: 강철
     public int totalDamRequiredResource = 20;       // 댐 만드는데 필요한 총 자원의 수, 이 숫자를 4개의 자원으로 랜덤으로 나눈다.
     public InventorySlotGroup inventorySlotGroup;   // 개인의 인벤토리
@@ -140,6 +143,9 @@ public class DamManager : MonoBehaviourPunCallbacks
         requiredResources[2] = randomBoundary[2] - randomBoundary[1];
         requiredResources[3] = totalDamRequiredResource - randomBoundary[2];
         */
+
+        
+
     }
 
     void Update()
@@ -149,9 +155,21 @@ public class DamManager : MonoBehaviourPunCallbacks
             buildGauge.transform.position = Camera.main.WorldToScreenPoint(new Vector3(this.transform.position.x, this.transform.position.y + gaugePlusYPos, 0.0f));    // 게이지 위치 설정(UI라서)
             buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount += Time.deltaTime * (0.01f * DameGaugeSpeedRate + accelerate + obstract); // 현재는 50초, 수치 조정 가능
 
+
+            float constructFillAmount = buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount;
+            int constructDegree = (Mathf.FloorToInt(constructFillAmount * 100.0f) + 50) / 50;
+
+
+            if (constructDegree != degreeOfConstruction)
+            {
+                this.gameObject.GetComponent<SpriteRenderer>().sprite = damSprite[constructDegree];
+                degreeOfConstruction = constructDegree;
+            }
+
+            /*
             if (buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount >= 1.0f)// 게이지가 다 찼을 경우
             {
-                
+
                 // 게이지 비활성화
                 buildNow = false;
                 buildComplete = true;
@@ -161,13 +179,53 @@ public class DamManager : MonoBehaviourPunCallbacks
                 Color damColor = gameObject.GetComponent<SpriteRenderer>().color;
                 damColor.a = 150;
                 gameObject.GetComponent<SpriteRenderer>().color = damColor;
+
+                this.gameObject.GetComponent<SpriteRenderer>().sprite = damSprite[3];
+
+
+                gameWinManager.DamCountCheck();
+            }
+            else if (buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount >= 0.5f)
+            {
+                this.gameObject.GetComponent<SpriteRenderer>().sprite = damSprite[2];
+            }
+            else if (buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount > 0.0f)
+            {
+                this.gameObject.GetComponent<SpriteRenderer>().sprite = damSprite[1];
+            }
+            else if (buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount <= 0.0f)  // 댐이 방해에 의해 게이지가 다 떨어졌을 경우 건설 취소
+            {
                 
+                buildNow = false;
+                buildGauge.SetActive(false);
+                this.gameObject.GetComponent<SpriteRenderer>().sprite = damSprite[0];
+            }
+            */
+
+
+
+
+            if (buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount >= 1.0f)// 게이지가 다 찼을 경우
+            {
+                
+                // 게이지 비활성화
+                buildNow = false;
+                buildComplete = true;
+                buildGauge.SetActive(false);
+                /*
+                // 댐 완성 이미지로 바꾸기, 현재는 색 바꾸는 걸로 구분, int로 현재 건설 진행도를 저장하고 현재 Amount와 진행도(int)가 일치하지 않으면 이미지 업데이트 하기
+                Color damColor = gameObject.GetComponent<SpriteRenderer>().color;
+                damColor.a = 150;
+                gameObject.GetComponent<SpriteRenderer>().color = damColor;
+                */
                 gameWinManager.DamCountCheck();
             }
             else if (buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount <= 0.0f)  // 댐이 방해에 의해 게이지가 다 떨어졌을 경우 건설 취소
             {
                 buildNow = false;
                 buildGauge.SetActive(false);
+                degreeOfConstruction = 0;
+                this.gameObject.GetComponent<SpriteRenderer>().sprite = damSprite[degreeOfConstruction];
             }
                 
         }
