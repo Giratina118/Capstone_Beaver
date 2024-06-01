@@ -8148,7 +8148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 356c06e18d938fc45ae4686c94576226, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   escapeTransform: {fileID: 1424159074}
 --- !u!1 &746974484
 GameObject:
@@ -12233,7 +12232,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 356c06e18d938fc45ae4686c94576226, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   escapeTransform: {fileID: 2027068397}
 --- !u!1 &1056840756
 GameObject:
@@ -14094,7 +14092,7 @@ MonoBehaviour:
   - {fileID: 215070747}
   - {fileID: 458430695}
   throwRopeButton: {fileID: 2090987104}
-  escapePrisonButton: {fileID: 1550998596}
+  escapePrisonButton: {fileID: 1550998598}
   spyBoolManager: {fileID: 0}
 --- !u!1 &1243874472
 GameObject:
@@ -15384,7 +15382,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 356c06e18d938fc45ae4686c94576226, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   escapeTransform: {fileID: 166704413}
 --- !u!1 &1332415554
 GameObject:
@@ -15475,7 +15472,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 356c06e18d938fc45ae4686c94576226, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   escapeTransform: {fileID: 8047586}
 --- !u!1 &1344790341
 GameObject:
@@ -16216,8 +16212,8 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 16, y: 11.5}
-      - {x: -16, y: 11.5}
+    - - {x: 15.999998, y: 27.5}
+      - {x: -16, y: 27.5}
       - {x: -16, y: -7.5}
       - {x: 16, y: -7.5}
   m_UseDelaunayMesh: 0
@@ -17360,7 +17356,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 356c06e18d938fc45ae4686c94576226, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   escapeTransform: {fileID: 1595691524}
 --- !u!1 &1492485522
 GameObject:
@@ -17668,7 +17663,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.47843137}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -19547,7 +19542,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 356c06e18d938fc45ae4686c94576226, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   escapeTransform: {fileID: 1695440811}
 --- !u!1 &1738928984
 GameObject:
@@ -21480,7 +21474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.39215687}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.47843137}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -21920,7 +21914,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.47843137}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -23452,7 +23446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.47843137}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

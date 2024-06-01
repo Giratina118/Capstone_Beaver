@@ -11,7 +11,7 @@ public class InventorySlotGroup : MonoBehaviourPunCallbacks
     public int[] resourceCountInts = new int[4] { 0, 0, 0, 0 }; // 기본 자원(진흙, 나무, 돌, 철)의 수
     public TMP_Text[] resourceCountTexts = new TMP_Text[4];     // 기본 자원의 수를 적는 텍스트(UI 좌상단)
     public Button throwRopeButton = null;   // 로프 던지기 버튼
-    public GameObject escapePrisonButton = null;    // 감옥 탈출 버튼
+    public Button escapePrisonButton = null;    // 감옥 탈출 버튼
     public SpyBoolManager spyBoolManager = null;    // 스파이 여부
 
     public void ShowResourceText()  // 기본 자원 개수 텍스트로 출력
@@ -65,7 +65,7 @@ public class InventorySlotGroup : MonoBehaviourPunCallbacks
         return buildable;
     }
 
-    public void UseItem(int itemIndexNum, int useItemCount) // 하나의 도구를 인벤토리 전체를 살펴서 쓰는 방식(자원 이외의 로프나 열쇠 등을 사용할때 쓴다)
+    public void UseItem(int itemIndexNum, int useItemCount, bool keepItem) // 하나의 도구를 인벤토리 전체를 살펴서 쓰는 방식(자원 이외의 로프나 열쇠 등을 사용할때 쓴다)
     {
         int remainResourceCount = useItemCount; // 사용할 아이템 수
         int ropeIndexNum = 4;   // 만약 루프의 인덱스 넘버가 바뀌면 이 숫자 바꿔주기
@@ -80,7 +80,6 @@ public class InventorySlotGroup : MonoBehaviourPunCallbacks
             if (itemSlots[i].gameObject.transform.childCount != 0 && itemIndexNum == itemSlots[i].gameObject.transform.GetChild(0).gameObject.GetComponent<ItemDrag>().itemPrefab.gameObject.GetComponent<ItemInfo>().GetItemIndexNumber())
             {
                 GameObject childItem = itemSlots[i].gameObject.transform.GetChild(0).gameObject;    // 현재 슬롯의 아이템
-
                 if (childItem.GetComponent<ItemCount>().count < remainResourceCount)    // 현재 슬롯의 아이템 수가 사용할 아이템 수보다 적으면
                 {
                     remainResourceCount -= childItem.GetComponent<ItemCount>().count;   // 사용할 아이템 수를 현재 슬롯의 아이템 수만큼 빼기
@@ -108,18 +107,31 @@ public class InventorySlotGroup : MonoBehaviourPunCallbacks
             }
         }
 
-        if (throwRopeButton != null && itemIndexNum == ropeIndexNum && !haveRope)  // 로프가 없을 경우 버튼 비활성화
+        
+
+        if (throwRopeButton != null && itemIndexNum == ropeIndexNum && !haveRope && !keepItem)  // 로프가 없을 경우 버튼 비활성화
         {
-            throwRopeButton.gameObject.SetActive(false);
+            //throwRopeButton.gameObject.SetActive(false);
+            throwRopeButton.enabled = false;
+            Color throwRopeButtonColor = throwRopeButton.GetComponent<Image>().color;
+            throwRopeButtonColor.a = 0.5f;
+            throwRopeButton.GetComponent<Image>().color = throwRopeButtonColor;
         }
-        else if (escapePrisonButton != null && itemIndexNum == keyIndexNum && !haveKey) // 열쇠가 없고 (스파이면서 긴급탈출을 사용할 수 있는 경우가 아니면) 버튼 비활성화
+        else if (escapePrisonButton != null && itemIndexNum == keyIndexNum && !haveKey && !keepItem) // 열쇠가 없고 (스파이면서 긴급탈출을 사용할 수 있는 경우가 아니면) 버튼 비활성화
         {
-            if (spyBoolManager.isSpy() && !spyBoolManager.gameObject.GetComponent<SpyBeaverAction>().useEmergencyEscape)     // 이 위의 if문에 하나로 합치기 가능
+            if (spyBoolManager.isSpy() && !spyBoolManager.gameObject.GetComponent<SpyBeaverAction>().spyBeaverEscape)     // 이 위의 if문에 하나로 합치기 가능
             {
 
             }
             else
-                escapePrisonButton.SetActive(false);
+            {
+                //escapePrisonButton.SetActive(false);
+                escapePrisonButton.enabled = false;
+                Color escapeButtonColor = escapePrisonButton.GetComponent<Image>().color;
+                escapeButtonColor.a = 0.5f;
+                escapePrisonButton.GetComponent<Image>().color = escapeButtonColor;
+            }
+                
         }
 
     }

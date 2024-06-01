@@ -26,7 +26,9 @@ public class ItemInfo : MonoBehaviourPunCallbacks
         this.transform.SetParent(PhotonView.Find(equipPlayerViewID).gameObject.transform);
         this.transform.localScale = Vector3.one;
         this.gameObject.GetComponent<SpriteRenderer>().sortingOrder = 11; // 캐릭터보다 위에 보이게 하기 위해서 조정(캐릭터는 10)
-        this.gameObject.layer = 7;    // 장착한 아이템이 인벤토리의 아이템 장착화면에 보이도록 Layer를 7(EquipItem)으로 변경
+
+        this.gameObject.layer = this.gameObject.transform.parent.gameObject.layer;
+        //this.gameObject.layer = 7;    // 장착한 아이템이 인벤토리의 아이템 장착화면에 보이도록 Layer를 7(EquipItem)으로 변경
     }
 
     [PunRPC]

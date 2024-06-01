@@ -60,6 +60,8 @@ public class TimerManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void ShowTimer(float timer) // 타이머 텍스트로 보여줌
     {
+        if (!PhotonNetwork.IsMasterClient)
+            this.timer = timer;
         timerText.text = Mathf.FloorToInt(timer / 60.0f).ToString() + " : ";
         if (timer % 60.0f < 10)
             timerText.text += "0";

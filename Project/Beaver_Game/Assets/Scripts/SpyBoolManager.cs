@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,7 @@ public class SpyBoolManager : MonoBehaviour
     private bool is_Spy = false;    // 스파이 여부
 
     public Button buildTowerButton;
-    SpyBeaverAction spyAction;
+    private SpyBeaverAction spyAction;
     private Button spyChangeButton;
 
     public bool isSpy() // 스파이 여부 확인
@@ -39,6 +40,9 @@ public class SpyBoolManager : MonoBehaviour
 
     void Start()
     {
+        if (!this.gameObject.GetPhotonView().IsMine)
+            return;
+
         spyAction = GetComponent<SpyBeaverAction>();
         buildTowerButton = GameObject.Find("BuildTowerButton").GetComponent<Button>();
         spyChangeButton = GameObject.Find("SpyChangeButton").GetComponent<Button>();

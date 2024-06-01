@@ -19,13 +19,16 @@ public class DemolishTower : MonoBehaviourPunCallbacks
 
     private void OnTriggerEnter2D(Collider2D collision) // 타워 위에 있으면 버튼 활성화
     {
+        if (!this.gameObject.GetPhotonView().IsMine)
+            return;
+
         if (collision.gameObject.tag == "Tower")
         {
             onTower = true;
             tower = collision.gameObject;
 
             Color buttonColor = demolishTowerButton.gameObject.GetComponent<Image>().color;
-            buttonColor.a = 200;
+            buttonColor.a = 1.0f;
             demolishTowerButton.gameObject.GetComponent<Image>().color = buttonColor;
             demolishTowerButton.enabled = true;
         }
@@ -33,12 +36,15 @@ public class DemolishTower : MonoBehaviourPunCallbacks
 
     private void OnTriggerExit2D(Collider2D collision)  // 타워 위에 없으면 버튼 비활성화
     {
+        if (!this.gameObject.GetPhotonView().IsMine)
+            return;
+
         if (collision.gameObject.tag == "Tower")
         {
             onTower = false;
 
             Color buttonColor = demolishTowerButton.gameObject.GetComponent<Image>().color;
-            buttonColor.a = 100;
+            buttonColor.a = 0.5f;
             demolishTowerButton.gameObject.GetComponent<Image>().color = buttonColor;
             demolishTowerButton.enabled = false;
         }
@@ -90,13 +96,16 @@ public class DemolishTower : MonoBehaviourPunCallbacks
     {
         GameObject targetTower = PhotonView.Find(towerViewID).gameObject;
         //GameObject towerGauge = PhotonView.Find(gaugeViewID).gameObject;
-        Destroy(tower.GetComponent<TowerInfo>().gauge);
-        Destroy(tower);
+        Destroy(targetTower.GetComponent<TowerInfo>().gauge);
+        Destroy(targetTower);
     }
 
 
     void Start()
     {
+        if (!this.gameObject.GetPhotonView().IsMine)
+            return;
+
         demolishTowerButton = GameObject.Find("DemolishTowerButton").GetComponent<Button>();
         getResourceManager = GameObject.Find("GetResourceBackground").GetComponent<GetResourceManager>();
         timerManager = GameObject.Find("Timer").GetComponent<TimerManager>();

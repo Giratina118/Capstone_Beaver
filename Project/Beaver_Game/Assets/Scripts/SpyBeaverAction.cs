@@ -19,7 +19,7 @@ public class SpyBeaverAction : MonoBehaviourPunCallbacks
     public GameWinManager gameWinManager;   // 승리(타워 일정 수 이상 필드에 동시에 존재할 경우)
     public Transform towerParentTransfotm;  // 타워의 부모
 
-    private bool spyBeaverEscape = false;   // 스파이 비버 긴급 탈출 가능 여부(특정 시간이 되었는지)
+    public bool spyBeaverEscape = false;   // 스파이 비버 긴급 탈출 가능 여부(특정 시간이 되었는지)
     public bool useEmergencyEscape = false; // 스파이 비버 긴급 탈출 사용 여부(이미 한 번 사용했는지)
     public GameObject escapePrisonButton;   // 감옥 탈출 버튼
 
@@ -132,6 +132,9 @@ public class SpyBeaverAction : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        if (!this.gameObject.GetPhotonView().IsMine)
+            return;
+
         inventorySlotGroup = GameObject.Find("InventorySlots").GetComponent<InventorySlotGroup>();
         timerManager = GameObject.Find("Timer").GetComponent<TimerManager>();
         buildComunicationButton = GameObject.Find("BuildTowerButton").GetComponent<Button>();

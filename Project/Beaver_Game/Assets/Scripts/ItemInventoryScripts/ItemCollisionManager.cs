@@ -77,12 +77,20 @@ public class ItemCollisionManager : MonoBehaviour
 
             if (this.gameObject.GetComponent<ItemInfo>().itemName == "Rope")    // ·ÎÇÁ¸¦ È¹µæÇÏ¸é ·ÎÇÁ ´øÁö±â ¹öÆ° È°¼ºÈ­
             {
-                throwRopeButton.gameObject.SetActive(true);
+                //throwRopeButton.gameObject.SetActive(true);
+                throwRopeButton.enabled = true;
+                Color throwRopeButtonColor = throwRopeButton.GetComponent<Image>().color;
+                throwRopeButtonColor.a = 1.0f;
+                throwRopeButton.GetComponent<Image>().color = throwRopeButtonColor;
             }
             else if (this.gameObject.GetComponent<ItemInfo>().itemName == "Key")    // ¿­¼è¸¦ È¹µæÇÏ¸é °¨¿Á Å»Ãâ ¹öÆ° È°¼ºÈ­
             {
                 collision.gameObject.GetComponent<PrisonManager>().keyCount++;
-                escapePrisonButton.gameObject.SetActive(true);
+                //escapePrisonButton.gameObject.SetActive(true);
+                escapePrisonButton.enabled = true;
+                Color escapeButtonColor = escapePrisonButton.GetComponent<Image>().color;
+                escapeButtonColor.a = 1.0f;
+                escapePrisonButton.GetComponent<Image>().color = escapeButtonColor;
             }
         }
 
@@ -106,6 +114,7 @@ public class ItemCollisionManager : MonoBehaviour
 
     void Start()
     {
+
         inventorySlotGroup = GameObject.Find("InventorySlots").GetComponent<InventorySlotGroup>();
         itemImage = GameObject.Find("ItemImage").gameObject;
         itemIndex = GameObject.Find("ItemManager").GetComponent<ItemIndex>();
@@ -117,7 +126,8 @@ public class ItemCollisionManager : MonoBehaviour
         }
         else if (this.gameObject.GetComponent<ItemInfo>().itemName == "Key")
         {
-            escapePrisonButton = GameObject.Find("PlayerBeaver").GetComponent<PrisonManager>().escapePrisonButton;
+            //escapePrisonButton = GameObject.Find("PlayerBeaver").GetComponent<PrisonManager>().escapePrisonButton;
+            escapePrisonButton = GameObject.Find("EscapePrisonButton").GetComponent<Button>();
         }
 
     }

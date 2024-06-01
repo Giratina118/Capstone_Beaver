@@ -1,9 +1,10 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RopeManager : MonoBehaviour
+public class RopeManager : MonoBehaviourPunCallbacks
 {
     public GameObject ropePrefab;   // 로프(던져지는 모습) 프리팹
     public Button throwRopeButton;  // 로프 던지기 버튼
@@ -20,14 +21,17 @@ public class RopeManager : MonoBehaviour
 
     void Start()
     {
+        if (!this.gameObject.transform.parent.gameObject.GetPhotonView().IsMine)
+            return;
         throwRopeButton = GameObject.Find("ThrowRopeButton").GetComponent<Button>();
-        //throwRopeButton.gameObject.SetActive(false);
         throwRopeButton.onClick.AddListener(OnClickThrowRopeButton);
+        //throwRopeButton.gameObject.SetActive(false);
+        throwRopeButton.enabled = false;
     }
 
     void Update()
     {
-        if (this.transform.GetChild(0).gameObject.activeSelf)   // 조준선이 나타난 상태라면
+        if (this.transform.GetChild(0).gameObject.activeSelf && this.transform.parent.gameObject.GetPhotonView().IsMine)   // 조준선이 나타난 상태라면
         {
             // 조준선이 마우스를 따라 회전하도록
             Vector3 rot = Camera.main.ScreenToWorldPoint(Input.mousePosition) - this.transform.position + Vector3.forward * 10;
@@ -37,10 +41,11 @@ public class RopeManager : MonoBehaviour
             // 마우스 좌클릭하면 로프 던짐
             if (Input.GetMouseButtonDown(0))
             {
-                GameObject newRope = Instantiate(ropePrefab);   // 로프(던져지는 모습) 생성
-                newRope.transform.position = this.transform.position + rot.normalized * 3.5f;   // 로프 위치 조정, 3.5f는 자기 자신에게 맞지 않게 하려고
+                GameObject newRope = PhotonNetwork.Instantiate(ropePrefab.name, this.transform.position + rot.normalized * 3.5f, Quaternion.Euler(0, 0, angle + 180.0f));
+                //GameObject newRope = Instantiate(ropePrefab);   // 로프(던져지는 모습) 생성
+                //newRope.transform.position = this.transform.position + rot.normalized * 3.5f;   // 로프 위치 조정, 3.5f는 자기 자신에게 맞지 않게 하려고
                 //newRope.GetComponent<RopeCollision>().SetDirection(rot.normalized);
-                newRope.transform.localRotation = Quaternion.Euler(0, 0, angle + 180.0f);   // 로프 각도 조정
+                //newRope.transform.localRotation = Quaternion.Euler(0, 0, angle + 180.0f);   // 로프 각도 조정
 
                 if (this.transform.localRotation.eulerAngles.z < 90.0f || this.transform.localRotation.eulerAngles.z > 270.0f)  // 로프의 위 아래 이미지가 뒤집히지 않도록 조정
                 {

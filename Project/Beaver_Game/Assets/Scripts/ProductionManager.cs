@@ -1,10 +1,11 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ProductionManager : MonoBehaviour
+public class ProductionManager : MonoBehaviourPunCallbacks
 {
     private ItemIndex itemIndex = null; // 아이템 목록
     private GameObject selectedItemGameObject;  // 아이템 제작 창에서 아이템 정보 보여주는 칸
@@ -40,8 +41,8 @@ public class ProductionManager : MonoBehaviour
             inventorySlotGroup.NowResourceCount();  // 현재 인벤토리의 재료 갱신
             SetSelectedItemmInfo(nowItemNum);   // 선택된 아이템을 갱신된 아이템 수로 다시 보여주기
 
-            GameObject newItem = Instantiate(itemIndex.items[nowItemNum].gameObject);   // 제작한 아이템 생성
-            newItem.transform.position = productionCenter.position; // 아이템 위치를 제작대로
+            GameObject newItem = PhotonNetwork.Instantiate(itemIndex.items[nowItemNum].gameObject.name, productionCenter.position, Quaternion.identity);   // 제작한 아이템 생성
+            //newItem.transform.position = productionCenter.position; // 아이템 위치를 제작대로
         }
     }
 

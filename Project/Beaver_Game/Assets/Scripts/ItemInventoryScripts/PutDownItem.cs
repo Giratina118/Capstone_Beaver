@@ -3,6 +3,7 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class PutDownItem : MonoBehaviourPunCallbacks, IDropHandler
@@ -25,15 +26,22 @@ public class PutDownItem : MonoBehaviourPunCallbacks, IDropHandler
 
         if (eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().itemIndexNumber == 4) // 로프 내려놓을때 0개면 버튼 비활성화 하기
         {
-            copyItemImage.transform.parent.gameObject.GetComponent<InventorySlotGroup>().UseItem(4, 0);
+            copyItemImage.transform.parent.gameObject.GetComponent<InventorySlotGroup>().UseItem(4, 0, eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().keepItemCount > 0);
         }
         else if (eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().itemIndexNumber == 5)    // 키 내려놓을때 0개면 버튼 비활성화 하기
         {
             playerPos.gameObject.GetComponent<PrisonManager>().keyCount -= eventData.pointerDrag.GetComponent<ItemCount>().count;
-            if (playerPos.gameObject.GetComponent<PrisonManager>().keyCount <= 0)
+            copyItemImage.transform.parent.gameObject.GetComponent<InventorySlotGroup>().UseItem(5, 0, eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().keepItemCount > 0);
+            /*
+            if (playerPos.gameObject.GetComponent<PrisonManager>().keyCount <= 0 && eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().keepItemCount <= 0)
             {
-                playerPos.gameObject.GetComponent<PrisonManager>().escapePrisonButton.gameObject.SetActive(false);
+                //playerPos.gameObject.GetComponent<PrisonManager>().escapePrisonButton.gameObject.SetActive(false);
+                playerPos.gameObject.GetComponent<PrisonManager>().escapePrisonButton.enabled = false;
+                Color escapeButtonColor = playerPos.gameObject.GetComponent<PrisonManager>().escapePrisonButton.GetComponent<Image>().color;
+                escapeButtonColor.a = 0.5f;
+                playerPos.gameObject.GetComponent<PrisonManager>().escapePrisonButton.GetComponent<Image>().color = escapeButtonColor;
             }
+            */
         }
 
         if (eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().normalParent.gameObject.GetComponent<ItemSlot>().equipSlotType > 0)   // 장비되어있던 아이템이라면

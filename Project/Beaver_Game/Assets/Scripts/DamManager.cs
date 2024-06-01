@@ -119,11 +119,8 @@ public class DamManager : MonoBehaviourPunCallbacks
         requiredResources[3] = totalDamRequiredResource - randomBoundary2;
     }
 
-    void Start()
+    public override void OnJoinedRoom()
     {
-        buildGauge = Instantiate(gaugePrefab, cnavasGaugesTransform);
-        buildGauge.SetActive(false);
-
         if (!PhotonNetwork.IsMasterClient)
             return;
 
@@ -136,16 +133,20 @@ public class DamManager : MonoBehaviourPunCallbacks
         randomBoundary.Sort();
 
         this.gameObject.GetPhotonView().RPC("SetDamCreateResource", RpcTarget.All, randomBoundary[0], randomBoundary[1], randomBoundary[2]);
+    }
 
+
+    void Start()
+    {
+        buildGauge = Instantiate(gaugePrefab, cnavasGaugesTransform);
+        buildGauge.SetActive(false);
+        
         /*
         requiredResources[0] = randomBoundary[0];
         requiredResources[1] = randomBoundary[1] - randomBoundary[0];
         requiredResources[2] = randomBoundary[2] - randomBoundary[1];
         requiredResources[3] = totalDamRequiredResource - randomBoundary[2];
         */
-
-        
-
     }
 
     void Update()
