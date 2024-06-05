@@ -70,8 +70,6 @@ public class ItemSlot : MonoBehaviourPunCallbacks, IDropHandler
             {
 
                 // 장착되어있던 아이템 효과 지우는 함수 만들기
-                //this.transform.parent.gameObject.GetComponent<ItemEquipManager>().SetItemEffect(eventData.pointerDrag.GetComponent<ItemDrag>().itemIndexNumber, false);
-                eventData.pointerDrag.GetComponent<ItemDrag>().normalParent.gameObject.GetComponent<ItemSlot>().gameObject.transform.parent.gameObject.GetComponent<ItemEquipManager>().SetItemEffect(eventData.pointerDrag.GetComponent<ItemDrag>().itemIndexNumber, false);
 
                 //Destroy(eventData.pointerDrag.GetComponent<ItemDrag>().normalParent.gameObject.GetComponent<ItemSlot>().equipItem);
                 eventData.pointerDrag.GetComponent<ItemDrag>().normalParent.gameObject.GetComponent<ItemSlot>().equipItem.GetPhotonView().RPC("equipItemDestroy", RpcTarget.All);
@@ -95,8 +93,6 @@ public class ItemSlot : MonoBehaviourPunCallbacks, IDropHandler
             {
 
                 // 장착되어있던 아이템 효과 지우는 함수 만들기
-                this.transform.parent.gameObject.GetComponent<ItemEquipManager>().SetItemEffect(equipItem.GetComponent<ItemInfo>().GetItemIndexNumber(), false);
-
 
                 Destroy(equipItem);
                 equipItem.GetPhotonView().RPC("equipItemDestroy", RpcTarget.All);
@@ -130,13 +126,9 @@ public class ItemSlot : MonoBehaviourPunCallbacks, IDropHandler
             {
                 equipItem.transform.localScale = Vector3.one * 0.5f;
             }
-
-
-            // 장착된 아이템 효과 발동시키는 함수 만들기
-            this.transform.parent.gameObject.GetComponent<ItemEquipManager>().SetItemEffect(equipItem.GetComponent<ItemInfo>().GetItemIndexNumber(), true);
         }
 
-
+        // 장착된 아이템 효과 발동시키는 함수 만들기
 
         eventData.pointerDrag.GetComponent<ItemDrag>().dropped = true;
     }
