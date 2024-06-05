@@ -43,7 +43,8 @@ public class InMapAction : MonoBehaviour
             }
             else    // 댐이 아닐 경우 해당 위치 저장(자원 생성 시 해당 위치에 생성하기 위함)
             {
-                ResourcePos = collision.transform;
+                //ResourcePos = collision.transform;
+                ResourcePos = this.gameObject.transform;
             }
         }
     }
