@@ -12,6 +12,31 @@ public class PlayerMove : MonoBehaviour
     Animator animator;  // 비버 애니메이션
     public NavMeshAgent navMeshAgent;
 
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!this.gameObject.GetPhotonView().IsMine)
+            return;
+
+        if (collision.gameObject.tag == "Water" && navMeshAgent != null)
+        {
+            navMeshAgent.speed *= 0.6f;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (!this.gameObject.GetPhotonView().IsMine)
+            return;
+
+        if (collision.gameObject.tag == "Water" && navMeshAgent != null)
+        {
+            navMeshAgent.speed /= 0.6f;
+        }
+    }
+
+
+
     void EquippedItemPos()   // 손톱 아이템 위치
     {
         if (this.transform.childCount > 2)  // 
@@ -39,10 +64,11 @@ public class PlayerMove : MonoBehaviour
 
     void Start()
     {
+        navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         ropeManager = this.transform.GetChild(0).GetComponent<RopeManager>();
         
-        navMeshAgent = GetComponent<NavMeshAgent>();
+        
         //navMeshAgent.updatePosition = false;
         //navMeshAgent.updateRotation = false;
         
@@ -101,5 +127,15 @@ public class PlayerMove : MonoBehaviour
         {
             navMeshAgent.SetDestination(transform.position);
         }
+
+
+        Vector3 agentPosition = navMeshAgent.transform.position;
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(agentPosition, out hit, 1.0f, NavMesh.AllAreas))
+        {
+            int areaIndex = hit.mask;
+            Debug.Log("현재 위치의 NavMesh 영역 값: " + areaIndex);
+        }
+
     }
 }

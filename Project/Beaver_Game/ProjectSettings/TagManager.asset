@@ -16,6 +16,7 @@ TagManager:
   - Stone
   - ProductionCenter
   - Map
+  - Water
   layers:
   - Default
   - TransparentFX

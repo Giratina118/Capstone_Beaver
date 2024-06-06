@@ -23,7 +23,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        GameObject createdBeaver = PhotonNetwork.Instantiate("PlayerBeaver", Vector3.zero, Quaternion.identity);    // 플레이어 비버 생성
+        Vector3 startPos = new Vector3(25.0f, 5.0f, 0.0f);
+        GameObject createdBeaver = PhotonNetwork.Instantiate("PlayerBeaver", startPos, Quaternion.identity);    // 플레이어 비버 생성
         if (createdBeaver.GetPhotonView().IsMine)
         {
             cinemachineVirtualCamera.Follow = createdBeaver.transform;  // 플레이어와 시네머신 카메라 연결
