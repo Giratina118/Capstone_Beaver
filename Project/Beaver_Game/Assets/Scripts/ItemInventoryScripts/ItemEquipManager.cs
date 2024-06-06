@@ -23,7 +23,7 @@ public class ItemEquipManager : MonoBehaviour
                 else
                 {
                     //player.GetComponent<PlayerMove>().moveSpeed = 10.0f;
-                    player.GetComponent<PlayerMove>().navMeshAgent.speed = 1.2f;
+                    player.GetComponent<PlayerMove>().navMeshAgent.speed /= 1.2f;
                 }
                 break;
             case 8:

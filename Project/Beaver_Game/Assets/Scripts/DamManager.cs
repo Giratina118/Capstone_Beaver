@@ -121,9 +121,10 @@ public class DamManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        if (!PhotonNetwork.IsMasterClient)
+        /*
+        if (!PhotonNetwork.IsMasterClient)  // 나중에 동시입장으로 바꾸면 그때 이거 켜기
             return;
-
+        */
         List<int> randomBoundary = new List<int>(); // 댐 건설하는데 필요한 자원 랜덤으로 정하기
 
         for (int i = 0; i < 3; i++)

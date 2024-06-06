@@ -16,6 +16,7 @@ public class InMapAction : MonoBehaviour
     private Transform ResourcePos;  // 현재 접하고있는 곳의 위치
     public InventorySlotGroup storageSlotGroup; // 창고 인벤토리
 
+    GameObject damUI;
     GameObject onTriggerObject = null;
 
 
@@ -40,6 +41,13 @@ public class InMapAction : MonoBehaviour
             if (collision.gameObject.transform.tag == "Dam")    // 댐에 위치해있을 경우 해당 댐의 정보 저장
             {
                 damGameObject = collision.gameObject;
+                damUI.gameObject.SetActive(true);
+
+                for (int i = 0; i < 4; i++)
+                {
+                    damUI.transform.GetChild(i).GetChild(0).gameObject.GetComponent<TMP_Text>().text = damGameObject.GetComponent<DamManager>().requiredResources[i].ToString();
+                }
+
             }
             else    // 댐이 아닐 경우 해당 위치 저장(자원 생성 시 해당 위치에 생성하기 위함)
             {
@@ -83,6 +91,7 @@ public class InMapAction : MonoBehaviour
                 actionButton.interactable = false;
 
                 tagName = "";
+                damUI.gameObject.SetActive(false);
             }
 
         }
@@ -158,6 +167,9 @@ public class InMapAction : MonoBehaviour
         actionButton = GameObject.Find("ActionButton").GetComponent<Button>();
         storageSlotGroup = GameObject.Find("StorageSlots").GetComponent<InventorySlotGroup>();
         actionButton.onClick.AddListener(OnClickActionButton);
+        damUI = GameObject.Find("DamUI");
+        damUI.transform.localPosition = new Vector3(0.0f, 300.0f, 0.0f);
+        damUI.SetActive(false);
     }
 
     void Update()

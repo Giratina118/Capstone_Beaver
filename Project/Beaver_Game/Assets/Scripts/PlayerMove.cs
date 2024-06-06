@@ -43,6 +43,7 @@ public class PlayerMove : MonoBehaviour
         {
             for (int i = 2; i < this.transform.childCount; i++)
             {
+                /*
                 // 나중에는 아이템별로 다 넣어서 위치 조정하기
                 if (this.transform.GetChild(i).gameObject.GetComponent<ItemInfo>().GetItemIndexNumber() == 18)  // 18번 아이템은 손톱, 현재 이것만 걷는거 따라서 위치 조정 함
                 {
@@ -57,6 +58,78 @@ public class PlayerMove : MonoBehaviour
                         this.transform.GetChild(i).localRotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
                     }
                     break;
+                }
+                */
+
+
+                switch (this.transform.GetChild(i).gameObject.GetComponent<ItemInfo>().GetItemIndexNumber())
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                    case 7:     // 이동속도 증가시키는 미끼 달린 모자
+                        if (animator.GetBool("Walk"))   // 걷기 상태일때와 아닐때 아이템의 위치 다르게 조정
+                        {
+                            this.transform.GetChild(i).localPosition = new Vector3(0.8f, 5.0f, 0.0f);
+                        }
+                        else
+                        {
+                            this.transform.GetChild(i).localPosition = new Vector3(1.3f, 5.0f, 0.0f);
+                        }
+                        break;
+                    case 8:
+                        break;
+                    case 9:
+                        break;
+                    case 10:
+                        break;
+                    case 11:
+                        break;
+                    case 12:
+                        break;
+                    case 13:
+                        break;
+                    case 14:
+                        break;
+                    case 15:
+                        break;
+                    case 16:
+                        break;
+                    case 17:
+                        break;
+                    case 18:    // 손톱
+                        if (animator.GetBool("Walk"))   // 걷기 상태일때와 아닐때 아이템의 위치 다르게 조정
+                        {
+                            this.transform.GetChild(i).localPosition = new Vector3(-1.25f, -3.3f, 0.0f);
+                            this.transform.GetChild(i).localRotation = Quaternion.Euler(0.0f, 0.0f, -40.0f);
+                        }
+                        else
+                        {
+                            this.transform.GetChild(i).localPosition = new Vector3(1.25f, -3.3f, 0.0f);
+                            this.transform.GetChild(i).localRotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+                        }
+                        break;
+                    case 19:
+                        break;
+                    case 20:
+                        break;
+                    case 21:
+                        break;
+                    case 22:
+                        break;
+                    default:
+                        break;
                 }
             }
         }
