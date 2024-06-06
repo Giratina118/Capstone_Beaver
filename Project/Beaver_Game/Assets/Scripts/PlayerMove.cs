@@ -2,6 +2,7 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -9,8 +10,7 @@ public class PlayerMove : MonoBehaviour
     public bool leftRightChange = false;    // 좌우 반전 여부
     public RopeManager ropeManager; // 로프 예비 선
     Animator animator;  // 비버 애니메이션
-
-
+    public NavMeshAgent navMeshAgent;
 
     void EquippedItemPos()   // 손톱 아이템 위치
     {
@@ -41,6 +41,12 @@ public class PlayerMove : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         ropeManager = this.transform.GetChild(0).GetComponent<RopeManager>();
+        
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        //navMeshAgent.updatePosition = false;
+        //navMeshAgent.updateRotation = false;
+        
+        
     }
 
     void Update()
@@ -76,7 +82,24 @@ public class PlayerMove : MonoBehaviour
             ropeManager.ThrowRopeLineLeftRightChange();
         }
 
-        transform.Translate(new Vector3(moveX, moveY, 0.0f));   // 이동
+        //transform.Translate(new Vector3(moveX, moveY, 0.0f));   // 이동
 
+
+
+        Vector3 movement = new Vector3(moveX, moveY, 0.0f);
+
+        // Rigidbody2D를 사용하여 방향키로 이동합니다.
+        //rb.velocity = movement * moveSpeed;
+
+        // NavMeshAgent에도 이동 목적지를 설정합니다.
+        if (movement != Vector3.zero)
+        {
+            Vector3 moveDestination = transform.position + new Vector3(moveX, moveY, 0.0f) * 5.0f;
+            navMeshAgent.SetDestination(moveDestination);
+        }
+        else
+        {
+            navMeshAgent.SetDestination(transform.position);
+        }
     }
 }
