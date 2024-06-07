@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -20,6 +21,7 @@ public class PrisonManager : MonoBehaviour
     public InventorySlotGroup inventorySlotGroup;   // 인벤토리(열쇠 사용시)
     public Button escapePrisonButton;   // 탈출 버튼
     private Transform prisonTransform;  // 감옥 위치
+    private NavMeshAgent navMeshAgent;
 
     public void ShowPrisonTimer()   // 감옥 타이머 보여주기
     {
@@ -32,7 +34,11 @@ public class PrisonManager : MonoBehaviour
     [PunRPC]
     public void CaughtByRope()  // 로프에 잡혔을 때
     {
-        this.gameObject.transform.position = prisonTransform.position; // 맞은 플레리어를 감옥으로 위프
+        if (navMeshAgent == null || prisonTransform == null)
+            return;
+
+            //this.gameObject.transform.position = prisonTransform.position; // 맞은 플레리어를 감옥으로 위프
+        navMeshAgent.Warp(prisonTransform.position);
         //prisonTimerText.gameObject.SetActive(true);
         caughtCount++;  // 잡힌 횟수 증가
         prisonTimer = inPrisonTime + (caughtCount - 1) * 10.0f; // 잡힌 횟수에 따른 투옥 시간 설정
@@ -86,6 +92,7 @@ public class PrisonManager : MonoBehaviour
         escapePrisonButton.onClick.AddListener(() => EscapePrison(true));
         //escapePrisonButton.gameObject.SetActive(false);
         escapePrisonButton.enabled = false;
+        navMeshAgent = this.gameObject.GetComponent<NavMeshAgent>();
     }
 
     void Update()
