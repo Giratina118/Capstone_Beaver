@@ -17,13 +17,13 @@ public class ItemEquipManager : MonoBehaviour
             case 7:
                 if (isEquip)
                 {
-                    //player.GetComponent<PlayerMove>().moveSpeed = 12.0f;
-                    player.GetComponent<PlayerMove>().navMeshAgent.speed *= 1.2f;
+                    player.GetComponent<PlayerMove>().moveSpeed = 12.0f;
+                    //player.GetComponent<PlayerMove>().navMeshAgent.speed *= 1.2f;
                 }
                 else
                 {
-                    //player.GetComponent<PlayerMove>().moveSpeed = 10.0f;
-                    player.GetComponent<PlayerMove>().navMeshAgent.speed /= 1.2f;
+                    player.GetComponent<PlayerMove>().moveSpeed = 10.0f;
+                    //player.GetComponent<PlayerMove>().navMeshAgent.speed /= 1.2f;
                 }
                 break;
             case 8:
