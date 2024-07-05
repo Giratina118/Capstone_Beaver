@@ -12,7 +12,7 @@ public class ProductionToggle : MonoBehaviour
     private GameObject itemCreateObject;
 
 
-    public void OnChangedToggle()
+    public void OnChangedToggle()   // 이 아이템이 선택되면 그 정보를 보냄(제작 정보에 띄우기 위해)
     {
         if (this.gameObject.GetComponent<Toggle>().isOn)
         {

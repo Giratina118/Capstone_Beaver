@@ -1,40 +1,63 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Resources;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DamManager : MonoBehaviour
+public class DamManager : MonoBehaviourPunCallbacks
 {
-    public int[] requiredResources = new int[4]; // 0: 나무, 1: 진흙, 2: 돌, 3: 강철
-    public int totalDamRequiredResource = 20;
-    public InventorySlotGroup inventorySlotGroup;
-    public InventorySlotGroup storageInventorySlotGroup;
-    public GameObject gaugePrefab;
-    private GameObject buildGauge;
-    public Transform cnavasGaugesTransform;
+    public Sprite[] damSprite = new Sprite[4];      // 댐 이미지들
+    private int degreeOfConstruction = 0;
+
+    public int[] requiredResources = new int[4];    // 댐 건설에 필요한 자원 수 저장, 0: 나무, 1: 진흙, 2: 돌, 3: 강철
+    public int totalDamRequiredResource = 20;       // 댐 만드는데 필요한 총 자원의 수, 이 숫자를 4개의 자원으로 랜덤으로 나눈다.
+    public InventorySlotGroup inventorySlotGroup;   // 개인의 인벤토리
+    public InventorySlotGroup storageInventorySlotGroup;    // 창고의 인벤토리
+    public GameObject gaugePrefab;          // 댐 건설 게이지 프리팹
+    private GameObject buildGauge;          // 프리팹으로 생성한 댐 건설 게이지를 저장
+    public Transform cnavasGaugesTransform; // 게이지의 부모 위치(UI로 하기 위함)
 
     [SerializeField]
-    private float gaugePlusYPos = 0.8f; 
-    public bool buildNow = false;
-    public bool buildComplete = false;
+    private float gaugePlusYPos = 0.8f; // 게이지 위치(댐 중심으로부터 조금 위쪽에 생기도록)
+    public bool buildNow = false;       // 댐 건설 중인지 여부
+    public bool buildComplete = false;  // 댐 건설 완료했는지 여부
 
-    public float obstract = 0.0f;
-    public float accelerate = 0.0f;
-    public GameWinManager gameWinManager;
+    public float obstract = 0.0f;   // 스파이 비버의 방해 속도
+    public float accelerate = 0.0f; // 일반 비버의 가속 속도
+    public GameWinManager gameWinManager;   // 댐 모두 건설 시 승리하게 하도록
+
+    private float DameGaugeSpeedRate = 2.0f;    // 댐 게이지차는 속도 배율,1일때 게이지 다 차는데 100초, 2일때 50초 
 
 
-    public void ObstructBuild() // 댐 건설 방해(스파이 전용)
+    [PunRPC]
+    public void ObstructBuild(bool turnOn) // 댐 건설 방해(스파이 전용)
     {
-        obstract = -0.015f; // 방해 시 감속 속도
+        if (turnOn)
+        {
+            obstract = -0.015f * DameGaugeSpeedRate; // 방해 시 감속 속도
+        }
+        else
+        {
+            obstract = 0.0f;
+        }
     }
 
-    public void AccelerateBuild() // 댐 건설 가속(일반 비버 전용)
+    [PunRPC]
+    public void AccelerateBuild(bool turnOn) // 댐 건설 가속(일반 비버 전용)
     {
-        accelerate = 0.01f; // 가속 시 가속 속도
+        if (turnOn)
+        {
+            accelerate = 0.01f * DameGaugeSpeedRate; // 가속 시 가속 속도
+        }
+        else
+        {
+            accelerate = 0.0f;
+        }
     }
 
-    public void DamCreate() // 현재 인벤토리 -> 창고 순인데 창고 -> 인벤토리 순으로 변경
+    public void DamCreate() // 창고 -> 인벤토리 순으로 자원 소비하여 댐 건설
     {
         bool damCreateBool = true;
         
@@ -55,29 +78,53 @@ public class DamManager : MonoBehaviour
             {
                 if (requiredResources[i] > storageInventorySlotGroup.resourceCountInts[i])  // 필요 자원이 창고에 저장된 자원보다 많을 경우
                 {
-                    storageInventorySlotGroup.itemSlots[i].gameObject.transform.GetChild(0).gameObject.GetComponent<ItemCount>().ShowItemCount(-storageInventorySlotGroup.resourceCountInts[i]); // 창고에서 자원 빼기
+                    storageInventorySlotGroup.itemSlots[i].gameObject.transform.GetChild(0).gameObject.GetPhotonView().RPC("ShowItemCount", RpcTarget.All, -storageInventorySlotGroup.resourceCountInts[i]);
+                    //storageInventorySlotGroup.itemSlots[i].gameObject.transform.GetChild(0).gameObject.GetComponent<ItemCount>().ShowItemCount(-storageInventorySlotGroup.resourceCountInts[i]); // 창고에서 자원 빼기
                     remainNum[i] -= storageInventorySlotGroup.resourceCountInts[i]; // 남은 더 지불해야할 자원 수
                 }
                 else   // 필요 자원이 창고에 저장된 자원보다 적거나 같을 경우
                 {
-                    storageInventorySlotGroup.itemSlots[i].gameObject.transform.GetChild(0).gameObject.GetComponent<ItemCount>().ShowItemCount(-remainNum[i]);   // 창고에서 자원 빼기
+                    storageInventorySlotGroup.itemSlots[i].gameObject.transform.GetChild(0).gameObject.GetPhotonView().RPC("ShowItemCount", RpcTarget.All, -remainNum[i]);
+                    //storageInventorySlotGroup.itemSlots[i].gameObject.transform.GetChild(0).gameObject.GetComponent<ItemCount>().ShowItemCount(-remainNum[i]);   // 창고에서 자원 빼기
                     remainNum[i] = 0;
                 }
             }
-            storageInventorySlotGroup.NowResourceCount();
+            //storageInventorySlotGroup.NowResourceCount();   // 창고의 자원 수 갱신
+            storageInventorySlotGroup.gameObject.GetPhotonView().RPC("NowResourceCount", RpcTarget.All);
 
-            inventorySlotGroup.UseResource(remainNum);
-            inventorySlotGroup.NowResourceCount();
+            inventorySlotGroup.UseResource(remainNum);  // 인벤토리의 자원 사용
+            inventorySlotGroup.NowResourceCount();  // 인벤토리의 자원 수 갱신
 
-            buildGauge.SetActive(true);
-            buildNow = true;
+            this.gameObject.GetPhotonView().RPC("TurnOnBuildGauge", RpcTarget.All);
+            //buildGauge.SetActive(true); // 건설 게이지 활성화
+            //buildNow = true;
 
         }
     }
 
-    void Start()
+    [PunRPC]
+    public void TurnOnBuildGauge()  // 누군가 댐 건설을 하면 건설 게이지 활성화, 건설중 상태로 변경
     {
-        
+        buildGauge.SetActive(true);
+        buildNow = true;
+    }
+
+
+    [PunRPC]
+    public void SetDamCreateResource(int randomBoundary0, int randomBoundary1, int randomBoundary2)
+    {
+        requiredResources[0] = randomBoundary0;
+        requiredResources[1] = randomBoundary1 - randomBoundary0;
+        requiredResources[2] = randomBoundary2 - randomBoundary1;
+        requiredResources[3] = totalDamRequiredResource - randomBoundary2;
+    }
+
+    public override void OnJoinedRoom()
+    {
+        /*
+        if (!PhotonNetwork.IsMasterClient)  // 나중에 동시입장으로 바꾸면 그때 이거 켜기
+            return;
+        */
         List<int> randomBoundary = new List<int>(); // 댐 건설하는데 필요한 자원 랜덤으로 정하기
 
         for (int i = 0; i < 3; i++)
@@ -86,40 +133,101 @@ public class DamManager : MonoBehaviour
         }
         randomBoundary.Sort();
 
+        this.gameObject.GetPhotonView().RPC("SetDamCreateResource", RpcTarget.All, randomBoundary[0], randomBoundary[1], randomBoundary[2]);
+    }
+
+
+    void Start()
+    {
+        buildGauge = Instantiate(gaugePrefab, cnavasGaugesTransform);
+        buildGauge.SetActive(false);
+        
+        /*
         requiredResources[0] = randomBoundary[0];
         requiredResources[1] = randomBoundary[1] - randomBoundary[0];
         requiredResources[2] = randomBoundary[2] - randomBoundary[1];
         requiredResources[3] = totalDamRequiredResource - randomBoundary[2];
-
-
-        buildGauge = Instantiate(gaugePrefab, cnavasGaugesTransform);
-        buildGauge.SetActive(false);
-
+        */
     }
 
     void Update()
     {
         if (buildNow)
         {
-            buildGauge.transform.position = Camera.main.WorldToScreenPoint(new Vector3(this.transform.position.x, this.transform.position.y + gaugePlusYPos, 0.0f));
-            buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount += Time.deltaTime * (0.01f + accelerate + obstract); // 100초
+            buildGauge.transform.position = Camera.main.WorldToScreenPoint(new Vector3(this.transform.position.x, this.transform.position.y + gaugePlusYPos, 0.0f));    // 게이지 위치 설정(UI라서)
+            buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount += Time.deltaTime * (0.01f * DameGaugeSpeedRate + accelerate + obstract); // 현재는 50초, 수치 조정 가능
 
-            if (buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount >= 1.0f)
+
+            float constructFillAmount = buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount;
+            int constructDegree = (Mathf.FloorToInt(constructFillAmount * 100.0f) + 50) / 50;
+
+
+            if (constructDegree != degreeOfConstruction)
             {
+                this.gameObject.GetComponent<SpriteRenderer>().sprite = damSprite[constructDegree];
+                degreeOfConstruction = constructDegree;
+            }
+
+            /*
+            if (buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount >= 1.0f)// 게이지가 다 찼을 경우
+            {
+
+                // 게이지 비활성화
                 buildNow = false;
                 buildComplete = true;
                 buildGauge.SetActive(false);
 
+                // 댐 완성 이미지로 바꾸기, 현재는 색 바꾸는 걸로 구분, int로 현재 건설 진행도를 저장하고 현재 Amount와 진행도(int)가 일치하지 않으면 이미지 업데이트 하기
                 Color damColor = gameObject.GetComponent<SpriteRenderer>().color;
                 damColor.a = 150;
                 gameObject.GetComponent<SpriteRenderer>().color = damColor;
 
+                this.gameObject.GetComponent<SpriteRenderer>().sprite = damSprite[3];
+
+
                 gameWinManager.DamCountCheck();
             }
-            else if (buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount <= 0.0f)
+            else if (buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount >= 0.5f)
+            {
+                this.gameObject.GetComponent<SpriteRenderer>().sprite = damSprite[2];
+            }
+            else if (buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount > 0.0f)
+            {
+                this.gameObject.GetComponent<SpriteRenderer>().sprite = damSprite[1];
+            }
+            else if (buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount <= 0.0f)  // 댐이 방해에 의해 게이지가 다 떨어졌을 경우 건설 취소
+            {
+                
+                buildNow = false;
+                buildGauge.SetActive(false);
+                this.gameObject.GetComponent<SpriteRenderer>().sprite = damSprite[0];
+            }
+            */
+
+
+
+
+            if (buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount >= 1.0f)// 게이지가 다 찼을 경우
+            {
+                
+                // 게이지 비활성화
+                buildNow = false;
+                buildComplete = true;
+                buildGauge.SetActive(false);
+                /*
+                // 댐 완성 이미지로 바꾸기, 현재는 색 바꾸는 걸로 구분, int로 현재 건설 진행도를 저장하고 현재 Amount와 진행도(int)가 일치하지 않으면 이미지 업데이트 하기
+                Color damColor = gameObject.GetComponent<SpriteRenderer>().color;
+                damColor.a = 150;
+                gameObject.GetComponent<SpriteRenderer>().color = damColor;
+                */
+                gameWinManager.DamCountCheck();
+            }
+            else if (buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount <= 0.0f)  // 댐이 방해에 의해 게이지가 다 떨어졌을 경우 건설 취소
             {
                 buildNow = false;
                 buildGauge.SetActive(false);
+                degreeOfConstruction = 0;
+                this.gameObject.GetComponent<SpriteRenderer>().sprite = damSprite[degreeOfConstruction];
             }
                 
         }
