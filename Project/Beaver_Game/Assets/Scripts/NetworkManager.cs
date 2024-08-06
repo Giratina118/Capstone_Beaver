@@ -13,6 +13,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         Screen.SetResolution(1920, 1080, false);    // 화면 가로세로 설정
         PhotonNetwork.ConnectUsingSettings();
+
+
+        
+        Vector3 startPos = new Vector3(25.0f, 5.0f, 0.0f);
+        GameObject createdBeaver = PhotonNetwork.Instantiate("PlayerBeaver", startPos, Quaternion.identity);    // 플레이어 비버 생성
+        if (createdBeaver.GetPhotonView().IsMine)
+        {
+            cinemachineVirtualCamera.Follow = createdBeaver.transform;  // 플레이어와 시네머신 카메라 연결
+            cinemachineVirtualCamera.LookAt = createdBeaver.transform;
+        }
         
     }
 

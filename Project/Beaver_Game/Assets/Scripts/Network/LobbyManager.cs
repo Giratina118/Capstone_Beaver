@@ -11,6 +11,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public Button btnJoin;           // 방 참가 버튼
     public Button btnCreate;         // 방 생성 버튼
     public InputField inputMaxPlayers; // 최대 인원수를 입력받는 InputField
+    public GameObject roomListItem;
+    public Transform rtContent;
+
+    Dictionary<string, RoomInfo> dicRoomInfo = new Dictionary<string, RoomInfo>();
+
 
     void Start()
     {
@@ -22,6 +27,81 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         inputRoomName.onValueChanged.AddListener(OnRoomNameValueChanged);
         inputMaxPlayers.onValueChanged.AddListener(OnMaxPlayerValueChanged);
     }
+
+
+
+
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        base.OnRoomListUpdate(roomList);
+        //Content에 자식으로 붙어있는 Item을 다 삭제
+        DeleteRoomListItem();
+        //dicRoomInfo 변수를 roomList를 이용해서 갱신
+        UpdateRoomListItem(roomList);
+        //dicRoom을 기반으로 roomListItem을 만들자
+        CreateRoomListItem();
+
+    }
+    void SelectRoomItem(string roomName)
+    {
+        inputRoomName.text = roomName;
+    }
+    void DeleteRoomListItem()
+    {
+
+        foreach (Transform tr in rtContent)
+        {
+            Destroy(tr.gameObject);
+        }
+    }
+    void UpdateRoomListItem(List<RoomInfo> roomList)
+    {
+        foreach (RoomInfo info in roomList)
+        {
+            //dicRoomInfo에 info 의 방이름으로 되어있는 key값이 존재하는가
+            if (dicRoomInfo.ContainsKey(info.Name))
+            {
+                //만약에 방이 삭제되었으면?
+                if (info.RemovedFromList)
+                {
+                    dicRoomInfo.Remove(info.Name); //삭제
+                    continue;
+                }
+            }
+            dicRoomInfo[info.Name] = info; //추가
+        }
+    }
+    void CreateRoomListItem()
+    {
+        foreach (RoomInfo info in dicRoomInfo.Values)
+        {
+            //방 정보 생성과 동시에 ScrollView-> Content의 자식으로 하자
+            GameObject go = Instantiate(roomListItem, rtContent);
+            //생성된 item에서 RoomListItem 컴포넌트를 가져온다.
+            RoomListItem item = go.GetComponent<RoomListItem>();
+            //가져온 컴포넌트가 가지고 있는 SetInfo 함수 실행
+            item.SetInfo(info.Name, info.PlayerCount, info.MaxPlayers);
+            //item 클릭되었을 때 호출되는 함수 등록
+            item.onDelegate = SelectRoomItem;
+        }
+    }
+    void OnNameValueChanged(string s)
+    {
+        btnJoin.interactable = s.Length > 0;
+        if (inputRoomName.text == "")
+            btnCreate.interactable = false;
+    }
+    void OnPlayerValueChange(string s)
+    {
+        btnCreate.interactable = s.Length > 0;
+        if (inputMaxPlayers.text == "")
+            btnCreate.interactable = false;
+    }
+
+
+
+
+
 
     // 방을 생성하는 메소드
     public void CreateRoom()
@@ -95,7 +175,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
         print("OnJoinedRoom");
-        PhotonNetwork.LoadLevel("SampleScene"); // 방에 참가하면 "SampleScene" 로드
+        PhotonNetwork.LoadLevel("MainGameScene"); // 방에 참가하면 "MainGameScene" 로드
+
+
+
+
     }
 
     // 방 참가 실패 시 호출되는 콜백 메소드
