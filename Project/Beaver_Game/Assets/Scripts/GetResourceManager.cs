@@ -1,6 +1,8 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,8 +14,10 @@ public class GetResourceManager : MonoBehaviourPunCallbacks
     public Sprite[] getResourceSprite;  // 자원 채취 화면 배경 이미지들
     public Animator beaverWorkAnimator; // 자원 채취 비버 애니메이션
 
+    public GetResourceScrollbar resourceScrollbar;
 
-    public NetworkManager networkManager;
+
+    //public NetworkManager networkManager;
 
 
     public void CloseGetResourceScreen()   // 자원 채취 화면 우상단의 X 버튼 클릭, 자원 채취 화면 안 보이도록 하기
@@ -28,12 +32,18 @@ public class GetResourceManager : MonoBehaviourPunCallbacks
         beaverWorkAnimator.SetBool("Work", true);   // 애니메이션 켜기
         getResourceNum = resourceNum;       // 해당 자원의 번호
         resourceItemPos = resourceDropPos;  // 해당 자원 채집하는 곳의 위치
+
+        resourceScrollbar.SetScrollbar();
+
     }
 
     public void OnClickButtonInGetResource()    // 자원 채취 버튼 클릭
     {
+        int resourceResult = resourceScrollbar.StopScrolling();
         //networkManager.CreateItem(itemIndex.items[getResourceNum].gameObject.name, resourceItemPos.position);   // 자원 생성
-        PhotonNetwork.Instantiate(itemIndex.items[getResourceNum].gameObject.name, resourceItemPos.position, Quaternion.identity);
+
+        for (int i = 0; i < resourceResult; i++)
+            PhotonNetwork.Instantiate(itemIndex.items[getResourceNum].gameObject.name, resourceItemPos.position, Quaternion.identity);
 
         /*
         GameObject newResource = PhotonNetwork.Instantiate(itemIndex.items[getResourceNum].gameObject.name, Vector3.zero, Quaternion.identity);
