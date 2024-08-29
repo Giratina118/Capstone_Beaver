@@ -29,6 +29,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         if (collision.gameObject.tag == "Water")
         {
             moveSpeed = 6.0f;
+            animator.SetBool("InWater", true);
         }
 
     }
@@ -48,6 +49,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         if (collision.gameObject.tag == "Water")
         {
             moveSpeed = 10.0f;
+            animator.SetBool("InWater", false);
         }
 
     }
