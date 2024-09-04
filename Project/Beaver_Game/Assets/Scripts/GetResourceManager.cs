@@ -43,7 +43,29 @@ public class GetResourceManager : MonoBehaviourPunCallbacks
         //networkManager.CreateItem(itemIndex.items[getResourceNum].gameObject.name, resourceItemPos.position);   // 자원 생성
 
         for (int i = 0; i < resourceResult; i++)
-            PhotonNetwork.Instantiate(itemIndex.items[getResourceNum].gameObject.name, resourceItemPos.position, Quaternion.identity);
+        {
+            //Vector3 pos = this.transform.position;
+            //float range = 1.5f;
+
+            Vector3 rand = Random.insideUnitCircle * 1.5f;
+
+            PhotonNetwork.Instantiate(itemIndex.items[getResourceNum].gameObject.name, resourceItemPos.position + rand, Quaternion.identity);
+        }
+            
+
+
+        /*
+        GameObject cloneobj = GameObject.Instantiate(obj);
+
+        Vector3 pos = this.transform.position;
+        float range = 1.5f;
+
+        Vector3 rand = Random.insideUnitCircle * range;
+        pos = pos + rand;
+
+
+        cloneobj.transform.position = pos;
+        */
 
         /*
         GameObject newResource = PhotonNetwork.Instantiate(itemIndex.items[getResourceNum].gameObject.name, Vector3.zero, Quaternion.identity);
