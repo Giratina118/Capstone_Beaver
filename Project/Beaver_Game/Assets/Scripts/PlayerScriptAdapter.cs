@@ -54,6 +54,7 @@ public class PlayerScriptAdapter : MonoBehaviourPunCallbacks
     private PutDownItem putDownItem;
     private ThrowAwayItem throwAwayItem;
     private InventorySlotGroup inventorySlotGroup;
+    private GameWinManager gameWinManager;
 
 
     void Start()
@@ -115,8 +116,8 @@ public class PlayerScriptAdapter : MonoBehaviourPunCallbacks
 
         inventorySlotGroup = GameObject.Find("InventorySlots").GetComponent<InventorySlotGroup>();
         inventorySlotGroup.spyBoolManager = this.gameObject.GetComponent<SpyBoolManager>();
-
-
+        gameWinManager = GameObject.Find("GameOverManager").GetComponent<GameWinManager>();
+        gameWinManager.spyBoolManager = this.gameObject.GetComponent<SpyBoolManager>();
 
     }
 

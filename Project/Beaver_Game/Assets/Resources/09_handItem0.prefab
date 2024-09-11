@@ -57,7 +57,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -141,6 +141,15 @@ MonoBehaviour:
   requiredResourceOfItem: 00000000020000000000000002000000
   itemName: Hand item 2
   itemInformation: This item can be mounted in a haed slot.
+  normalPos: {x: 4, y: 0, z: 0}
+  normalRot: {x: 0, y: 0, z: 0}
+  normalScale: {x: 1, y: 1, z: 1}
+  walkPos: {x: 1.7, y: -1, z: 0}
+  walkRot: {x: 0, y: 0, z: -10}
+  walkScale: {x: 1, y: 1, z: 1}
+  swimPos: {x: 0.5, y: 0.9, z: 0}
+  swimRot: {x: 0, y: 0, z: 145}
+  swimScale: {x: 0.5, y: 0.5, z: 1}
 --- !u!114 &9172403719032227683
 MonoBehaviour:
   m_ObjectHideFlags: 0

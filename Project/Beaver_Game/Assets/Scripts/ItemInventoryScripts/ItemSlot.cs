@@ -13,7 +13,7 @@ public class ItemSlot : MonoBehaviourPunCallbacks, IDropHandler
     private InventorySlotGroup playerInventory = null;  // 인벤토리
     public GameObject equipItem = null; // 장착한 아이템(인벤토리가 아닌 맵 상의 플레이어가 장비하고 있는 오브젝트)
     public int equipSlotType = 0;   // 1: 머리, 2: 손 도구, 3: 다리 등..  itemInfo의 itemCategory와 숫자가 같도록, 0은 아이템 장착 슬롯이 아님을 의미
-    private int clawNum = 18;   // 손톱 장비의 번호
+    //private int clawNum = 18;   // 손톱 장비의 번호
 
     public void OnDrop(PointerEventData eventData)  // 이 슬롯에 아이템을 드래그해서 놓으면 인식
     {
@@ -126,11 +126,16 @@ public class ItemSlot : MonoBehaviourPunCallbacks, IDropHandler
             //equipItem.GetComponent<SpriteRenderer>().sortingOrder = 11; // 캐릭터보다 위에 보이게 하기 위해서 조정(캐릭터는 10)
             //equipItem.layer = 7;    // 장착한 아이템이 인벤토리의 아이템 장착화면에 보이도록 Layer를 7(EquipItem)으로 변경
 
+
+            //equipItem.GetComponent<ItemInfo>().SetNormalTransform();
+            this.transform.parent.gameObject.GetComponent<ItemEquipManager>().player.GetComponent<PlayerMove>().EquippedItemPos();
+
+            /*
             if (equipItem.GetComponent<ItemInfo>().GetItemIndexNumber() == clawNum)  // 손톱일 경우 크기 조정
             {
                 equipItem.transform.localScale = Vector3.one * 0.5f;
             }
-
+            */
 
             // 장착된 아이템 효과 발동시키는 함수 만들기
             this.transform.parent.gameObject.GetComponent<ItemEquipManager>().SetItemEffect(equipItem.GetComponent<ItemInfo>().GetItemIndexNumber(), true);

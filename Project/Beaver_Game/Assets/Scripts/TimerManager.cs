@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 public class TimerManager : MonoBehaviourPunCallbacks
@@ -18,6 +19,18 @@ public class TimerManager : MonoBehaviourPunCallbacks
     public GameWinManager gameWinManager;   // 시간 다 되면 게임 종료
 
     public PhotonView timerPhotonView;
+
+    public Light2D globalLight;
+    private Color nightColor;
+    bool isNight = false;
+
+
+    [PunRPC]
+    public void SetNight()
+    {
+        globalLight.color = nightColor;
+
+    }
 
     public float GetNowTime()   // 현재 시간 정보
     {
@@ -72,6 +85,7 @@ public class TimerManager : MonoBehaviourPunCallbacks
     {
         timerText = this.GetComponent<TMP_Text>();
         timerPhotonView = this.GetComponent<PhotonView>();
+        nightColor = new Color(0.0625f, 0.0625f, 0.0625f);
     }
 
     void Update()
@@ -88,6 +102,11 @@ public class TimerManager : MonoBehaviourPunCallbacks
             timer = 0.0f;
             ShowTimer(timer);
             gameWinManager.TimeCheck();
+        }
+        else if (timer <= 60.0f * 14.8f && !isNight)
+        {
+            isNight = true;
+            timerPhotonView.RPC("SetNight", RpcTarget.All);
         }
 
         if (!basicTimeSpeedBool && nowTower.remainComunicationTime >= 0.0f) // 통신 중일 경우

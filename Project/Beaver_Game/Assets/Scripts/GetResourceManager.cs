@@ -33,7 +33,7 @@ public class GetResourceManager : MonoBehaviourPunCallbacks
         getResourceNum = resourceNum;       // 해당 자원의 번호
         resourceItemPos = resourceDropPos;  // 해당 자원 채집하는 곳의 위치
 
-        resourceScrollbar.SetScrollbar();
+        resourceScrollbar.SetScrollbar(getResourceNum);
 
     }
 

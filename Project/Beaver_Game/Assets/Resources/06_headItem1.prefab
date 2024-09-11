@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 3900344286781883701}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -57,7 +57,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -141,6 +141,15 @@ MonoBehaviour:
   requiredResourceOfItem: 02000000020000000000000000000000
   itemName: Head Item 1
   itemInformation: This item can be mounted in an arm slot.
+  normalPos: {x: 0, y: 5, z: 0}
+  normalRot: {x: 0, y: 0, z: 10}
+  normalScale: {x: 0.6, y: 0.6, z: 1}
+  walkPos: {x: -0.5, y: 5, z: 0}
+  walkRot: {x: 0, y: 0, z: 10}
+  walkScale: {x: 0.6, y: 0.6, z: 1}
+  swimPos: {x: 3.5, y: 1.6, z: 0}
+  swimRot: {x: 0, y: 0, z: 0}
+  swimScale: {x: 0.3, y: 0.3, z: 1}
 --- !u!114 &1033769612242216318
 MonoBehaviour:
   m_ObjectHideFlags: 0

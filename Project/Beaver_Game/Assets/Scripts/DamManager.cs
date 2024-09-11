@@ -28,7 +28,7 @@ public class DamManager : MonoBehaviourPunCallbacks
     public float accelerate = 0.0f; // 일반 비버의 가속 속도
     public GameWinManager gameWinManager;   // 댐 모두 건설 시 승리하게 하도록
 
-    private float DameGaugeSpeedRate = 2.0f;    // 댐 게이지차는 속도 배율,1일때 게이지 다 차는데 100초, 2일때 50초 
+    public float dameGaugeSpeedRate = 1.0f;    // 댐 게이지차는 속도 배율, 작업모 착용으로 변경
 
 
     [PunRPC]
@@ -36,7 +36,7 @@ public class DamManager : MonoBehaviourPunCallbacks
     {
         if (turnOn)
         {
-            obstract = -0.015f * DameGaugeSpeedRate; // 방해 시 감속 속도
+            obstract = -0.015f * dameGaugeSpeedRate; // 방해 시 감속 속도
         }
         else
         {
@@ -49,7 +49,7 @@ public class DamManager : MonoBehaviourPunCallbacks
     {
         if (turnOn)
         {
-            accelerate = 0.01f * DameGaugeSpeedRate; // 가속 시 가속 속도
+            accelerate = 0.01f * dameGaugeSpeedRate; // 가속 시 가속 속도
         }
         else
         {
@@ -155,7 +155,7 @@ public class DamManager : MonoBehaviourPunCallbacks
         if (buildNow)
         {
             buildGauge.transform.position = Camera.main.WorldToScreenPoint(new Vector3(this.transform.position.x, this.transform.position.y + gaugePlusYPos, 0.0f));    // 게이지 위치 설정(UI라서)
-            buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount += Time.deltaTime * (0.01f * DameGaugeSpeedRate + accelerate + obstract); // 현재는 50초, 수치 조정 가능
+            buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount += Time.deltaTime * (0.01f + accelerate + obstract); // 현재는 100초, 수치 조정 가능
 
 
             float constructFillAmount = buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount;

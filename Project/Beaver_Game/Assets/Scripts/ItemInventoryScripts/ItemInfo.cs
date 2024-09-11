@@ -13,6 +13,27 @@ public class ItemInfo : MonoBehaviourPunCallbacks
     public string itemName;     // 아이템 이름
     public string itemInformation;  // 아이템 설명글
 
+    public Vector3 normalPos;
+    public Vector3 normalRot;
+    public Vector3 normalScale;
+
+    public Vector3 walkPos;
+    public Vector3 walkRot;
+    public Vector3 walkScale;
+
+    public Vector3 swimPos;
+    public Vector3 swimRot;
+    public Vector3 swimScale;
+
+    /*
+    public void SetNormalTransform()
+    {
+        this.transform.localPosition = normalPos;
+        this.transform.localRotation = Quaternion.Euler(normalRot);
+        this.transform.localScale = normalScale;
+    }
+    */
+
     public int GetItemIndexNumber() // 아이템 번호 불러오기
     {
         return itemIndexNumber;
