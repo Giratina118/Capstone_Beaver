@@ -9,7 +9,7 @@ public class GetResourceScrollbar : MonoBehaviour
     private float randRange;    // 성공 범위
     private Scrollbar scrollbar;    // 스크롤바
     private bool scrollingForward = true;   // 스크롤바 진행 방향(한 쪽에 닿으면 반대로 진행하도록)
-    private float scrollSpeed = 0.5f;   // 스크롤바 스피드
+    public float scrollSpeed = 0.5f;   // 스크롤바 스피드
 
     private bool scrolling = false; // 스크롤바가 움직이고 있는지
 

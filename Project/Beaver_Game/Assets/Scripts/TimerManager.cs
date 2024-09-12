@@ -20,16 +20,20 @@ public class TimerManager : MonoBehaviourPunCallbacks
 
     public PhotonView timerPhotonView;
 
+    public GameObject nightLight;
     public Light2D globalLight;
     private Color nightColor;
     bool isNight = false;
+    public GetResourceScrollbar resourceScrollbar;
 
 
     [PunRPC]
     public void SetNight()
     {
         globalLight.color = nightColor;
-
+        nightLight.SetActive(true);
+        nightLight.GetComponent<Light2D>().intensity = 1.5f;
+        resourceScrollbar.scrollSpeed = 1.0f;
     }
 
     public float GetNowTime()   // 현재 시간 정보
@@ -85,7 +89,7 @@ public class TimerManager : MonoBehaviourPunCallbacks
     {
         timerText = this.GetComponent<TMP_Text>();
         timerPhotonView = this.GetComponent<PhotonView>();
-        nightColor = new Color(0.0625f, 0.0625f, 0.0625f);
+        nightColor = new Color(0.03125f, 0.03125f, 0.03125f);
     }
 
     void Update()
@@ -103,10 +107,11 @@ public class TimerManager : MonoBehaviourPunCallbacks
             ShowTimer(timer);
             gameWinManager.TimeCheck();
         }
-        else if (timer <= 60.0f * 14.8f && !isNight)
+        else if (timer <= 60.0f * 14.5f && !isNight)
         {
             isNight = true;
             timerPhotonView.RPC("SetNight", RpcTarget.All);
+            //SetNight();
         }
 
         if (!basicTimeSpeedBool && nowTower.remainComunicationTime >= 0.0f) // 통신 중일 경우

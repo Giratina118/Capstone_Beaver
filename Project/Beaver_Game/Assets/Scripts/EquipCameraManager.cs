@@ -8,6 +8,7 @@ public class EquipCameraManager : MonoBehaviour
 {
     public RenderTexture renderTexture;
     private RawImage equipCharacterImage;
+    public GameObject nightLight;
 
     void Start()
     {
@@ -19,6 +20,10 @@ public class EquipCameraManager : MonoBehaviour
         this.gameObject.GetComponent<Camera>().targetTexture = renderTexture;
         equipCharacterImage = GameObject.Find("EquipCharacterImage").GetComponent<RawImage>();
         equipCharacterImage.texture = renderTexture;
+
+        nightLight.layer = this.transform.parent.gameObject.layer;
+        GameObject.Find("Timer").GetComponent<TimerManager>().nightLight = nightLight;
+
     }
 
     void Update()
