@@ -26,6 +26,13 @@ public class TimerManager : MonoBehaviourPunCallbacks
     bool isNight = false;
     public GetResourceScrollbar resourceScrollbar;
 
+    private bool timerOn = false;
+
+
+    public void SetTimerOn()
+    {
+        timerOn = true;
+    }
 
     [PunRPC]
     public void SetNight()
@@ -94,7 +101,7 @@ public class TimerManager : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if (!PhotonNetwork.IsMasterClient)
+        if (!PhotonNetwork.IsMasterClient || !timerOn)
             return;
 
         timer -= timeSpeed * Time.deltaTime;    // 타이머 시간 흐름

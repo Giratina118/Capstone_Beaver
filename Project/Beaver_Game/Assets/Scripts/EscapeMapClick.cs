@@ -14,9 +14,9 @@ public class EscapeMapClick : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnPointerClick(PointerEventData eventData)  // 플레이어를 탈출 위치로 워프
     {
-        //this.gameObject.transform.parent.gameObject.GetComponent<MapImages>().player.transform.position = escapeTransform.position;
+        this.gameObject.transform.parent.gameObject.GetComponent<MapImages>().player.transform.position = escapeTransform.position;
 
-        this.transform.parent.gameObject.GetComponent<MapImages>().player.gameObject.GetComponent<NavMeshAgent>().Warp(escapeTransform.position);
+        //this.transform.parent.gameObject.GetComponent<MapImages>().player.gameObject.GetComponent<NavMeshAgent>().Warp(escapeTransform.position);
 
         this.gameObject.GetComponent<Image>().color = Color.white;
         this.transform.parent.position = new Vector3(0.0f, -1200.0f, 0.0f); // 지도가 안 보이도록 화면 밖으로 이동

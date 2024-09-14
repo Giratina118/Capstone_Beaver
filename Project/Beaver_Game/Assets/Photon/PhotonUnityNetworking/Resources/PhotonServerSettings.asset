@@ -61,6 +61,8 @@ MonoBehaviour:
   - DamBuildComplete
   - CaughtByRope
   - SetNight
+  - OnClickGameStartButton
+  - SetStartSetting
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
