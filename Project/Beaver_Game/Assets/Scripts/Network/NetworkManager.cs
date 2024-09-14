@@ -10,7 +10,8 @@ using UnityEngine.UI;
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
     public CinemachineVirtualCamera cinemachineVirtualCamera;
-    public Vector3 waitingRoomPos;
+    //public Vector3 waitingRoomPos;
+    public Transform waitingRoomPos;
     public Transform[] startPos = new Transform[5];
     public TimerManager timerManager;
 
@@ -26,7 +27,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
 
         
-        GameObject createdBeaver = PhotonNetwork.Instantiate("PlayerBeaver", waitingRoomPos, Quaternion.identity);    // 플레이어 비버 생성
+        GameObject createdBeaver = PhotonNetwork.Instantiate("PlayerBeaver", waitingRoomPos.position, Quaternion.identity);    // 플레이어 비버 생성
         myBeaver = createdBeaver;
         if (createdBeaver.GetPhotonView().IsMine)
         {
@@ -51,7 +52,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
 
-        GameObject createdBeaver = PhotonNetwork.Instantiate("PlayerBeaver", waitingRoomPos, Quaternion.identity);    // 플레이어 비버 생성
+        GameObject createdBeaver = PhotonNetwork.Instantiate("PlayerBeaver", waitingRoomPos.position, Quaternion.identity);    // 플레이어 비버 생성
         if (createdBeaver.GetPhotonView().IsMine)
         {
             cinemachineVirtualCamera.Follow = createdBeaver.transform;  // 플레이어와 시네머신 카메라 연결
