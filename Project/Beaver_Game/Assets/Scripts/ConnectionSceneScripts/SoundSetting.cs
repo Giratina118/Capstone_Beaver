@@ -13,6 +13,7 @@ public class SoundSetting : MonoBehaviour
     {
         audioManager = GameObject.FindObjectOfType<AudioManager>();
 
+
         // 초기 볼륨을 설정하거나 저장된 값으로 불러옴
         bgmSlider.value = audioManager.GetBGMVolume();
         sfxSlider.value = audioManager.GetSFXVolume();
