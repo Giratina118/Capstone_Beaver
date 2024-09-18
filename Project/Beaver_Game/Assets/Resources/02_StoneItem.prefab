@@ -150,7 +150,7 @@ MonoBehaviour:
   itemCategory: 0
   requiredResourceOfItem: 00000000000000000000000000000000
   itemName: Stone
-  itemInformation: this item is stone.
+  itemInformation: You can make other items with this.
   normalPos: {x: 0, y: 0, z: 0}
   normalRot: {x: 0, y: 0, z: 0}
   normalScale: {x: 0, y: 0, z: 0}

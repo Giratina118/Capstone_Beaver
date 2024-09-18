@@ -12,10 +12,11 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     public bool leftRightChange = false;    // 좌우 반전 여부
     public RopeManager ropeManager; // 로프 예비 선
     Animator animator;  // 비버 애니메이션
-    Rigidbody2D rigidbody2D;
+    private Rigidbody2D playerRigidbody2D;
     //public NavMeshAgent navMeshAgent;
 
     private Vector3 remotePosition;
+    public SoundEffectManager soundEffectManager;
 
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -35,6 +36,9 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             moveSpeed = swimSpeed;
             animator.SetBool("InWater", true);
             EquippedItemPos();
+
+            soundEffectManager.SetPlayerAudioClip(2);
+            soundEffectManager.PlayPalyerAudio();
         }
 
     }
@@ -56,6 +60,9 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             moveSpeed = runSpeed;
             animator.SetBool("InWater", false);
             EquippedItemPos();
+
+            soundEffectManager.SetPlayerAudioClip(1);
+            soundEffectManager.PlayPalyerAudio();
         }
 
     }
@@ -191,7 +198,11 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         //navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         ropeManager = this.transform.GetChild(0).GetComponent<RopeManager>();
-        rigidbody2D = this.GetComponent<Rigidbody2D>();
+        playerRigidbody2D = this.GetComponent<Rigidbody2D>();
+
+        if (this.GetComponent<PhotonView>().IsMine)
+            soundEffectManager = GameObject.Find("SoundEffectManager").GetComponent<SoundEffectManager>();
+
 
         //navMeshAgent.updatePosition = false;
         //navMeshAgent.updateRotation = false;
@@ -212,13 +223,25 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             {
                 animator.SetBool("Walk", true);
                 EquippedItemPos();  // 장비 위치 조정
+
+                //soundEffectManager.SetPlayerAudioClip(1);
+                soundEffectManager.PlayPalyerAudio();
             }
             else if (animator.GetBool("Walk") && (moveX == 0.0f && moveY == 0.0f))
             {
                 animator.SetBool("Walk", false);
                 EquippedItemPos();  // 장비 위치 조정
+                soundEffectManager.StopPlayerAudio();
+                
             }
             //EquippedItemPos();  // 장비 위치 조정
+
+            if (!animator.GetBool("InWater") && (moveX != 0.0f || moveY != 0.0f) && soundEffectManager.playerAudioSource.clip != soundEffectManager.audioClips[1])
+            {
+                soundEffectManager.SetPlayerAudioClip(1);
+                soundEffectManager.PlayPalyerAudio();
+            }
+
 
             if (moveX < 0.0f && !leftRightChange)   // 좌우 반전 설정
             {
@@ -235,7 +258,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
             //transform.Translate(new Vector3(moveX, moveY, 0.0f));   // 이동
 
-            rigidbody2D.velocity = new Vector3(moveX, moveY, 0.0f).normalized * moveSpeed;
+            playerRigidbody2D.velocity = new Vector3(moveX, moveY, 0.0f).normalized * moveSpeed;
 
             /*
             Vector3 movement = new Vector3(moveX, moveY, 0.0f);

@@ -140,7 +140,8 @@ MonoBehaviour:
   itemCategory: 2
   requiredResourceOfItem: 02000000000000000200000000000000
   itemName: Hand item 1
-  itemInformation: This item can be mounted in a haed slot.
+  itemInformation: Can be equiped in a weapon slot.\nCan get more mud.\nCan get mud
+    more easily.
   normalPos: {x: 4, y: 0, z: 0}
   normalRot: {x: 0, y: 0, z: 0}
   normalScale: {x: 1, y: 1, z: 1}

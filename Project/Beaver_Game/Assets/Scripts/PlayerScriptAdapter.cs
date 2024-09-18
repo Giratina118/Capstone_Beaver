@@ -55,6 +55,8 @@ public class PlayerScriptAdapter : MonoBehaviourPunCallbacks
     private ThrowAwayItem throwAwayItem;
     private InventorySlotGroup inventorySlotGroup;
     private GameWinManager gameWinManager;
+    private NetworkManager networkManager;
+    private SoundEffectManager soundEffectManager;
 
 
     void Start()
@@ -118,7 +120,11 @@ public class PlayerScriptAdapter : MonoBehaviourPunCallbacks
         inventorySlotGroup.spyBoolManager = this.gameObject.GetComponent<SpyBoolManager>();
         gameWinManager = GameObject.Find("GameOverManager").GetComponent<GameWinManager>();
         gameWinManager.spyBoolManager = this.gameObject.GetComponent<SpyBoolManager>();
+        networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
+        networkManager.player = this.gameObject;
 
+        soundEffectManager = GameObject.Find("SoundEffectManager").GetComponent<SoundEffectManager>();
+        soundEffectManager.playerAudioSource = GetComponent<AudioSource>();
     }
 
     void Update()

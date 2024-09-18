@@ -140,7 +140,7 @@ MonoBehaviour:
   itemCategory: 3
   requiredResourceOfItem: 01000000010000000100000000000000
   itemName: Body item 1
-  itemInformation: This item can be mounted in a body slot.
+  itemInformation: Can be equiped in a accesary slot.\nCan get 2 more resource.
   normalPos: {x: 1.6, y: -0.4, z: 0}
   normalRot: {x: 0, y: 0, z: 0}
   normalScale: {x: 0.25, y: 0.25, z: 1}

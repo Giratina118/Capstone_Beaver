@@ -78,19 +78,21 @@ public class ItemCollisionManager : MonoBehaviour
             if (this.gameObject.GetComponent<ItemInfo>().itemName == "Rope")    // ·ÎÇÁ¸¦ È¹µæÇÏ¸é ·ÎÇÁ ´øÁö±â ¹öÆ° È°¼ºÈ­
             {
                 //throwRopeButton.gameObject.SetActive(true);
-                throwRopeButton.enabled = true;
-                Color throwRopeButtonColor = throwRopeButton.GetComponent<Image>().color;
-                throwRopeButtonColor.a = 1.0f;
-                throwRopeButton.GetComponent<Image>().color = throwRopeButtonColor;
+                throwRopeButton.interactable = true;
+
+                //Color throwRopeButtonColor = throwRopeButton.GetComponent<Image>().color;
+                //throwRopeButtonColor.a = 1.0f;
+                //throwRopeButton.GetComponent<Image>().color = throwRopeButtonColor;
             }
             else if (this.gameObject.GetComponent<ItemInfo>().itemName == "Key")    // ¿­¼è¸¦ È¹µæÇÏ¸é °¨¿Á Å»Ãâ ¹öÆ° È°¼ºÈ­
             {
                 collision.gameObject.GetComponent<PrisonManager>().keyCount++;
                 //escapePrisonButton.gameObject.SetActive(true);
-                escapePrisonButton.enabled = true;
-                Color escapeButtonColor = escapePrisonButton.GetComponent<Image>().color;
-                escapeButtonColor.a = 1.0f;
-                escapePrisonButton.GetComponent<Image>().color = escapeButtonColor;
+                escapePrisonButton.interactable = true;
+
+                //Color escapeButtonColor = escapePrisonButton.GetComponent<Image>().color;
+                //escapeButtonColor.a = 1.0f;
+                //escapePrisonButton.GetComponent<Image>().color = escapeButtonColor;
             }
         }
 

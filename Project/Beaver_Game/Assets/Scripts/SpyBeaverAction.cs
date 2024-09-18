@@ -12,7 +12,9 @@ public class SpyBeaverAction : MonoBehaviourPunCallbacks
     public TimerManager timerManager;   // 타이머(타워 건설 시)
     private TowerInfo nowTower = null;  // 현재 위치한 타워(통신을 위해)
 
-    public Button buildComunicationButton;  // 탑 건설 <-> 통신 버튼
+    //public Button buildComunicationButton;  // 탑 건설 <-> 통신 버튼
+
+    public ButtonIconManager btnManager;
     public GameObject towerGaugePrefab;     // 타워 통신 게이지
     public Transform cnavasGaugesTransform; // 통신 게이지의 부모 위치
 
@@ -21,12 +23,13 @@ public class SpyBeaverAction : MonoBehaviourPunCallbacks
 
     public bool spyBeaverEscape = false;   // 스파이 비버 긴급 탈출 가능 여부(특정 시간이 되었는지)
     public bool useEmergencyEscape = false; // 스파이 비버 긴급 탈출 사용 여부(이미 한 번 사용했는지)
-    public GameObject escapePrisonButton;   // 감옥 탈출 버튼
+    //public GameObject escapePrisonButton;   // 감옥 탈출 버튼
 
 
     [SerializeField]
     private float decreaseTime = 30.0f; // 전파탑 건설 시 즉시 줄어드는 시간
     private bool onTower = false;   // 타워 위에 있는지 여부(타워 건설과 통신의 상황을 구분하기 위함)
+
 
 
     private void OnTriggerEnter2D(Collider2D collision) // 타워 위에 있는지 확인, 위에 있다면 타워 정보 가져오기
@@ -47,7 +50,8 @@ public class SpyBeaverAction : MonoBehaviourPunCallbacks
             }
 
             // 타워 위에 있으면 건설 버튼을 통신 버튼으로 바꿈, 나중에 text를 바꾸는 대신 글자가 써진 이미지만 button에서 바뀌게 하기
-            buildComunicationButton.gameObject.transform.GetChild(0).GetComponent<TMP_Text>().text = "Radio\nComuni\ncation";
+            //btnManager.buildTowerComunicationButton.gameObject.transform.GetChild(0).GetComponent<TMP_Text>().text = "Radio\nComuni\ncation";
+            btnManager.ChangeBuildTowerComunicationButton(true); 
 
             // 지금 밟은 타워로 타워 정보 설정
             onTower = true;
@@ -68,7 +72,8 @@ public class SpyBeaverAction : MonoBehaviourPunCallbacks
 
         if (collision.gameObject.tag == "Tower")
         {
-            buildComunicationButton.gameObject.transform.GetChild(0).GetComponent<TMP_Text>().text = "Build\nTower";    // 나중에 text를 바꾸는 대신 글자가 써진 이미지만 button에서 바뀌게 하기
+            //btnManager.buildTowerComunicationButton.gameObject.transform.GetChild(0).GetComponent<TMP_Text>().text = "Build\nTower";    // 나중에 text를 바꾸는 대신 글자가 써진 이미지만 button에서 바뀌게 하기
+            btnManager.ChangeBuildTowerComunicationButton(false);
 
             // 밟고 있던 타워 정보 지우기
             onTower = false;
@@ -126,7 +131,10 @@ public class SpyBeaverAction : MonoBehaviourPunCallbacks
             //GameObject newGauge = Instantiate(towerGaugePrefab, cnavasGaugesTransform); // 게이지 생성
             //newTower.GetComponent<TowerInfo>().gauge = newGauge;    // 타워와 게이지를 연결
 
-            gameWinManager.TowerCountCheck();   // 타워가 일정 수 이상 지어졌는지 확인
+
+            //gameWinManager.TowerCountCheck();   // 타워가 일정 수 이상 지어졌는지 확인
+            gameWinManager.gameObject.GetPhotonView().RPC("TowerCountCheck", RpcTarget.All);    // 타워가 일정 수 이상 지어졌는지 확인
+
         }
     }
 
@@ -137,13 +145,15 @@ public class SpyBeaverAction : MonoBehaviourPunCallbacks
 
         inventorySlotGroup = GameObject.Find("InventorySlots").GetComponent<InventorySlotGroup>();
         timerManager = GameObject.Find("Timer").GetComponent<TimerManager>();
-        buildComunicationButton = GameObject.Find("BuildTowerButton").GetComponent<Button>();
+        //buildComunicationButton = GameObject.Find("BuildTowerButton").GetComponent<Button>();
         cnavasGaugesTransform = GameObject.Find("Gauges").transform;
         gameWinManager = GameObject.Find("GameOverManager").GetComponent<GameWinManager>();
         towerParentTransfotm = GameObject.Find("Towers").transform;
-        escapePrisonButton = GameObject.Find("EscapePrisonButton");
+        //escapePrisonButton = GameObject.Find("EscapePrisonButton");
 
-        buildComunicationButton.onClick.AddListener(OnClickBuildOrRadioComunicationButton);
+        btnManager = GameObject.Find("Buttons").GetComponent<ButtonIconManager>();
+
+        btnManager.buildTowerComunicationButton.onClick.AddListener(OnClickBuildOrRadioComunicationButton);
     }
 
     void Update()
@@ -151,7 +161,8 @@ public class SpyBeaverAction : MonoBehaviourPunCallbacks
         if (!spyBeaverEscape && !useEmergencyEscape && timerManager.GetNowTime() <= 120.0f) // 스파이 비버의 긴급 탈출 조건 체크
         {
             spyBeaverEscape = true;
-            escapePrisonButton.SetActive(true);
+            //btnManager.escapePrisonButton.gameObject.SetActive(true);
+            btnManager.escapePrisonButton.interactable = true;
         }
     }
 }

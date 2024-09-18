@@ -112,10 +112,11 @@ public class InventorySlotGroup : MonoBehaviourPunCallbacks
         if (throwRopeButton != null && itemIndexNum == ropeIndexNum && !haveRope && !keepItem)  // 로프가 없을 경우 버튼 비활성화
         {
             //throwRopeButton.gameObject.SetActive(false);
-            throwRopeButton.enabled = false;
-            Color throwRopeButtonColor = throwRopeButton.GetComponent<Image>().color;
-            throwRopeButtonColor.a = 0.5f;
-            throwRopeButton.GetComponent<Image>().color = throwRopeButtonColor;
+            throwRopeButton.interactable = false;
+
+            //Color throwRopeButtonColor = throwRopeButton.GetComponent<Image>().color;
+            //throwRopeButtonColor.a = 0.5f;
+            //throwRopeButton.GetComponent<Image>().color = throwRopeButtonColor;
         }
         else if (escapePrisonButton != null && itemIndexNum == keyIndexNum && !haveKey && !keepItem) // 열쇠가 없고 (스파이면서 긴급탈출을 사용할 수 있는 경우가 아니면) 버튼 비활성화
         {
@@ -126,10 +127,11 @@ public class InventorySlotGroup : MonoBehaviourPunCallbacks
             else
             {
                 //escapePrisonButton.SetActive(false);
-                escapePrisonButton.enabled = false;
-                Color escapeButtonColor = escapePrisonButton.GetComponent<Image>().color;
-                escapeButtonColor.a = 0.5f;
-                escapePrisonButton.GetComponent<Image>().color = escapeButtonColor;
+                escapePrisonButton.interactable = false;
+
+                //Color escapeButtonColor = escapePrisonButton.GetComponent<Image>().color;
+                //escapeButtonColor.a = 0.5f;
+                //escapePrisonButton.GetComponent<Image>().color = escapeButtonColor;
             }
                 
         }

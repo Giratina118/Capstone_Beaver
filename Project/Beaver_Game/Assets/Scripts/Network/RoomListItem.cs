@@ -17,6 +17,9 @@ public class RoomListItem : MonoBehaviour
     {
         name = roomName;
         roomInfo.text = roomName + '(' + currPlayer + '/' + maxPlayer + ')';
+
+        if (maxPlayer == 0)
+            Destroy(this.gameObject);
     }
 
     public void OnClick()

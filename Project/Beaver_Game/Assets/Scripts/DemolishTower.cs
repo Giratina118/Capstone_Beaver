@@ -27,10 +27,10 @@ public class DemolishTower : MonoBehaviourPunCallbacks
             onTower = true;
             tower = collision.gameObject;
 
-            Color buttonColor = demolishTowerButton.gameObject.GetComponent<Image>().color;
-            buttonColor.a = 1.0f;
-            demolishTowerButton.gameObject.GetComponent<Image>().color = buttonColor;
-            demolishTowerButton.enabled = true;
+            //Color buttonColor = demolishTowerButton.gameObject.GetComponent<Image>().color;
+            //buttonColor.a = 1.0f;
+            //demolishTowerButton.gameObject.GetComponent<Image>().color = buttonColor;
+            demolishTowerButton.interactable = true;
         }
     }
 
@@ -43,10 +43,10 @@ public class DemolishTower : MonoBehaviourPunCallbacks
         {
             onTower = false;
 
-            Color buttonColor = demolishTowerButton.gameObject.GetComponent<Image>().color;
-            buttonColor.a = 0.5f;
-            demolishTowerButton.gameObject.GetComponent<Image>().color = buttonColor;
-            demolishTowerButton.enabled = false;
+            //Color buttonColor = demolishTowerButton.gameObject.GetComponent<Image>().color;
+            //buttonColor.a = 0.5f;
+            //demolishTowerButton.gameObject.GetComponent<Image>().color = buttonColor;
+            demolishTowerButton.interactable = false;
         }
     }
 

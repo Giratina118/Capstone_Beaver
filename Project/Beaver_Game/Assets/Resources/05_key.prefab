@@ -140,7 +140,7 @@ MonoBehaviour:
   itemCategory: 0
   requiredResourceOfItem: 01000000010000000100000001000000
   itemName: Key
-  itemInformation: rope can catch enemy.
+  itemInformation: Can escape from prison.
   normalPos: {x: 0, y: 0, z: 0}
   normalRot: {x: 0, y: 0, z: 0}
   normalScale: {x: 0, y: 0, z: 0}

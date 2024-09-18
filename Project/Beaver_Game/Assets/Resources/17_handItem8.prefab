@@ -140,7 +140,8 @@ MonoBehaviour:
   itemCategory: 2
   requiredResourceOfItem: 00000000020000000000000002000000
   itemName: Hand item 2
-  itemInformation: This item can be mounted in a haed slot.
+  itemInformation: Can be equiped in a weapon slot.\nCan get more stone, steel.\nCan
+    get stone, steel more easily.
   normalPos: {x: 4, y: -0.8, z: 0}
   normalRot: {x: 0, y: 0, z: -25}
   normalScale: {x: 1, y: 1, z: 1}

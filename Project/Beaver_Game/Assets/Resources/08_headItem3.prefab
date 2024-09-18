@@ -140,7 +140,7 @@ MonoBehaviour:
   itemCategory: 1
   requiredResourceOfItem: 00000000000000000200000002000000
   itemName: Head Item 2
-  itemInformation: This item can be mounted in an arm slot.
+  itemInformation: Can be equiped in the head slot.\nSpeed up int the water.
   normalPos: {x: 0.6, y: 2.5, z: 0}
   normalRot: {x: 0, y: 0, z: 0}
   normalScale: {x: 1, y: 1, z: 1}

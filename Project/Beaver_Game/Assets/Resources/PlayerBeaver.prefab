@@ -296,6 +296,7 @@ GameObject:
   - component: {fileID: 6974148950228788062}
   - component: {fileID: 8707839247687109956}
   - component: {fileID: 3272217632306856561}
+  - component: {fileID: -9082853845294365713}
   m_Layer: 0
   m_Name: PlayerBeaver
   m_TagString: Player
@@ -482,6 +483,7 @@ MonoBehaviour:
   swimSpeed: 6
   leftRightChange: 0
   ropeManager: {fileID: 5663235014013857493}
+  soundEffectManager: {fileID: 0}
 --- !u!114 &5715422946306376063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -496,8 +498,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   productionImage: {fileID: 0}
   getResourceManager: {fileID: 0}
-  actionButton: {fileID: 0}
+  btnManager: {fileID: 0}
   storageSlotGroup: {fileID: 0}
+  damUI: {fileID: 0}
 --- !u!114 &69229112311314962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -513,14 +516,13 @@ MonoBehaviour:
   inventorySlotGroup: {fileID: 0}
   towerInfo: {fileID: 5977772026308164568, guid: a601615b48f6ebc4a9ae5d809f4af9d0, type: 3}
   timerManager: {fileID: 0}
-  buildComunicationButton: {fileID: 0}
+  btnManager: {fileID: 0}
   towerGaugePrefab: {fileID: 2209702357865066274, guid: 2d3781beb28285646adeec5db0170080, type: 3}
   cnavasGaugesTransform: {fileID: 0}
   gameWinManager: {fileID: 0}
   towerParentTransfotm: {fileID: 0}
   spyBeaverEscape: 0
   useEmergencyEscape: 0
-  escapePrisonButton: {fileID: 0}
   decreaseTime: 30
 --- !u!114 &346456636074684724
 MonoBehaviour:
@@ -535,7 +537,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   is_Spy: 0
-  buildTowerButton: {fileID: 0}
+  spyAction: {fileID: 69229112311314962}
+  btnManager: {fileID: 0}
 --- !u!114 &7490282830176940228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -641,11 +644,107 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: Walk
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: InWater
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
+--- !u!82 &-9082853845294365713
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6848931894815903516}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &7813554864686991979
 GameObject:
   m_ObjectHideFlags: 0

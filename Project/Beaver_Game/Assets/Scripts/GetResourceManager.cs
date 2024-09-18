@@ -15,7 +15,7 @@ public class GetResourceManager : MonoBehaviourPunCallbacks
     public Animator beaverWorkAnimator; // 자원 채취 비버 애니메이션
 
     public GetResourceScrollbar resourceScrollbar;
-
+    public SoundEffectManager soundEffectManager;
 
     //public NetworkManager networkManager;
 
@@ -24,6 +24,8 @@ public class GetResourceManager : MonoBehaviourPunCallbacks
     {
         this.gameObject.transform.localPosition = new Vector3(-2000, 0, 0);
         beaverWorkAnimator.SetBool("Work", false);  // 자원 채취 애니메이션 멈춤 -> idle 상태로
+
+        soundEffectManager.StopGetResourceSound();
     }
 
     public void GetResourceActive(int resourceNum, Transform resourceDropPos)   // 자원 채취 화면 설정
@@ -34,7 +36,7 @@ public class GetResourceManager : MonoBehaviourPunCallbacks
         resourceItemPos = resourceDropPos;  // 해당 자원 채집하는 곳의 위치
 
         resourceScrollbar.SetScrollbar(getResourceNum);
-
+        soundEffectManager.PlayGetResourceSound(getResourceNum);
     }
 
     public void OnClickButtonInGetResource()    // 자원 채취 버튼 클릭
@@ -50,9 +52,9 @@ public class GetResourceManager : MonoBehaviourPunCallbacks
             Vector3 rand = Random.insideUnitCircle * 1.5f;
 
             PhotonNetwork.Instantiate(itemIndex.items[getResourceNum].gameObject.name, resourceItemPos.position + rand, Quaternion.identity);
-        }
-            
 
+            
+        }
 
         /*
         GameObject cloneobj = GameObject.Instantiate(obj);

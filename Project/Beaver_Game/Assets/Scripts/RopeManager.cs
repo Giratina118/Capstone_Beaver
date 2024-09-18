@@ -30,7 +30,7 @@ public class RopeManager : MonoBehaviourPunCallbacks
         throwRopeButton = GameObject.Find("ThrowRopeButton").GetComponent<Button>();
         throwRopeButton.onClick.AddListener(OnClickThrowRopeButton);
         //throwRopeButton.gameObject.SetActive(false);
-        throwRopeButton.enabled = false;
+        throwRopeButton.interactable = false;
     }
 
     void Update()

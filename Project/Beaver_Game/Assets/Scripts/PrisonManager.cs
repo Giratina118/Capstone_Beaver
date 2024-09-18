@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -39,6 +40,10 @@ public class PrisonManager : MonoBehaviour
             return;
         */
         //navMeshAgent.Warp(prisonTransform.position);
+
+        if (!GetComponent<PhotonView>().IsMine)
+            return;
+
         this.gameObject.transform.position = prisonTransform.position; // 맞은 플레리어를 감옥으로 위프
 
         //prisonTimerText.gameObject.SetActive(true);
@@ -59,12 +64,15 @@ public class PrisonManager : MonoBehaviour
             {
                 this.gameObject.GetComponent<SpyBeaverAction>().useEmergencyEscape = true;
                 //escapePrisonButton.gameObject.SetActive(false);
-                escapePrisonButton.enabled = false;
-                Color escapeButtonColor = escapePrisonButton.GetComponent<Image>().color;
-                escapeButtonColor.a = 0.5f;
-                escapePrisonButton.GetComponent<Image>().color = escapeButtonColor;
+                escapePrisonButton.interactable = false;
+                
+                //Color escapeButtonColor = escapePrisonButton.GetComponent<Image>().color;
+                //escapeButtonColor.a = 0.5f;
+                //escapePrisonButton.GetComponent<Image>().color = escapeButtonColor;
                 Debug.Log(this.gameObject.name + " 스파이가 감옥에서 탈출했습니다.");
                 this.gameObject.GetComponent<SpriteRenderer>().color = Color.black;
+
+                this.gameObject.GetPhotonView().RPC("SpyEmergencyEscape", RpcTarget.All, this.gameObject.GetPhotonView().ViewID);
             }
             else    // 열쇠로 탈출
             {
@@ -80,6 +88,14 @@ public class PrisonManager : MonoBehaviour
         prisonTimerText.text = "";
     }
 
+    [PunRPC]
+    public void SpyEmergencyEscape(int ViewID)
+    {
+        Color spyColor = new Color(1.0f, 0.75f, 0.75f);
+        PhotonView.Find(ViewID).gameObject.GetComponent<SpriteRenderer>().color = spyColor;
+
+    }
+
     void Start()
     {
         if (!GetComponent<PhotonView>().IsMine)
@@ -93,7 +109,7 @@ public class PrisonManager : MonoBehaviour
         escapePrisonButton = GameObject.Find("EscapePrisonButton").gameObject.GetComponent<Button>();
         escapePrisonButton.onClick.AddListener(() => EscapePrison(true));
         //escapePrisonButton.gameObject.SetActive(false);
-        escapePrisonButton.enabled = false;
+        escapePrisonButton.interactable = false;
         //navMeshAgent = this.gameObject.GetComponent<NavMeshAgent>();
     }
 
