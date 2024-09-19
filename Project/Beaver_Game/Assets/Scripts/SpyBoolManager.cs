@@ -11,7 +11,7 @@ public class SpyBoolManager : MonoBehaviour
 
     //public Button buildTowerButton;
     public SpyBeaverAction spyAction;
-    private Button spyChangeButton;
+    //private Button spyChangeButton;
     private ShowRole showRole;
     public ButtonIconManager btnManager;
 
@@ -70,8 +70,8 @@ public class SpyBoolManager : MonoBehaviour
         //spyAction = GetComponent<SpyBeaverAction>();
         //buildTowerButton = GameObject.Find("BuildTowerButton").GetComponent<Button>();
         btnManager = GameObject.Find("Buttons").GetComponent<ButtonIconManager>();
-        spyChangeButton = GameObject.Find("SpyChangeButton").GetComponent<Button>();
-        spyChangeButton.onClick.AddListener(OnClickSpyChangeButton);
+        //spyChangeButton = GameObject.Find("SpyChangeButton").GetComponent<Button>();
+        //spyChangeButton.onClick.AddListener(OnClickSpyChangeButton);
         showRole = GameObject.Find("ShowRoleImage").GetComponent<ShowRole>();
         showRole.gameObject.SetActive(false);
 

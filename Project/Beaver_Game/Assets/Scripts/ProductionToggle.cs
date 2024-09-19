@@ -16,6 +16,8 @@ public class ProductionToggle : MonoBehaviour
     {
         if (this.gameObject.GetComponent<Toggle>().isOn)
         {
+            Debug.Log(this.gameObject + "  " + itemCreateObject + "  ");
+
             itemCreateObject.transform.localPosition = new Vector3(300.0f, 0.0f, 0.0f);
             productionManager.SetSelectedItemmInfo(itemNumber);
 
