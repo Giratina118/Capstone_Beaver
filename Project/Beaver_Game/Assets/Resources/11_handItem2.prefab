@@ -138,7 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemIndexNumber: 11
   itemCategory: 2
-  requiredResourceOfItem: 04000000060000000000000006000000
+  requiredResourceOfItem: 02000000070000000100000006000000
   itemName: Iron shovel
   itemInformation: Can be equiped in a weapon slot.\nCan get more mud.\nCan get mud
     more easily.

@@ -138,7 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemIndexNumber: 16
   itemCategory: 2
-  requiredResourceOfItem: 00000000020000000000000002000000
+  requiredResourceOfItem: 06000000050000000700000000000000
   itemName: Stone pickax
   itemInformation: Can be equiped in a weapon slot.\nCan get more stone, steel.\nCan
     get stone, steel more easily.

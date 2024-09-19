@@ -138,7 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemIndexNumber: 6
   itemCategory: 1
-  requiredResourceOfItem: 02000000020000000000000000000000
+  requiredResourceOfItem: 02000000020000000a0000000a000000
   itemName: Work cap
   itemInformation: Can be equiped in the head slot.\nSpeed up work at the dam.
   normalPos: {x: 0, y: 5, z: 0}

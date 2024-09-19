@@ -138,7 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemIndexNumber: 4
   itemCategory: 0
-  requiredResourceOfItem: 01000000000000000000000000000000
+  requiredResourceOfItem: 0a0000001e0000000200000002000000
   itemName: Rope
   itemInformation: Can catch another beaver.
   normalPos: {x: 0, y: 0, z: 0}

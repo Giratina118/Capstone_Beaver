@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,8 @@ public class SpyBoolManager : MonoBehaviour
     //private Button spyChangeButton;
     private ShowRole showRole;
     public ButtonIconManager btnManager;
+
+    public GameObject towerPriceObject;
 
     public bool isSpy() // 스파이 여부 확인
     {
@@ -60,6 +63,7 @@ public class SpyBoolManager : MonoBehaviour
         showRole.SetShowRuleImage(is_Spy);
         btnManager.SetButtonIcons(is_Spy);
 
+        towerPriceObject.SetActive(is_Spy);
     }
 
     void Start()
@@ -74,6 +78,8 @@ public class SpyBoolManager : MonoBehaviour
         //spyChangeButton.onClick.AddListener(OnClickSpyChangeButton);
         showRole = GameObject.Find("ShowRoleImage").GetComponent<ShowRole>();
         showRole.gameObject.SetActive(false);
+        towerPriceObject = GameObject.Find("TowerPrice");
+        towerPriceObject.SetActive(false);
 
         //SpyManager(isSpy());
     }

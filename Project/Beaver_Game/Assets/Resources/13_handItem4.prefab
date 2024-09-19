@@ -138,7 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemIndexNumber: 13
   itemCategory: 2
-  requiredResourceOfItem: 02000000000000000200000000000000
+  requiredResourceOfItem: 03000000020000000800000000000000
   itemName: Stone ax
   itemInformation: Can be equiped in a weapon slot.\nCan get more wood.\nCan get
     wood more easily.

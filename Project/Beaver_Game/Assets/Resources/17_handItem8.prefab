@@ -138,7 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemIndexNumber: 17
   itemCategory: 2
-  requiredResourceOfItem: 00000000020000000000000002000000
+  requiredResourceOfItem: 0600000008000000040000000a000000
   itemName: Iton pickax
   itemInformation: Can be equiped in a weapon slot.\nCan get more stone, steel.\nCan
     get stone, steel more easily.

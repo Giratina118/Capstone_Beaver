@@ -138,7 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemIndexNumber: 18
   itemCategory: 2
-  requiredResourceOfItem: 00000000020000000000000002000000
+  requiredResourceOfItem: 0a0000000a0000000a0000000a000000
   itemName: Ultimate claw
   itemInformation: Can be equiped in a weapon slot.\nCan get more resource.\nCan
     get resource more easily.

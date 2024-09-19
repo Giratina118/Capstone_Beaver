@@ -539,6 +539,7 @@ MonoBehaviour:
   is_Spy: 0
   spyAction: {fileID: 69229112311314962}
   btnManager: {fileID: 0}
+  towerPriceObject: {fileID: 0}
 --- !u!114 &7490282830176940228
 MonoBehaviour:
   m_ObjectHideFlags: 0

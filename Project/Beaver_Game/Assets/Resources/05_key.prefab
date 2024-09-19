@@ -138,7 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemIndexNumber: 5
   itemCategory: 0
-  requiredResourceOfItem: 01000000010000000100000001000000
+  requiredResourceOfItem: 02000000020000000200000014000000
   itemName: Key
   itemInformation: Can escape from prison.
   normalPos: {x: 0, y: 0, z: 0}
