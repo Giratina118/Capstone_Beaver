@@ -36,7 +36,7 @@ public class DamManager : MonoBehaviourPunCallbacks
     {
         if (turnOn)
         {
-            obstract = -0.015f * dameGaugeSpeedRate; // 방해 시 감속 속도
+            obstract = -0.02f * dameGaugeSpeedRate; // 방해 시 감속 속도
         }
         else
         {
