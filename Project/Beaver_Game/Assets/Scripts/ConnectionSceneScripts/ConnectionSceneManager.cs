@@ -73,6 +73,12 @@ public class ConnectionSceneManager : MonoBehaviour
         {
             currentOpeningNum++;
 
+            if (currentOpeningNum == 1)
+            {
+                openingImage.rectTransform.offsetMax = new Vector2(0.0f, 150.0f);
+                openingImage.rectTransform.offsetMin = new Vector2(0.0f, 150.0f);
+            }
+
             if (currentOpeningNum >= openingSprites.Length)
             {
                 openingScreen.gameObject.SetActive(false);

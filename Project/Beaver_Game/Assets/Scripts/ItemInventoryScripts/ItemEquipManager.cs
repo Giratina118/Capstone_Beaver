@@ -7,7 +7,7 @@ public class ItemEquipManager : MonoBehaviour
 {
     public GameObject player;
     public GetResourceScrollbar resourceScrollbar;
-    public DamManager damManager;
+    public DamManager[] damManagers;
 
     // 장비 아이템 착용 시 효과
     public void SetItemEffect(int itemNum, bool isEquip)
@@ -17,11 +17,17 @@ public class ItemEquipManager : MonoBehaviour
             case 6:
                 if (isEquip)
                 {
-                    damManager.dameGaugeSpeedRate = 2.0f;
+                    for (int i = 0; i < damManagers.Length; i++)
+                    {
+                        damManagers[i].dameGaugeSpeedRate = 2.0f;
+                    }
                 }
                 else
                 {
-                    damManager.dameGaugeSpeedRate = 1.0f;
+                    for (int i = 0; i < damManagers.Length; i++)
+                    {
+                        damManagers[i].dameGaugeSpeedRate = 1.0f;
+                    }
                 }
                 break;
             case 7:

@@ -1254,12 +1254,14 @@ MonoBehaviour:
   openingImage: {fileID: 1723607860}
   openingText: {fileID: 1201271684}
   openingSprites:
+  - {fileID: 21300000, guid: d17d0a7cb02805543a9db7363122d761, type: 3}
   - {fileID: 21300000, guid: 0d51e904eb3d3294c8dda4443f7eeb8e, type: 3}
   - {fileID: 21300000, guid: 3f1e4c004eddcaf439b5bde9898a2852, type: 3}
   - {fileID: 21300000, guid: b0183ddff58cc56448ce21546b4159f3, type: 3}
   - {fileID: 21300000, guid: ce97c57e8ef7eef4e922d2f95fd5e329, type: 3}
   - {fileID: 21300000, guid: 0304f3c62577da5458c5fb2a5fba83ad, type: 3}
   openingStrings:
+  - 
   - Beavers built dams along the river, leaving humans short of water.
   - Humans smashed the dam and drove out the beavers.
   - Beavers set up a new ground by the river and began building dams.
@@ -2503,7 +2505,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Beavers built dams along the river, leaving humans short of water.
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3226,7 +3228,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 150}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1723607860
@@ -3249,7 +3251,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0d51e904eb3d3294c8dda4443f7eeb8e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d17d0a7cb02805543a9db7363122d761, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

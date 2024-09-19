@@ -10531,7 +10531,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   resourceScrollbar: {fileID: 1488480109}
-  damManager: {fileID: 0}
+  damManagers:
+  - {fileID: 821175241}
+  - {fileID: 2059749287}
+  - {fileID: 813110399}
+  - {fileID: 348111988}
+  - {fileID: 370310974}
 --- !u!1 &457138988
 GameObject:
   m_ObjectHideFlags: 0
@@ -121383,7 +121388,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1966958880
 RectTransform:
   m_ObjectHideFlags: 0

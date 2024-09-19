@@ -12,6 +12,7 @@ public class DemolishTower : MonoBehaviourPunCallbacks
     public Button demolishTowerButton;  // 타워 철거 버튼
     public GetResourceManager getResourceManager;   // 타워 철거 후 자원 돌려받기 위함
     public TimerManager timerManager;   // 타워 철거에 따른 시간 복구 위함
+    public ItemIndex itemIndex; // 아이템 목록
 
     [SerializeField]
     private float increaseTime = 20.0f;
@@ -71,7 +72,12 @@ public class DemolishTower : MonoBehaviourPunCallbacks
                 getResourceManager.GetResourceActive(i, tower.gameObject.transform);
                 for (int j = 0; j < tower.GetComponent<TowerInfo>().requiredResourceOfTowers[i] / 2; j++)
                 {
-                    getResourceManager.OnClickButtonInGetResource();
+                    //getResourceManager.OnClickButtonInGetResource();
+
+
+                    Vector3 rand = Random.insideUnitCircle * 1.5f;
+
+                    PhotonNetwork.Instantiate(itemIndex.items[i].gameObject.name, tower.transform.position + rand, Quaternion.identity);
                 }
             }
 
@@ -110,7 +116,7 @@ public class DemolishTower : MonoBehaviourPunCallbacks
         getResourceManager = GameObject.Find("GetResourceBackground").GetComponent<GetResourceManager>();
         timerManager = GameObject.Find("Timer").GetComponent<TimerManager>();
         demolishTowerButton.onClick.AddListener(OnClickDemolishTowerButton);
-
+        itemIndex = GameObject.Find("ItemManager").GetComponent<ItemIndex>();
     }
 
     void Update()

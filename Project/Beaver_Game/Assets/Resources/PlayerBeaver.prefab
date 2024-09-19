@@ -554,6 +554,7 @@ MonoBehaviour:
   demolishTowerButton: {fileID: 0}
   getResourceManager: {fileID: 0}
   timerManager: {fileID: 0}
+  itemIndex: {fileID: 0}
   increaseTime: 20
 --- !u!114 &8984884966023611301
 MonoBehaviour:
