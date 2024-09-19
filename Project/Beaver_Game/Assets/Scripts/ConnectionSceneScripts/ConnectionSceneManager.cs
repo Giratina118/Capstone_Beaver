@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,9 +9,12 @@ public class ConnectionSceneManager : MonoBehaviour
     public GameObject titleObjects;
     public GameObject settingObjects;
     public AudioManager audioManager;
+    public GameObject openingScreen;
     public Image openingImage;
+    public TMP_Text openingText;
     public Sprite[] openingSprites;
-    private int currentOpeningImageNum = 0;
+    public string[] openingStrings;
+    private int currentOpeningNum = 0;
 
     public int firstPlay = 1;
     private const string firstPlayKey = "firstPlayBool";
@@ -57,23 +61,26 @@ public class ConnectionSceneManager : MonoBehaviour
         {
             firstPlay = 0;
             PlayerPrefs.SetInt(firstPlayKey, 0);
-            openingImage.gameObject.SetActive(true);
+            openingScreen.gameObject.SetActive(true);
+            openingImage.sprite = openingSprites[currentOpeningNum];
+            openingText.text = openingStrings[currentOpeningNum];
         }
     }
 
     void Update()
     {
-        if (openingImage.gameObject.activeSelf && Input.GetMouseButtonDown(0))
+        if (openingScreen.gameObject.activeSelf && Input.GetMouseButtonDown(0))
         {
-            currentOpeningImageNum++;
+            currentOpeningNum++;
 
-            if (currentOpeningImageNum >= openingSprites.Length)
+            if (currentOpeningNum >= openingSprites.Length)
             {
-                openingImage.gameObject.SetActive(false);
+                openingScreen.gameObject.SetActive(false);
             }
             else
             {
-                openingImage.sprite = openingSprites[currentOpeningImageNum];
+                openingImage.sprite = openingSprites[currentOpeningNum];
+                openingText.text = openingStrings[currentOpeningNum];
             }
             
         }

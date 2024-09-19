@@ -139,7 +139,7 @@ MonoBehaviour:
   itemIndexNumber: 18
   itemCategory: 2
   requiredResourceOfItem: 00000000020000000000000002000000
-  itemName: Hand item 2
+  itemName: Ultimate claw
   itemInformation: Can be equiped in a weapon slot.\nCan get more resource.\nCan
     get resource more easily.
   normalPos: {x: 1.25, y: -3.3, z: 0}

@@ -138,8 +138,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemIndexNumber: 9
   itemCategory: 2
-  requiredResourceOfItem: 00000000020000000000000002000000
-  itemName: Hand item 2
+  requiredResourceOfItem: 02000000040000000000000000000000
+  itemName: Wooden shovel
   itemInformation: Can be equiped in a weapon slot.\nCan get more mud.\nCan get mud
     more easily.
   normalPos: {x: 4, y: 0, z: 0}

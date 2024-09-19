@@ -139,7 +139,7 @@ MonoBehaviour:
   itemIndexNumber: 17
   itemCategory: 2
   requiredResourceOfItem: 00000000020000000000000002000000
-  itemName: Hand item 2
+  itemName: Iton pickax
   itemInformation: Can be equiped in a weapon slot.\nCan get more stone, steel.\nCan
     get stone, steel more easily.
   normalPos: {x: 4, y: -0.8, z: 0}

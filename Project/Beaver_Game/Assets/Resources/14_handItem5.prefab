@@ -139,7 +139,7 @@ MonoBehaviour:
   itemIndexNumber: 14
   itemCategory: 2
   requiredResourceOfItem: 02000000000000000200000000000000
-  itemName: Hand item 1
+  itemName: Iron ax
   itemInformation: Can be equiped in a weapon slot.\nCan get more wood.\nCan get
     wood more easily.
   normalPos: {x: 5.1, y: 0.2, z: 0}

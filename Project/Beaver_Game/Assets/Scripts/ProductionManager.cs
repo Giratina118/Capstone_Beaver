@@ -25,7 +25,7 @@ public class ProductionManager : MonoBehaviourPunCallbacks
         selectedItemGameObject.transform.GetChild(0).GetChild(0).transform.localScale = itemIndex.items[itemNumber].gameObject.transform.localScale;    // 나중에 아이템 그림 완성되고 나서는 빼기
         */
         selectedItemGameObject.transform.GetChild(0).GetChild(1).gameObject.GetComponent<TMP_Text>().text = itemIndex.items[itemNumber].itemName;   // 아이템 이름
-        selectedItemGameObject.transform.GetChild(0).GetChild(2).gameObject.GetComponent<TMP_Text>().text = itemIndex.items[itemNumber].itemInformation;    // 아이템 정보(설명)
+        selectedItemGameObject.transform.GetChild(0).GetChild(2).gameObject.GetComponent<TMP_Text>().text = itemIndex.items[itemNumber].itemInformation.Replace("\\n", "\n"); ;    // 아이템 정보(설명)
 
         for (int i = 0; i < 4; i++) // 제작에 필요한 재료 수 표시
         {

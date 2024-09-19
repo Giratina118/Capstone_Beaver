@@ -139,7 +139,7 @@ MonoBehaviour:
   itemIndexNumber: 7
   itemCategory: 1
   requiredResourceOfItem: 00000000000000000100000001000000
-  itemName: Head Item 2
+  itemName: Fish hat
   itemInformation: Can be equiped in the head slot.\nSpeed up on the ground.
   normalPos: {x: 1.3, y: 5, z: 0}
   normalRot: {x: 0, y: 0, z: 0}

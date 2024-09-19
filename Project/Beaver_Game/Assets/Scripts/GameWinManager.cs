@@ -19,9 +19,8 @@ public class GameWinManager : MonoBehaviour
 
     public void DamCountCheck() // 댐 수 체크
     {
-        if (++damCount >= 2)    // 댐이 5개 지어지면 끝
+        if (++damCount >= 5)    // 댐이 5개 지어지면 끝
         {
-            Debug.Log("1111");
             GameEnding(false);
         }
     }
@@ -29,9 +28,8 @@ public class GameWinManager : MonoBehaviour
     [PunRPC]
     public void TowerCountCheck()   // 타워 수 체크
     {
-        if (towers.transform.childCount >= 2)  // 타워가 맵에 10개 이상 동시에 존재하면 끝
+        if (towers.transform.childCount >= 10)  // 타워가 맵에 10개 이상 동시에 존재하면 끝
         {
-            Debug.Log("2222");
             GameEnding(true);
         }
     }
@@ -39,13 +37,11 @@ public class GameWinManager : MonoBehaviour
     [PunRPC]
     public void TimeCheck() // 시간 체크, 시간이 0이 되면 이 함수로 들어옴
     {
-        Debug.Log("3333");
         GameEnding(true);
     }
 
     public void GameEnding(bool spyWin) // 게임 결과
     {
-        Debug.Log("4444");
         if (!doingGame)
             return;
 
