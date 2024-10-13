@@ -17,6 +17,8 @@ TagManager:
   - ProductionCenter
   - Map
   - Water
+  - CCTV1
+  - CCTV2
   layers:
   - Default
   - TransparentFX

@@ -16,6 +16,7 @@ public class InMapAction : MonoBehaviour
     private GameObject damGameObject = null;    // 현재 위치해 있는 댐
     private Transform ResourcePos;  // 현재 접하고있는 곳의 위치
     public InventorySlotGroup storageSlotGroup; // 창고 인벤토리
+    public CCTVManager cctvManager; // cctv 관리
 
     public GameObject damUI;
     GameObject onTriggerObject = null;
@@ -28,7 +29,8 @@ public class InMapAction : MonoBehaviour
 
         // 액션 버튼으로 상호작용 할 수 있는 곳에 위치했을 경우
         if (collision.gameObject.transform.tag == "Forest" || collision.gameObject.transform.tag == "Mud" || collision.gameObject.transform.tag == "Stone" || collision.gameObject.transform.tag == "Dump" 
-            || collision.gameObject.transform.tag == "Storage" || collision.gameObject.transform.tag == "Dam" || collision.gameObject.tag == "ProductionCenter")
+            || collision.gameObject.transform.tag == "Storage" || collision.gameObject.transform.tag == "Dam" || collision.gameObject.tag == "ProductionCenter"
+            || collision.gameObject.tag == "CCTV1" || collision.gameObject.tag == "CCTV2")
         {
             // 액션 버튼 활성화 및 강조, 나중에는 위치한 곳에 따라 버튼 그림 바뀌게
             if (collision.gameObject.transform.tag == "Storage")
@@ -38,6 +40,10 @@ public class InMapAction : MonoBehaviour
             else if (collision.gameObject.tag == "ProductionCenter")
             {
                 btnManager.ChangeActionButtonIcon(2);
+            }
+            else if (collision.gameObject.tag == "CCTV1" || collision.gameObject.tag == "CCTV2")
+            {
+                btnManager.ChangeActionButtonIcon(0);
             }
             else
             {
@@ -188,6 +194,12 @@ public class InMapAction : MonoBehaviour
             case "ProductionCenter":
                 productionImage.transform.localPosition = Vector3.zero; // 제작 화면 띄우기
                 break;
+            case "CCTV1":
+                cctvManager.ShowCCTV(0);
+                break;
+            case "CCTV2":
+                cctvManager.ShowCCTV(1);
+                break;
             default:
                 break;
         }
@@ -204,6 +216,7 @@ public class InMapAction : MonoBehaviour
         //actionButton = GameObject.Find("ActionButton").GetComponent<Button>();
         btnManager = GameObject.Find("Buttons").GetComponent<ButtonIconManager>();
         storageSlotGroup = GameObject.Find("StorageSlots").GetComponent<InventorySlotGroup>();
+        cctvManager = GameObject.Find("CCTVManager").GetComponent<CCTVManager>();
 
         btnManager.actionButton.onClick.AddListener(OnClickActionButton);
         

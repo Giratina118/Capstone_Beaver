@@ -500,6 +500,7 @@ MonoBehaviour:
   getResourceManager: {fileID: 0}
   btnManager: {fileID: 0}
   storageSlotGroup: {fileID: 0}
+  cctvManager: {fileID: 0}
   damUI: {fileID: 0}
 --- !u!114 &69229112311314962
 MonoBehaviour:
