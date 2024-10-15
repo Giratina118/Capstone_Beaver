@@ -125,6 +125,7 @@ public class PlayerScriptAdapter : MonoBehaviourPunCallbacks
 
         soundEffectManager = GameObject.Find("SoundEffectManager").GetComponent<SoundEffectManager>();
         soundEffectManager.playerAudioSource = GetComponent<AudioSource>();
+        soundEffectManager.SetVolume();
     }
 
     void Update()

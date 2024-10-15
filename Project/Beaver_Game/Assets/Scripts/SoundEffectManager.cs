@@ -11,6 +11,7 @@ public class SoundEffectManager : MonoBehaviour
     public AudioSource buttonClickAudio;
     public AudioSource getResourceAudio;
 
+    AudioManager audioManager;
 
     public void PlayGetResourceSound(int resourceNum)
     {
@@ -47,12 +48,17 @@ public class SoundEffectManager : MonoBehaviour
         buttonClickAudio.Play();
     }
 
-    void Start()
+    public void SetVolume()
     {
-        AudioManager audioManager = GameObject.FindObjectOfType<AudioManager>();
-        audioManager.soundEffectManager = this;
         audioManager.SetBGMVolume(audioManager.GetBGMVolume());
         audioManager.SetSFXVolume(audioManager.GetSFXVolume());
+    }
+
+    void Start()
+    {
+        audioManager = GameObject.FindObjectOfType<AudioManager>();
+        audioManager.soundEffectManager = this;
+        SetVolume();
     }
 
     void Update()
