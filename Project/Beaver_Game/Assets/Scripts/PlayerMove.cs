@@ -193,6 +193,23 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         }
     }
 
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)   // 쓰는 권한이 있냐(내꺼냐)
+        {   // 순서 바뀌면 안 됨
+            stream.SendNext(playerRigidbody2D.position);
+            stream.SendNext(playerRigidbody2D.velocity);
+        }
+        else    // 받는 사람 읽어오기
+        {
+            playerRigidbody2D.position = (Vector3)stream.ReceiveNext();
+            playerRigidbody2D.velocity = (Vector3)stream.ReceiveNext();
+
+            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.timestamp));    // 딜레이 계산
+            playerRigidbody2D.position += playerRigidbody2D.velocity * lag;
+        }
+    }
+
     void Start()
     {
         //navMeshAgent = GetComponent<NavMeshAgent>();

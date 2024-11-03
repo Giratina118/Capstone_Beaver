@@ -297,7 +297,7 @@ GameObject:
   - component: {fileID: 8707839247687109956}
   - component: {fileID: 3272217632306856561}
   - component: {fileID: -9082853845294365713}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PlayerBeaver
   m_TagString: Player
   m_Icon: {fileID: 0}

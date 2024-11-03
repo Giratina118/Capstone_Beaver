@@ -14,16 +14,21 @@ public class ThrowAwayItem : MonoBehaviour, IDropHandler
     public void OnDrop(PointerEventData eventData)  // 아이템 버리기
     {
         copyItemImage.transform.position = new Vector3(2100.0f, 1200.0f, 0.0f); // 예비 아이템 치움
+        ItemDrag itemDrag = eventData.pointerDrag.gameObject.GetComponent<ItemDrag>();
 
-
-        if (eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().itemIndexNumber == 4) // 로프 버릴때 0개면 버튼 비활성화 하기
+        if (itemDrag == null)
         {
-            copyItemImage.transform.parent.gameObject.GetComponent<InventorySlotGroup>().UseItem(4, 0, eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().keepItemCount > 0);
+            return;
         }
-        else if (eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().itemIndexNumber == 5)    // 키 버릴때 0개면 버튼 비활성화 하기
+
+        if (itemDrag.itemIndexNumber == 4) // 로프 버릴때 0개면 버튼 비활성화 하기
+        {
+            copyItemImage.transform.parent.gameObject.GetComponent<InventorySlotGroup>().UseItem(4, 0, itemDrag.keepItemCount > 0);
+        }
+        else if (itemDrag.itemIndexNumber == 5)    // 키 버릴때 0개면 버튼 비활성화 하기
         {
             prisonManager.keyCount -= eventData.pointerDrag.GetComponent<ItemCount>().count;
-            copyItemImage.transform.parent.gameObject.GetComponent<InventorySlotGroup>().UseItem(5, 0, eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().keepItemCount > 0);
+            copyItemImage.transform.parent.gameObject.GetComponent<InventorySlotGroup>().UseItem(5, 0, itemDrag.keepItemCount > 0);
             /*
             if (prisonManager.keyCount <= 0 && eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().keepItemCount <= 0)
             {
@@ -36,15 +41,15 @@ public class ThrowAwayItem : MonoBehaviour, IDropHandler
             */
         }
 
-        if (eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().normalParent.gameObject.GetComponent<ItemSlot>().equipSlotType > 0)   // 장비된 아이템이었다면 필드의 아이템도 삭제
+        if (itemDrag.normalParent.gameObject.GetComponent<ItemSlot>().equipSlotType > 0)   // 장비된 아이템이었다면 필드의 아이템도 삭제
         {
-            eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().normalParent.gameObject.GetComponent<ItemSlot>().equipItem.GetPhotonView().RPC("equipItemDestroy", RpcTarget.All);
+            itemDrag.normalParent.gameObject.GetComponent<ItemSlot>().equipItem.GetPhotonView().RPC("equipItemDestroy", RpcTarget.All);
             //Destroy(eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().normalParent.gameObject.GetComponent<ItemSlot>().equipItem);
         }
 
-        if (eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().keepItemCount > 0)    // 만약 수를 나눈 상태라면
+        if (itemDrag.keepItemCount > 0)    // 만약 수를 나눈 상태라면
         {
-            eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().ItemDrop(this.transform.position, this.transform, true);  // 앞의 두 변수는 뒤가 true면 안 쓰임
+            itemDrag.ItemDrop(this.transform.position, this.transform, true);  // 앞의 두 변수는 뒤가 true면 안 쓰임
         }
         else
         {
