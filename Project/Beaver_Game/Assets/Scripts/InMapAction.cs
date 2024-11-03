@@ -10,7 +10,6 @@ public class InMapAction : MonoBehaviour
 {
     public GameObject productionImage;  // 아이템 제작 화면
     public GetResourceManager getResourceManager;   // 자원 채취 화면
-    //public Button actionButton;     // 액션 버튼
     public ButtonIconManager btnManager;    // 버튼 매니저
     private string tagName = "";    // 현재 접하고 있는 곳의 태그의 이름 저장
     private GameObject damGameObject = null;    // 현재 위치해 있는 댐
@@ -51,11 +50,6 @@ public class InMapAction : MonoBehaviour
             }
             btnManager.actionButton.interactable = true;
 
-            //Color buttonColor = actionButton.gameObject.GetComponent<Image>().color;
-            //buttonColor.a = 200;
-            //actionButton.gameObject.GetComponent<Image>().color = buttonColor;
-            //actionButton.interactable = true;
-
             tagName = collision.gameObject.tag; // 위치한 곳의 태그 저장
             onTriggerObject = collision.gameObject;
 
@@ -72,7 +66,6 @@ public class InMapAction : MonoBehaviour
                     else    // 댐 건설 시작 전이라면
                     {
                         btnManager.ChangeActionButtonIcon(6);   // 댐 건설 버튼
-
                         for (int i = 0; i < 4; i++) // 댐 건설에 필요한 자원 수 표시
                         {
                             damUI.gameObject.SetActive(true);
@@ -84,11 +77,9 @@ public class InMapAction : MonoBehaviour
                 {
                     btnManager.ChangeActionButtonIcon(8);   // 댐 완공
                 }
-
             }
             else    // 댐이 아닐 경우 해당 위치 저장(자원 생성 시 해당 위치에 생성하기 위함)
             {
-                //ResourcePos = collision.transform;
                 ResourcePos = this.gameObject.transform;
             }
         }
@@ -103,19 +94,14 @@ public class InMapAction : MonoBehaviour
         if (collision.gameObject.transform.tag == "Mud" || collision.gameObject.transform.tag == "Forest" || collision.gameObject.transform.tag == "Stone" || collision.gameObject.transform.tag == "Dump" 
             || collision.gameObject.transform.tag == "Storage" || collision.gameObject.transform.tag == "Dam" || collision.gameObject.tag == "ProductionCenter")
         {
-
-            
-
             if (collision.gameObject.transform.tag == "Dam")    // 댐에 있었을 경우 댐 건설의 가속, 감속을 원래대로 없앰
             {
                 if (this.gameObject.GetComponent<SpyBoolManager>().isSpy())
                 {
-                    //damGameObject.GetComponent<DamManager>().obstract = 0.0f;
                     damGameObject.GetPhotonView().RPC("ObstructBuild", RpcTarget.All, false);
                 }
                 else
                 {
-                    //damGameObject.GetComponent<DamManager>().accelerate = 0.0f;
                     damGameObject.GetPhotonView().RPC("AccelerateBuild", RpcTarget.All, false);
                 }
             }
@@ -125,18 +111,9 @@ public class InMapAction : MonoBehaviour
                 btnManager.ChangeActionButtonIcon(0);   // 기본 버튼으로 되돌리기
                 btnManager.actionButton.interactable = true;    // 버튼 비활성화
 
-                /*
-                // 버튼 비활성화
-                Color buttonColor = actionButton.GetComponent<Image>().color;
-                buttonColor.a = 100;
-                actionButton.GetComponent<Image>().color = buttonColor;
-                actionButton.interactable = false;
-                */
-
                 tagName = "";
                 damUI.gameObject.SetActive(false);
             }
-
         }
     }
 
@@ -177,12 +154,10 @@ public class InMapAction : MonoBehaviour
                         if (this.gameObject.GetComponent<SpyBoolManager>().isSpy()) // 스파이 비버는 댐 건설 방해
                         {
                             damGameObject.GetPhotonView().RPC("ObstructBuild", RpcTarget.All, true);
-                            //damGameObject.GetComponent<DamManager>().ObstructBuild();
                         }
                         else    // 일반 비버는 댐 건설 가속
                         {
                             damGameObject.GetPhotonView().RPC("AccelerateBuild", RpcTarget.All, true);
-                            //damGameObject.GetComponent<DamManager>().AccelerateBuild();
                         }
                     }
                     else    // 댐 건설 시작 전이라면 댐 건설 시작
@@ -205,7 +180,6 @@ public class InMapAction : MonoBehaviour
         }
     }
 
-
     void Start()
     {
         if (!this.GetComponent<PhotonView>().IsMine)
@@ -213,7 +187,6 @@ public class InMapAction : MonoBehaviour
 
         productionImage = GameObject.Find("ProductionImage");
         getResourceManager = GameObject.Find("GetResourceBackground").GetComponent<GetResourceManager>();
-        //actionButton = GameObject.Find("ActionButton").GetComponent<Button>();
         btnManager = GameObject.Find("Buttons").GetComponent<ButtonIconManager>();
         storageSlotGroup = GameObject.Find("StorageSlots").GetComponent<InventorySlotGroup>();
         cctvManager = GameObject.Find("CCTVManager").GetComponent<CCTVManager>();
@@ -223,10 +196,5 @@ public class InMapAction : MonoBehaviour
         damUI = GameObject.Find("DamUI");
         damUI.transform.localPosition = new Vector3(0.0f, 300.0f, 0.0f);
         damUI.SetActive(false);
-    }
-
-    void Update()
-    {
-        
     }
 }

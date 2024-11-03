@@ -10,19 +10,23 @@ public class ShowRole : MonoBehaviour
     public TimerManager timerManager;
     private float closeTime;
 
+
     public void SetShowRuleImage(bool isSpy)
     {
+        Image isSpyImage = this.transform.GetChild(0).gameObject.GetComponent<Image>();
+        TMP_Text isSpyText = this.transform.GetChild(1).gameObject.GetComponent<TMP_Text>();
+
         if (isSpy)
         {
-            this.transform.GetChild(0).gameObject.GetComponent<Image>().sprite = beaverRoleSprites[1];
-            this.transform.GetChild(1).gameObject.GetComponent<TMP_Text>().text = "You are a SPY beaver";
-            this.transform.GetChild(1).gameObject.GetComponent<TMP_Text>().color = Color.red;
+            isSpyImage.sprite = beaverRoleSprites[1];
+            isSpyText.text = "You are a SPY beaver";
+            isSpyText.color = Color.red;
         }
         else
         {
-            this.transform.GetChild(0).gameObject.GetComponent<Image>().sprite = beaverRoleSprites[0];
-            this.transform.GetChild(1).gameObject.GetComponent<TMP_Text>().text = "You are a citizen beaver";
-            this.transform.GetChild(1).gameObject.GetComponent<TMP_Text>().color = Color.white;
+            isSpyImage.sprite = beaverRoleSprites[0];
+            isSpyText.text = "You are a citizen beaver";
+            isSpyText.color = Color.white;
         }
     }
 

@@ -31,7 +31,6 @@ public class ItemCollisionManager : MonoBehaviour
             }
             return;
         }
-            
 
         int emptySlotNum = 0;
         bool findEmptySlot = false;
@@ -51,7 +50,6 @@ public class ItemCollisionManager : MonoBehaviour
                     {
                         collision.gameObject.GetComponent<PrisonManager>().keyCount++;
                     }
-
                     break;
                 }
             }
@@ -65,34 +63,24 @@ public class ItemCollisionManager : MonoBehaviour
         if (!addInventory && findEmptySlot)  // 인벤토리에 같은 아이템이 없어 아이템을 더하지 못했다면
         {
             GameObject newItemImage = Instantiate(itemImage);   // 인벤토리용 새 아이콘 생성
-
-            newItemImage.GetComponent<ItemDrag>().SetSpriteRender(itemIndex.items[this.gameObject.GetComponent<ItemInfo>().GetItemIndexNumber()].gameObject.GetComponent<SpriteRenderer>());    // 새로 생성한 인벤토리용 아이콘에 Sprite 넣기
+            ItemDrag itemIconDrag = newItemImage.GetComponent<ItemDrag>();
+            ItemCount itemIconCount = newItemImage.GetComponent<ItemCount>();
+            itemIconDrag.SetSpriteRender(itemIndex.items[this.gameObject.GetComponent<ItemInfo>().GetItemIndexNumber()].gameObject.GetComponent<SpriteRenderer>());    // 새로 생성한 인벤토리용 아이콘에 Sprite 넣기
 
             newItemImage.transform.SetParent(inventorySlotGroup.itemSlots[emptySlotNum].gameObject.transform);  // 생성한 아이템 부모 설정
-            newItemImage.GetComponent<ItemDrag>().SetNromalState(); // 생성한 아이템 위치 설정
+            itemIconDrag.SetNromalState(); // 생성한 아이템 위치 설정
 
-            newItemImage.GetComponent<ItemCount>().SetCountText();  // 생성한 아이템의 수를 보여줄 TMP 연결
-            newItemImage.GetComponent<ItemCount>().ShowItemCount(itemCount);    // 연결한 TMP를 통해 생성한 아이템의 수 보여주기
-
+            itemIconCount.SetCountText();  // 생성한 아이템의 수를 보여줄 TMP 연결
+            itemIconCount.ShowItemCount(itemCount);    // 연결한 TMP를 통해 생성한 아이템의 수 보여주기
 
             if (this.gameObject.GetComponent<ItemInfo>().itemName == "Rope")    // 로프를 획득하면 로프 던지기 버튼 활성화
             {
-                //throwRopeButton.gameObject.SetActive(true);
                 throwRopeButton.interactable = true;
-
-                //Color throwRopeButtonColor = throwRopeButton.GetComponent<Image>().color;
-                //throwRopeButtonColor.a = 1.0f;
-                //throwRopeButton.GetComponent<Image>().color = throwRopeButtonColor;
             }
             else if (this.gameObject.GetComponent<ItemInfo>().itemName == "Key")    // 열쇠를 획득하면 감옥 탈출 버튼 활성화
             {
                 collision.gameObject.GetComponent<PrisonManager>().keyCount++;
-                //escapePrisonButton.gameObject.SetActive(true);
                 escapePrisonButton.interactable = true;
-
-                //Color escapeButtonColor = escapePrisonButton.GetComponent<Image>().color;
-                //escapeButtonColor.a = 1.0f;
-                //escapePrisonButton.GetComponent<Image>().color = escapeButtonColor;
             }
         }
 
@@ -101,10 +89,8 @@ public class ItemCollisionManager : MonoBehaviour
         // 아이템을 주웠을 경우(기존의 자원에 더했거나 새로 빈 칸에 만들었을때) 바닥의 아이템 삭제
         if (addInventory || findEmptySlot)
         {
-            //PhotonNetwork.Destroy(this.gameObject);
             Destroy(this.gameObject);
         }
-            
     }
 
     [PunRPC]
@@ -113,10 +99,8 @@ public class ItemCollisionManager : MonoBehaviour
         PhotonView.Find(dropItemViewID).GetComponent<ItemCollisionManager>().itemCount = dropItemCount;
     }
 
-
     void Start()
     {
-
         inventorySlotGroup = GameObject.Find("InventorySlots").GetComponent<InventorySlotGroup>();
         itemImage = GameObject.Find("ItemImage").gameObject;
         itemIndex = GameObject.Find("ItemManager").GetComponent<ItemIndex>();
@@ -128,14 +112,7 @@ public class ItemCollisionManager : MonoBehaviour
         }
         else if (this.gameObject.GetComponent<ItemInfo>().itemName == "Key")
         {
-            //escapePrisonButton = GameObject.Find("PlayerBeaver").GetComponent<PrisonManager>().escapePrisonButton;
             escapePrisonButton = GameObject.Find("EscapePrisonButton").GetComponent<Button>();
         }
-
-    }
-
-    void Update()
-    {
-
     }
 }

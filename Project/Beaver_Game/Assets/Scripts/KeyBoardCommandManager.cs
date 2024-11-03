@@ -6,11 +6,6 @@ public class KeyBoardCommandManager : MonoBehaviour
 {
     public GameObject inventoryObj; // 인벤토리
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))    // 왼쪽 시프트 키로 인벤토리 열고 닫기

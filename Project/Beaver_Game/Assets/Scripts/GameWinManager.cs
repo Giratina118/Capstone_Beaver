@@ -17,6 +17,7 @@ public class GameWinManager : MonoBehaviour
     public TMP_Text gameEndingText;
     public bool doingGame = true;
 
+
     public void DamCountCheck() // 댐 수 체크
     {
         if (++damCount >= 5)    // 댐이 5개 지어지면 끝
@@ -85,33 +86,6 @@ public class GameWinManager : MonoBehaviour
                 gameEndingText.text = "You Win";
             }
         }
-
-
         gameEndingImage.gameObject.SetActive(true);
-
-        //GoWaitingRoom();
-    }
-
-    /*  미완, 게임 종료 후 로비로 나가지 않고 대기방으로 돌아오도록
-    public void GoWaitingRoom()
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.CurrentRoom.IsOpen = true;
-            PhotonNetwork.CurrentRoom.IsVisible = true;
-        }
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
-    }
-    */
-
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-        
     }
 }

@@ -31,6 +31,7 @@ public class TimerManager : MonoBehaviourPunCallbacks
     public AudioClip nightBGM;
     public AudioSource cameraAudio;
 
+
     public void SetTimerOn()
     {
         timerOn = true;
@@ -74,7 +75,6 @@ public class TimerManager : MonoBehaviourPunCallbacks
             basicTimeSpeedBool = true;
             tower.remainComunicationTime = timeSpeedRecoverTimer;   // 해당 타워의 남은 통신 시간을 이 타이머에 등록 (타워 -> 타이머)
         }
-        
     }
 
     [PunRPC]
@@ -82,7 +82,6 @@ public class TimerManager : MonoBehaviourPunCallbacks
     {
         timer -= addTime;
         timerPhotonView.RPC("ShowTimer", RpcTarget.All, timer);
-        //ShowTimer(timer);
     }
 
     [PunRPC]
@@ -110,7 +109,6 @@ public class TimerManager : MonoBehaviourPunCallbacks
             return;
 
         timer -= timeSpeed * Time.deltaTime;    // 타이머 시간 흐름
-        //ShowTimer();    // 타이머 텍스트로 보여주기
         timerPhotonView.RPC("ShowTimer", RpcTarget.All, timer);
 
         if (timer <= 0) // 시간 다 되면 게임 종료
@@ -118,22 +116,17 @@ public class TimerManager : MonoBehaviourPunCallbacks
             timerOn = false;
             timer = 0.0f;
             ShowTimer(timer);
-
-            //gameWinManager.TimeCheck();
             gameWinManager.gameObject.GetPhotonView().RPC("TimeCheck", RpcTarget.All);
         }
         else if (timer <= timeSetting / 3.0f && !isNight)
         {
             isNight = true;
             timerPhotonView.RPC("SetNight", RpcTarget.All);
-            //SetNight();
         }
 
         if (!basicTimeSpeedBool && nowTower.remainComunicationTime >= 0.0f) // 통신 중일 경우
         {
-            nowTower.gameObject.GetPhotonView().RPC("UpdateFillAmountofGauge", RpcTarget.All, timeSpeedRecoverTimer);
-            //nowTower.gauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount = 1 - timeSpeedRecoverTimer / 20.0f; // 통신 게이지, 수치가 점차 올라감, 최대가 1.0, 최소 0.0
-
+            nowTower.gameObject.GetPhotonView().RPC("UpdateFillAmountofGauge", RpcTarget.All, timeSpeedRecoverTimer);   // 통신 게이지, 수치가 점차 올라감, 최대가 1.0, 최소 0.0
             timeSpeedRecoverTimer -= Time.deltaTime;    // 전파탑의 남은 통신 제한 시감
 
             if (timeSpeedRecoverTimer <= 0.0f)  // 통신 중이었다가 해당 타워의 통신 제한 시간이 다 되면 통신 종료
@@ -141,6 +134,5 @@ public class TimerManager : MonoBehaviourPunCallbacks
                 RadioComunicationTime(1.0f, nowTower.gameObject.GetPhotonView().ViewID);
             }
         }
-
     }
 }

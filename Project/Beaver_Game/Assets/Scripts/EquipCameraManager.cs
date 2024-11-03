@@ -11,12 +11,11 @@ public class EquipCameraManager : MonoBehaviour
     private RawImage equipCharacterImage;
     public GameObject nightLight;
 
+
     void Start()
     {
         if (!this.transform.parent.gameObject.GetPhotonView().IsMine)
             return;
-        //this.gameObject.transform.parent.gameObject.GetComponent<PhotonView>().OwnerActorNr
-        //PhotonNetwork.PlayerList[spyNum]
 
         Player localPlayer = PhotonNetwork.LocalPlayer;
 
@@ -35,11 +34,5 @@ public class EquipCameraManager : MonoBehaviour
 
         nightLight.layer = this.transform.parent.gameObject.layer;
         GameObject.Find("Timer").GetComponent<TimerManager>().nightLight = nightLight;
-
-    }
-
-    void Update()
-    {
-        
     }
 }

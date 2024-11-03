@@ -17,6 +17,7 @@ public class TowerInfo : MonoBehaviourPunCallbacks
     private Transform cnavasGaugesTransform; // 통신 게이지의 부모 위치
     private Transform towerParentTransfotm;
 
+
     [PunRPC]
     public void SetGauge(int gaugeViewID)
     {
@@ -44,20 +45,11 @@ public class TowerInfo : MonoBehaviourPunCallbacks
         gauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount = 1 - remainTime / 20.0f; // 통신 게이지, 수치가 점차 올라감, 최대가 1.0, 최소 0.0
     }
 
-
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         if (gauge != null && gauge.activeSelf)  // 게이지 위치 조정(UI라서)
         {
             gauge.transform.position = Camera.main.WorldToScreenPoint(new Vector3(this.transform.position.x, this.transform.position.y + gaugePlusYPos, 0.0f));
-        }
-
-
-        
+        } 
     }
 }

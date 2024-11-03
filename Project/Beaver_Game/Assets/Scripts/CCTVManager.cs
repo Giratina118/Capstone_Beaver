@@ -13,8 +13,6 @@ public class CCTVManager : MonoBehaviour
 {
     public Camera cctvCamera;
     public Image cctvImageBackground;
-    //public RawImage cctvRawImage;
-    //public Texture cameraRendererTexture;
 
     public CCTVCameraNum[] cctvTransform;
     private int nowCameraNum = 0;
@@ -25,7 +23,6 @@ public class CCTVManager : MonoBehaviour
         nowCameraNum = cctvNum;
         nowCameraPosNum = 0;
         cctvCamera.transform.position = cctvTransform[cctvNum].cameraTransforms[0].position;
-        //cctvRawImage.texture = cameraRendererTexture;
         cctvImageBackground.gameObject.SetActive(true);
     }
 
@@ -52,16 +49,5 @@ public class CCTVManager : MonoBehaviour
     public void CloseCCTV()
     {
         cctvImageBackground.gameObject.SetActive(false);
-    }
-
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
     }
 }

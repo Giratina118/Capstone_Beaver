@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    //public AudioSource bgmSource;
-    //public AudioSource sfxSource;
     public SoundEffectManager soundEffectManager;
     private static AudioManager instance;
 
@@ -14,8 +12,6 @@ public class AudioManager : MonoBehaviour
     private float sfxVolume = 1.0f;
 
     
-
-
     private void Awake()
     {
         if (instance == null)
@@ -35,7 +31,6 @@ public class AudioManager : MonoBehaviour
 
         if (soundEffectManager.bgmAudio != null)
             soundEffectManager.bgmAudio.volume = bgmVolume;
-
     }
 
     public float GetBGMVolume()
@@ -53,7 +48,6 @@ public class AudioManager : MonoBehaviour
             soundEffectManager.getResourceAudio.volume = sfxVolume;
         if (soundEffectManager.playerAudioSource != null)
             soundEffectManager.playerAudioSource.volume = sfxVolume;
-
     }
 
     public float GetSFXVolume()
@@ -64,13 +58,7 @@ public class AudioManager : MonoBehaviour
     void Start()
     {
         soundEffectManager = GameObject.Find("SoundEffectManager").GetComponent<SoundEffectManager>();
-
         SetBGMVolume(bgmVolume);
         SetSFXVolume(sfxVolume);
-    }
-
-    void Update()
-    {
-        
     }
 }

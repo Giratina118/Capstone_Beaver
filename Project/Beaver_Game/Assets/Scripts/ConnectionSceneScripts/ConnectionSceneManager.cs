@@ -42,9 +42,7 @@ public class ConnectionSceneManager : MonoBehaviour
     {
         PlayerPrefs.SetFloat(bgmVolumeKey, audioManager.GetBGMVolume());
         PlayerPrefs.SetFloat(sfxVolumeKey, audioManager.GetSFXVolume());
-
         PlayerPrefs.SetInt(firstPlayKey, 1);
-
         Application.Quit();
     }
 
@@ -52,7 +50,6 @@ public class ConnectionSceneManager : MonoBehaviour
     {
         audioManager = GameObject.FindObjectOfType<AudioManager>();
 
-        
         audioManager.SetBGMVolume(PlayerPrefs.GetFloat(bgmVolumeKey, 1.0f));
         audioManager.SetSFXVolume(PlayerPrefs.GetFloat(sfxVolumeKey, 1.0f));
         firstPlay = PlayerPrefs.GetInt(firstPlayKey);
@@ -88,7 +85,6 @@ public class ConnectionSceneManager : MonoBehaviour
                 openingImage.sprite = openingSprites[currentOpeningNum];
                 openingText.text = openingStrings[currentOpeningNum];
             }
-            
         }
     }
 }

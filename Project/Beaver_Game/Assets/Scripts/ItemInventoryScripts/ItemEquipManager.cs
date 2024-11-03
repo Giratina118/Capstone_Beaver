@@ -9,6 +9,7 @@ public class ItemEquipManager : MonoBehaviour
     public GetResourceScrollbar resourceScrollbar;
     public DamManager[] damManagers;
 
+
     // 장비 아이템 착용 시 효과
     public void SetItemEffect(int itemNum, bool isEquip)
     {
@@ -181,17 +182,5 @@ public class ItemEquipManager : MonoBehaviour
             default:
                 break;
         }
-    }
-
-
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
     }
 }

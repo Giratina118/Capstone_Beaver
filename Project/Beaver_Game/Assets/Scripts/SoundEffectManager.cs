@@ -13,6 +13,7 @@ public class SoundEffectManager : MonoBehaviour
 
     AudioManager audioManager;
 
+
     public void PlayGetResourceSound(int resourceNum)
     {
         getResourceAudio.clip = audioClips[resourceNum + 3];
@@ -59,10 +60,5 @@ public class SoundEffectManager : MonoBehaviour
         audioManager = GameObject.FindObjectOfType<AudioManager>();
         audioManager.soundEffectManager = this;
         SetVolume();
-    }
-
-    void Update()
-    {
-        
     }
 }

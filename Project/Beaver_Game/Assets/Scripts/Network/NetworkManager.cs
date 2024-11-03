@@ -11,7 +11,6 @@ using UnityEngine.SceneManagement;
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
     public CinemachineVirtualCamera cinemachineVirtualCamera;
-    //public Vector3 waitingRoomPos;
     public Transform waitingRoomPos;
     public Transform[] startPos = new Transform[5];
     public TimerManager timerManager;
@@ -30,12 +29,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public bool onGame = false;
 
+
     void Start()
     {
         Screen.SetResolution(1920, 1080, false);    // 화면 가로세로 설정
-        //PhotonNetwork.ConnectUsingSettings();
 
-        
         GameObject createdBeaver = PhotonNetwork.Instantiate("PlayerBeaver", waitingRoomPos.position, Quaternion.identity);    // 플레이어 비버 생성
         myBeaver = createdBeaver;
         if (createdBeaver.GetPhotonView().IsMine)
@@ -57,7 +55,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             gameStartButton.interactable = true;
         }
-
     }
 
     public override void OnConnectedToMaster()
@@ -76,10 +73,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
                 cinemachineVirtualCamera.LookAt = createdBeaver.transform;
             }
         }
-        
-        
     }
-
 
     // 플레이어가 방에 들어왔을 때 호출되는 콜백
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -121,10 +115,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     // 게임 시작 버튼
     public void OnClickGameStartButton()
     {
-        //player.GetComponent<PhotonView>().RPC("SetSpyBool", RpcTarget.All, true);
-        //myBeaver.GetComponent<PhotonView>().RPC("SetSpyBool", RpcTarget.All, false);
-        //showRole.SetShowRuleImage(false);
-
         this.gameObject.GetPhotonView().RPC("CallSetSpyBool", RpcTarget.All, false);
 
         if (PhotonNetwork.IsMasterClient)
@@ -141,18 +131,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             Debug.Log("Selected Player: " + PhotonNetwork.PlayerList[spyNum].NickName); // 플레이어의 NickName 확인
             Debug.Log("TagObject: " + PhotonNetwork.PlayerList[spyNum].TagObject);
 
-            //player.GetComponent<PhotonView>().RPC("SetSpyBool", PhotonNetwork.PlayerList[spyNum], true);
             this.gameObject.GetPhotonView().RPC("CallSetSpyBool", PhotonNetwork.PlayerList[spyNum], true);
 
             for(int i = 0; i < damManagers.Length; i++)
             {
                 damManagers[i].DamRandomPrice();
             }
-
-            //showRole.SetShowRuleImage(true);
         }
-
-
         this.gameObject.GetPhotonView().RPC("SetStartSetting", RpcTarget.All);
     }
 
@@ -182,20 +167,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         base.OnLeftRoom();
         print("OnLeftRoom");
-
         SceneManager.LoadScene("LobbyScene");
-
-        /*
-        // 방을 나간 후 로비에 자동으로 입장하도록 JoinLobby() 호출
-        if (!PhotonNetwork.InLobby)
-        {
-            PhotonNetwork.JoinLobby(); // 로비로 다시 입장
-        }
-        else
-        {
-            SceneManager.LoadScene("LobbyScene");
-        }
-        */
     }
 
     // 로비에 성공적으로 입장한 후 호출되는 콜백
@@ -205,7 +177,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         print("OnJoinedLobby");
         SceneManager.LoadScene("LobbyScene"); // 로비에 입장한 후에 씬 전환
     }
-
 
     [PunRPC]
     public void SetStartSetting()
@@ -218,20 +189,4 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         cinemachineManager.SetCameraRange(1);   // 카메라 범위를 대기방에서 게임 맵으로 변경
         onGame = true;
     }
-
-    /*
-    public void CreateItem(string itemName, Vector3 createPos)    // 자원 채취칸에서 버튼 누르면 자원 아이템 필드에 생성
-    {
-        GameObject newItem = PhotonNetwork.Instantiate(itemName, createPos, Quaternion.identity);
-        //newResource.transform.position = resourcePos;
-    }
-    */
-
-    /*
-    public void StorageResource()
-    {
-        //PhotonNetwork.
-    }
-    */
-
 }

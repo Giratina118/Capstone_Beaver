@@ -7,11 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class ConnectionManager : MonoBehaviourPunCallbacks
 {
-    // Start는 처음 프레임 업데이트 전에 호출됩니다.
-    void Start()
-    {
-    }
-
     // 서버에 접속하는 버튼을 클릭했을 때 호출되는 메소드
     public void OnClickConnect()
     {

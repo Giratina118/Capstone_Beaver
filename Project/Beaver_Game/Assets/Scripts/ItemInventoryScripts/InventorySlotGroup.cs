@@ -14,6 +14,7 @@ public class InventorySlotGroup : MonoBehaviourPunCallbacks
     public Button escapePrisonButton = null;    // 감옥 탈출 버튼
     public SpyBoolManager spyBoolManager = null;    // 스파이 여부
 
+
     public void ShowResourceText()  // 기본 자원 개수 텍스트로 출력
     {
         for (int i = 0; i < resourceCountInts.Length; i++)
@@ -73,24 +74,24 @@ public class InventorySlotGroup : MonoBehaviourPunCallbacks
         bool haveRope = false;  // 로프 가지고 있는지
         bool haveKey = false;   // 열쇠 가지고 있는지
 
-
         for (int i = 0; i < itemSlots.Count; i++)   // 슬롯들을 하나씩 체크
         {
             // 현재 체크하는 슬롯의 아이템이 사용한 아이템일 경우
             if (itemSlots[i].gameObject.transform.childCount != 0 && itemIndexNum == itemSlots[i].gameObject.transform.GetChild(0).gameObject.GetComponent<ItemDrag>().itemPrefab.gameObject.GetComponent<ItemInfo>().GetItemIndexNumber())
             {
                 GameObject childItem = itemSlots[i].gameObject.transform.GetChild(0).gameObject;    // 현재 슬롯의 아이템
-                if (childItem.GetComponent<ItemCount>().count < remainResourceCount)    // 현재 슬롯의 아이템 수가 사용할 아이템 수보다 적으면
+                ItemCount itemCount = childItem.GetComponent<ItemCount>();
+                if (itemCount.count < remainResourceCount)    // 현재 슬롯의 아이템 수가 사용할 아이템 수보다 적으면
                 {
-                    remainResourceCount -= childItem.GetComponent<ItemCount>().count;   // 사용할 아이템 수를 현재 슬롯의 아이템 수만큼 빼기
+                    remainResourceCount -= itemCount.count;   // 사용할 아이템 수를 현재 슬롯의 아이템 수만큼 빼기
                     Destroy(childItem); // 현재 슬롯의 아이템 삭제(모두 사용)
                 }
                 else    // 현재 슬롯의 아이템 수가 사용한 아이템 수보다 많거나 같으면
                 {
-                    childItem.GetComponent<ItemCount>().ShowItemCount(-remainResourceCount);    // 현재 슬롯의 아이템 수를 사용할 아이템 수만큼 감소
+                    itemCount.ShowItemCount(-remainResourceCount);    // 현재 슬롯의 아이템 수를 사용할 아이템 수만큼 감소
                     remainResourceCount = 0;
 
-                    if (childItem.GetComponent<ItemCount>().count <= 0) // 슬롯의 아이템 수가 사용한 아이템 수와 같은 경우에만 인벤토리에서 삭제
+                    if (itemCount.count <= 0) // 슬롯의 아이템 수가 사용한 아이템 수와 같은 경우에만 인벤토리에서 삭제
                     {
                         Destroy(childItem);
                     }
@@ -102,40 +103,19 @@ public class InventorySlotGroup : MonoBehaviourPunCallbacks
                     {
                         haveKey = true;
                     }
-
                 }
             }
         }
 
-        
-
         if (throwRopeButton != null && itemIndexNum == ropeIndexNum && !haveRope && !keepItem)  // 로프가 없을 경우 버튼 비활성화
         {
-            //throwRopeButton.gameObject.SetActive(false);
             throwRopeButton.interactable = false;
-
-            //Color throwRopeButtonColor = throwRopeButton.GetComponent<Image>().color;
-            //throwRopeButtonColor.a = 0.5f;
-            //throwRopeButton.GetComponent<Image>().color = throwRopeButtonColor;
         }
-        else if (escapePrisonButton != null && itemIndexNum == keyIndexNum && !haveKey && !keepItem) // 열쇠가 없고 (스파이면서 긴급탈출을 사용할 수 있는 경우가 아니면) 버튼 비활성화
-        {
-            if (spyBoolManager.isSpy() && !spyBoolManager.gameObject.GetComponent<SpyBeaverAction>().spyBeaverEscape)     // 이 위의 if문에 하나로 합치기 가능
-            {
-
-            }
-            else
-            {
-                //escapePrisonButton.SetActive(false);
-                escapePrisonButton.interactable = false;
-
-                //Color escapeButtonColor = escapePrisonButton.GetComponent<Image>().color;
-                //escapeButtonColor.a = 0.5f;
-                //escapePrisonButton.GetComponent<Image>().color = escapeButtonColor;
-            }
-                
+        else if (escapePrisonButton != null && itemIndexNum == keyIndexNum && !haveKey && !keepItem && !(spyBoolManager.isSpy() && !spyBoolManager.gameObject.GetComponent<SpyBeaverAction>().spyBeaverEscape))
+        {   
+            // 열쇠가 없고 (스파이면서 긴급탈출을 사용할 수 있는 경우가 아니면) 버튼 비활성화
+            escapePrisonButton.interactable = false;
         }
-
     }
 
     public void UseResource(int[] useResourceCount) // 인벤토리 전체를 살피면서 4개의 자원이라면 사용하는 방식
@@ -153,15 +133,16 @@ public class InventorySlotGroup : MonoBehaviourPunCallbacks
             if (itemSlots[i].gameObject.transform.childCount != 0 && 4 > itemSlots[i].gameObject.transform.GetChild(0).gameObject.GetComponent<ItemDrag>().itemPrefab.gameObject.GetComponent<ItemInfo>().GetItemIndexNumber())
             {
                 GameObject childItemObj = itemSlots[i].gameObject.transform.GetChild(0).gameObject; // 해당 슬롯에 있는 아이템
+                ItemCount itemCount = childItemObj.GetComponent<ItemCount>();
                 int itemNum = childItemObj.GetComponent<ItemDrag>().itemPrefab.gameObject.GetComponent<ItemInfo>().GetItemIndexNumber();    // 해당 슬롯에 있는 아이템의 도감 번호
 
                 if (remainResource[itemNum] <= 0)   // 해당 자원을 더 지불할 필요가 없다면 넘기기
                     continue;
 
-                if (childItemObj.GetComponent<ItemCount>().count <= remainResource[itemNum]) // 지불해야할 자원이 현재 슬롯에 있는 아이템 수보다 많거나 같을 경우
+                if (itemCount.count <= remainResource[itemNum]) // 지불해야할 자원이 현재 슬롯에 있는 아이템 수보다 많거나 같을 경우
                 {
-                    remainResource[itemNum] -= childItemObj.GetComponent<ItemCount>().count;    // 남은 사용할 자원을 현재 슬롯의 아이템 수로 뺌
-                    childItemObj.GetComponent<ItemCount>().ShowItemCount(-childItemObj.GetComponent<ItemCount>().count);    // 현재 슬롯의 아이템 수를 0으로
+                    remainResource[itemNum] -= itemCount.count;    // 남은 사용할 자원을 현재 슬롯의 아이템 수로 뺌
+                    itemCount.ShowItemCount(-itemCount.count);    // 현재 슬롯의 아이템 수를 0으로
 
                     if (!itemSlots[i].gameObject.GetComponent<ItemSlot>().storageSlot) // 창고슬롯이 아니면 -> 플레이어 인벤토리 슬롯이라면 아이템 삭제
                     {
@@ -170,23 +151,10 @@ public class InventorySlotGroup : MonoBehaviourPunCallbacks
                 }
                 else    // 지불해야할 자원이 현재 슬롯에 있는 아이템 수보다 적을 경우
                 {
-                    childItemObj.GetComponent<ItemCount>().ShowItemCount(-remainResource[itemNum]); // 현재 슬롯의 아이템 수를 감소
+                    itemCount.ShowItemCount(-remainResource[itemNum]); // 현재 슬롯의 아이템 수를 감소
                     remainResource[itemNum] = 0;    // 남은 사용할 자원 수를 0으로
-
                 }
-
             }
         }
-
-    }
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
     }
 }

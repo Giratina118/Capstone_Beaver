@@ -27,10 +27,6 @@ public class DemolishTower : MonoBehaviourPunCallbacks
         {
             onTower = true;
             tower = collision.gameObject;
-
-            //Color buttonColor = demolishTowerButton.gameObject.GetComponent<Image>().color;
-            //buttonColor.a = 1.0f;
-            //demolishTowerButton.gameObject.GetComponent<Image>().color = buttonColor;
             demolishTowerButton.interactable = true;
         }
     }
@@ -43,10 +39,6 @@ public class DemolishTower : MonoBehaviourPunCallbacks
         if (collision.gameObject.tag == "Tower")
         {
             onTower = false;
-
-            //Color buttonColor = demolishTowerButton.gameObject.GetComponent<Image>().color;
-            //buttonColor.a = 0.5f;
-            //demolishTowerButton.gameObject.GetComponent<Image>().color = buttonColor;
             demolishTowerButton.interactable = false;
         }
     }
@@ -60,23 +52,12 @@ public class DemolishTower : MonoBehaviourPunCallbacks
 
         if (onTower)
         {
-            /*
-            for (int i = 0; i < 3; i++)
-            {
-                this.GetComponent<PlayerResourceManager>().PlayerResourceCountChange(i, tower.GetComponent<TowerInfo>().requiredResourceOfTowers[i] / 2);
-            }
-            */
-
             for (int i = 0; i < 4; i++)
             {
                 getResourceManager.GetResourceActive(i, tower.gameObject.transform);
                 for (int j = 0; j < tower.GetComponent<TowerInfo>().requiredResourceOfTowers[i] / 2; j++)
                 {
-                    //getResourceManager.OnClickButtonInGetResource();
-
-
                     Vector3 rand = Random.insideUnitCircle * 1.5f;
-
                     PhotonNetwork.Instantiate(itemIndex.items[i].gameObject.name, tower.transform.position + rand, Quaternion.identity);
                 }
             }
@@ -84,15 +65,11 @@ public class DemolishTower : MonoBehaviourPunCallbacks
             if (PhotonNetwork.IsMasterClient)
             {
                 timerManager.TowerTime(-increaseTime);
-                //timerManager.timerPhotonView.RPC("TowerTime", RpcTarget.All, -increaseTime);
             }
             else
             {
                 timerManager.timerPhotonView.RPC("TowerTime", RpcTarget.MasterClient, -increaseTime);
             }
-
-            //timerManager.TowerTime(-increaseTime);  // 시간 복구
-            //Destroy(tower);  // 타워 파괴
             this.photonView.RPC("DestroyTower", RpcTarget.All, tower.GetComponent<PhotonView>().ViewID);
         }
     }
@@ -101,11 +78,9 @@ public class DemolishTower : MonoBehaviourPunCallbacks
     public void DestroyTower(int towerViewID)
     {
         GameObject targetTower = PhotonView.Find(towerViewID).gameObject;
-        //GameObject towerGauge = PhotonView.Find(gaugeViewID).gameObject;
         Destroy(targetTower.GetComponent<TowerInfo>().gauge);
         Destroy(targetTower);
     }
-
 
     void Start()
     {
@@ -117,10 +92,5 @@ public class DemolishTower : MonoBehaviourPunCallbacks
         timerManager = GameObject.Find("Timer").GetComponent<TimerManager>();
         demolishTowerButton.onClick.AddListener(OnClickDemolishTowerButton);
         itemIndex = GameObject.Find("ItemManager").GetComponent<ItemIndex>();
-    }
-
-    void Update()
-    {
-        
     }
 }

@@ -17,8 +17,6 @@ public class GetResourceManager : MonoBehaviourPunCallbacks
     public GetResourceScrollbar resourceScrollbar;
     public SoundEffectManager soundEffectManager;
 
-    //public NetworkManager networkManager;
-
 
     public void CloseGetResourceScreen()   // 자원 채취 화면 우상단의 X 버튼 클릭, 자원 채취 화면 안 보이도록 하기
     {
@@ -42,48 +40,11 @@ public class GetResourceManager : MonoBehaviourPunCallbacks
     public void OnClickButtonInGetResource()    // 자원 채취 버튼 클릭
     {
         int resourceResult = resourceScrollbar.StopScrolling();
-        //networkManager.CreateItem(itemIndex.items[getResourceNum].gameObject.name, resourceItemPos.position);   // 자원 생성
-
         for (int i = 0; i < resourceResult; i++)
         {
-            //Vector3 pos = this.transform.position;
-            //float range = 1.5f;
-
             Vector3 rand = Random.insideUnitCircle * 1.5f;
-
-            PhotonNetwork.Instantiate(itemIndex.items[getResourceNum].gameObject.name, resourceItemPos.position + rand, Quaternion.identity);
-
-            
+            PhotonNetwork.Instantiate(itemIndex.items[getResourceNum].gameObject.name, resourceItemPos.position + rand, Quaternion.identity);   // 자원 생성
         }
-
-        /*
-        GameObject cloneobj = GameObject.Instantiate(obj);
-
-        Vector3 pos = this.transform.position;
-        float range = 1.5f;
-
-        Vector3 rand = Random.insideUnitCircle * range;
-        pos = pos + rand;
-
-
-        cloneobj.transform.position = pos;
-        */
-
-        /*
-        GameObject newResource = PhotonNetwork.Instantiate(itemIndex.items[getResourceNum].gameObject.name, Vector3.zero, Quaternion.identity);
-        newResource.transform.position = resourceItemPos.position;
-        */
-
         CloseGetResourceScreen();   // 자원 채취 화면 닫기
-    }
-
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-        
     }
 }

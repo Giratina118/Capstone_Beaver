@@ -6,13 +6,4 @@ public class MapImages : MonoBehaviour
 {
     public GameObject player;
 
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-        
-    }
 }

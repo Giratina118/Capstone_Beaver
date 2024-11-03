@@ -19,6 +19,7 @@ public class ItemDrag : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     private bool keepItemBool = false;  // 우클릭으로 나눴는지 여부
     public bool dropped = false;    // 아이템을 놨는지 여부
 
+
     public void OnPointerDown(PointerEventData eventData)   // 아이템을 클릭했을때
     {
         normalParent = this.transform.parent;   // 그 슬롯을 부모로 설정
@@ -30,18 +31,12 @@ public class ItemDrag : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        
         copyItemImage.sprite = itemPrefab.sprite;   // 예비 아이템의 이미지 설정
-        /*
-        copyItemImage.transform.localRotation = itemPrefab.transform.localRotation; // 나중에 아이템 그림 완성되고 나서는 빼기
-        copyItemImage.transform.localScale = itemPrefab.transform.localScale; // 나중에 아이템 그림 완성되고 나서는 빼기
-        */
         copyItemImage.gameObject.transform.position = normalPos;    // 예비 아이템의 위치 설정
 
         Color copyColor = itemPrefab.color; // 예비 아이템을 반투명하게
         copyColor.a = 0.5f;
         copyItemImage.color = copyColor;
-
 
         this.transform.SetParent(this.transform.parent.parent.parent);  // 부모를 더 상위의 오브젝트로 -> 드래그 하고 있는 아이템으 가장 위에 보이도록
 
@@ -77,11 +72,12 @@ public class ItemDrag : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         if (keepItemCount > 0)  // 드래그할때 원래 장소에 아이템을 남겨뒀다면(수를 나눴다면) 그 위치에 새로 생성
         {
             GameObject newObj = Instantiate(this.gameObject);   // 아이템 생성
+            ItemCount itemCount = newObj.GetComponent<ItemCount>();
             newObj.transform.position = normalPos;  // 새로 생긴 아이템 위치 설정
             newObj.transform.SetParent(normalParent);   // 새로 생긴 아이템 부모 설정  
-            newObj.GetComponent<ItemCount>().SetCountText();    // 아이템 수 적는 텍스트 연결
-            newObj.GetComponent<ItemCount>().count = 0;     // 아이템 수
-            newObj.GetComponent<ItemCount>().ShowItemCount(keepItemCount);  // 연결한 텍스트에 아이템 수 출력
+            itemCount.SetCountText();    // 아이템 수 적는 텍스트 연결
+            itemCount.count = 0;     // 아이템 수
+            itemCount.ShowItemCount(keepItemCount);  // 연결한 텍스트에 아이템 수 출력
             newObj.GetComponent<Image>().raycastTarget = true;  // 마우스를 인식할 수 있도록
         }
 
@@ -107,11 +103,6 @@ public class ItemDrag : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     {
         itemPrefab = prefabSprite;
         this.GetComponent<Image>().sprite = itemPrefab.sprite;
-        /*
-        this.GetComponent<Image>().color = itemPrefab.color;
-        this.transform.localRotation = itemPrefab.transform.localRotation;
-        this.transform.localScale = itemPrefab.transform.localScale;
-        */
         itemIndexNumber = itemPrefab.gameObject.GetComponent<ItemInfo>().GetItemIndexNumber();  // 아이템 번호 저장
     }
 
@@ -120,10 +111,7 @@ public class ItemDrag : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         this.transform.localPosition = Vector3.zero;
         normalParent = this.transform.parent;
         normalPos = this.transform.position;
-
     }
-
-
 
     void Start()
     {

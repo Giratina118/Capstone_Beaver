@@ -29,22 +29,11 @@ public class ThrowAwayItem : MonoBehaviour, IDropHandler
         {
             prisonManager.keyCount -= eventData.pointerDrag.GetComponent<ItemCount>().count;
             copyItemImage.transform.parent.gameObject.GetComponent<InventorySlotGroup>().UseItem(5, 0, itemDrag.keepItemCount > 0);
-            /*
-            if (prisonManager.keyCount <= 0 && eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().keepItemCount <= 0)
-            {
-                //prisonManager.escapePrisonButton.gameObject.SetActive(false);
-                prisonManager.escapePrisonButton.enabled = false;
-                Color escapeButtonColor = prisonManager.escapePrisonButton.GetComponent<Image>().color;
-                escapeButtonColor.a = 0.5f;
-                prisonManager.escapePrisonButton.GetComponent<Image>().color = escapeButtonColor;
-            }
-            */
         }
 
         if (itemDrag.normalParent.gameObject.GetComponent<ItemSlot>().equipSlotType > 0)   // 장비된 아이템이었다면 필드의 아이템도 삭제
         {
             itemDrag.normalParent.gameObject.GetComponent<ItemSlot>().equipItem.GetPhotonView().RPC("equipItemDestroy", RpcTarget.All);
-            //Destroy(eventData.pointerDrag.gameObject.GetComponent<ItemDrag>().normalParent.gameObject.GetComponent<ItemSlot>().equipItem);
         }
 
         if (itemDrag.keepItemCount > 0)    // 만약 수를 나눈 상태라면
@@ -57,15 +46,5 @@ public class ThrowAwayItem : MonoBehaviour, IDropHandler
         }
 
         this.gameObject.transform.parent.GetComponent<InventorySlotGroup>().NowResourceCount(); // 아이템 수 갱신
-    }
-
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-
     }
 }

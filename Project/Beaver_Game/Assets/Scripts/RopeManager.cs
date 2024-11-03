@@ -10,6 +10,7 @@ public class RopeManager : MonoBehaviourPunCallbacks
     public Button throwRopeButton;  // 로프 던지기 버튼
     private GameObject nowRope = null;
 
+
     public void ThrowRopeLineLeftRightChange()  // 좌우 반전에 따른 로프 던지기 조준선 조정
     {
         this.transform.localScale = new Vector3(this.transform.localScale.x * -1, this.transform.localScale.y, this.transform.localScale.z);
@@ -29,7 +30,6 @@ public class RopeManager : MonoBehaviourPunCallbacks
         // 로트 던지기 버튼 누르면 OnClickThrowRopeButton 함수가 작동되도록 연결
         throwRopeButton = GameObject.Find("ThrowRopeButton").GetComponent<Button>();
         throwRopeButton.onClick.AddListener(OnClickThrowRopeButton);
-        //throwRopeButton.gameObject.SetActive(false);
         throwRopeButton.interactable = false;
     }
 
@@ -46,19 +46,12 @@ public class RopeManager : MonoBehaviourPunCallbacks
             if (Input.GetMouseButtonDown(0))
             {
                 nowRope = PhotonNetwork.Instantiate(ropePrefab.name, this.transform.position + rot.normalized * 1.5f, Quaternion.Euler(0, 0, angle + 180.0f));
-                //GameObject newRope = Instantiate(ropePrefab);   // 로프(던져지는 모습) 생성
-                //newRope.transform.position = this.transform.position + rot.normalized * 3.5f;   // 로프 위치 조정, 3.5f는 자기 자신에게 맞지 않게 하려고
-                //newRope.GetComponent<RopeCollision>().SetDirection(rot.normalized);
-                //newRope.transform.localRotation = Quaternion.Euler(0, 0, angle + 180.0f);   // 로프 각도 조정
-
                 if (this.transform.localRotation.eulerAngles.z < 90.0f || this.transform.localRotation.eulerAngles.z > 270.0f)  // 로프의 위 아래 이미지가 뒤집히지 않도록 조정
                 {
                     nowRope.transform.localScale = new Vector3(0.25f, -0.2f, 0.0f);
                 }
-
                 transform.GetChild(0).gameObject.SetActive(false);  // 조준선 없애기
             }
-            
         }
     }
 }

@@ -17,6 +17,7 @@ public class GetResourceScrollbar : MonoBehaviour
     public int fourleafCloverBonus = 0;  // 클로버 아이템 장착 시 자원 획득량 증가
     private int nowResource = 0;    // 현재 재칩하는 자원, 0: 흙, 1: 나무, 2: 돌, 3: 철
 
+
     public void SetScrollbar(int resourceNum)  // 스크롤바의 초기값, 목표 랜덤값 설정
     {
         nowResource = resourceNum;
@@ -24,8 +25,6 @@ public class GetResourceScrollbar : MonoBehaviour
         randRange = Random.value;   // 목표 랜덤값 설정
         ScrollbarRandRangeImage.localPosition = new Vector3(randRange * 1000.0f, -50.0f, 0.0f); // 목표 영역 이미지 위치
         ScrollbarRandRangeImage.localScale = new Vector3(1.0f + equipItemLevel[nowResource] / 3.0f, 1.0f, 1.0f);    // 목표 영역 이미지 크기
-
-
         scrolling = true;
 
         StartCoroutine(AutoScrolling());
@@ -49,7 +48,6 @@ public class GetResourceScrollbar : MonoBehaviour
         {
             return fourleafCloverBonus;
         }
-        
     }
 
 
@@ -82,11 +80,5 @@ public class GetResourceScrollbar : MonoBehaviour
     void Start()
     {
         scrollbar = this.GetComponent<Scrollbar>();
-
-    }
-
-    void Update()
-    {
-
     }
 }

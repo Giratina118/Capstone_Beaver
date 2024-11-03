@@ -62,7 +62,6 @@ public class DamManager : MonoBehaviourPunCallbacks
     public void DamCreate() // 창고 -> 인벤토리 순으로 자원 소비하여 댐 건설
     {
         bool damCreateBool = true;
-        
         for (int i = 0; i < 4; i++) // 댐을 만들 자원이 충분한지 체크
         {
             if (requiredResources[i] > inventorySlotGroup.resourceCountInts[i] + storageInventorySlotGroup.resourceCountInts[i])
@@ -80,27 +79,21 @@ public class DamManager : MonoBehaviourPunCallbacks
             {
                 if (requiredResources[i] > storageInventorySlotGroup.resourceCountInts[i])  // 필요 자원이 창고에 저장된 자원보다 많을 경우
                 {
-                    storageInventorySlotGroup.itemSlots[i].gameObject.transform.GetChild(0).gameObject.GetPhotonView().RPC("ShowItemCount", RpcTarget.All, -storageInventorySlotGroup.resourceCountInts[i]);
-                    //storageInventorySlotGroup.itemSlots[i].gameObject.transform.GetChild(0).gameObject.GetComponent<ItemCount>().ShowItemCount(-storageInventorySlotGroup.resourceCountInts[i]); // 창고에서 자원 빼기
+                    storageInventorySlotGroup.itemSlots[i].gameObject.transform.GetChild(0).gameObject.GetPhotonView().RPC("ShowItemCount", RpcTarget.All, -storageInventorySlotGroup.resourceCountInts[i]);    // 창고에서 자원 빼기
                     remainNum[i] -= storageInventorySlotGroup.resourceCountInts[i]; // 남은 더 지불해야할 자원 수
                 }
                 else   // 필요 자원이 창고에 저장된 자원보다 적거나 같을 경우
                 {
-                    storageInventorySlotGroup.itemSlots[i].gameObject.transform.GetChild(0).gameObject.GetPhotonView().RPC("ShowItemCount", RpcTarget.All, -remainNum[i]);
-                    //storageInventorySlotGroup.itemSlots[i].gameObject.transform.GetChild(0).gameObject.GetComponent<ItemCount>().ShowItemCount(-remainNum[i]);   // 창고에서 자원 빼기
+                    storageInventorySlotGroup.itemSlots[i].gameObject.transform.GetChild(0).gameObject.GetPhotonView().RPC("ShowItemCount", RpcTarget.All, -remainNum[i]);  // 창고에서 자원 빼기
                     remainNum[i] = 0;
                 }
             }
-            //storageInventorySlotGroup.NowResourceCount();   // 창고의 자원 수 갱신
-            storageInventorySlotGroup.gameObject.GetPhotonView().RPC("NowResourceCount", RpcTarget.All);
+            storageInventorySlotGroup.gameObject.GetPhotonView().RPC("NowResourceCount", RpcTarget.All);    // 창고의 자원 수 갱신
 
             inventorySlotGroup.UseResource(remainNum);  // 인벤토리의 자원 사용
             inventorySlotGroup.NowResourceCount();  // 인벤토리의 자원 수 갱신
 
-            this.gameObject.GetPhotonView().RPC("TurnOnBuildGauge", RpcTarget.All);
-            //buildGauge.SetActive(true); // 건설 게이지 활성화
-            //buildNow = true;
-
+            this.gameObject.GetPhotonView().RPC("TurnOnBuildGauge", RpcTarget.All); // 건설 게이지 활성화
         }
     }
 
@@ -111,7 +104,6 @@ public class DamManager : MonoBehaviourPunCallbacks
         buildNow = true;
     }
 
-
     [PunRPC]
     public void SetDamCreateResource(int randomBoundary0, int randomBoundary1, int randomBoundary2)
     {
@@ -121,28 +113,8 @@ public class DamManager : MonoBehaviourPunCallbacks
         requiredResources[3] = totalDamRequiredResource - randomBoundary2;
     }
 
-    /*
-    public override void OnJoinedRoom()
-    {
-        
-        //if (!PhotonNetwork.IsMasterClient)  // 나중에 동시입장으로 바꾸면 그때 이거 켜기
-        //    return;
-        
-        List<int> randomBoundary = new List<int>(); // 댐 건설하는데 필요한 자원 랜덤으로 정하기
-
-        for (int i = 0; i < 3; i++)
-        {
-            randomBoundary.Add(Random.Range(0, totalDamRequiredResource + 1));
-        }
-        randomBoundary.Sort();
-
-        this.gameObject.GetPhotonView().RPC("SetDamCreateResource", RpcTarget.All, randomBoundary[0], randomBoundary[1], randomBoundary[2]);
-    }
-    */
-
     public void DamRandomPrice()
     {
-
         List<int> randomBoundary = new List<int>(); // 댐 건설하는데 필요한 자원 랜덤으로 정하기
 
         for (int i = 0; i < 3; i++)
@@ -153,19 +125,11 @@ public class DamManager : MonoBehaviourPunCallbacks
 
         this.gameObject.GetPhotonView().RPC("SetDamCreateResource", RpcTarget.All, randomBoundary[0], randomBoundary[1], randomBoundary[2]);
     }
-
 
     void Start()
     {
         buildGauge = Instantiate(gaugePrefab, cnavasGaugesTransform);
         buildGauge.SetActive(false);
-        
-        /*
-        requiredResources[0] = randomBoundary[0];
-        requiredResources[1] = randomBoundary[1] - randomBoundary[0];
-        requiredResources[2] = randomBoundary[2] - randomBoundary[1];
-        requiredResources[3] = totalDamRequiredResource - randomBoundary[2];
-        */
     }
 
     void Update()
@@ -175,10 +139,8 @@ public class DamManager : MonoBehaviourPunCallbacks
             buildGauge.transform.position = Camera.main.WorldToScreenPoint(new Vector3(this.transform.position.x, this.transform.position.y + gaugePlusYPos, 0.0f));    // 게이지 위치 설정(UI라서)
             buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount += Time.deltaTime * (0.01f + accelerate + obstract); // 현재는 100초, 수치 조정 가능
 
-
             float constructFillAmount = buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount;
             int constructDegree = (Mathf.FloorToInt(constructFillAmount * 100.0f) + 50) / 50;
-
 
             if (constructDegree != degreeOfConstruction)
             {
@@ -186,58 +148,12 @@ public class DamManager : MonoBehaviourPunCallbacks
                 degreeOfConstruction = constructDegree;
             }
 
-            /*
             if (buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount >= 1.0f)// 게이지가 다 찼을 경우
             {
-
                 // 게이지 비활성화
                 buildNow = false;
                 buildComplete = true;
                 buildGauge.SetActive(false);
-
-                // 댐 완성 이미지로 바꾸기, 현재는 색 바꾸는 걸로 구분, int로 현재 건설 진행도를 저장하고 현재 Amount와 진행도(int)가 일치하지 않으면 이미지 업데이트 하기
-                Color damColor = gameObject.GetComponent<SpriteRenderer>().color;
-                damColor.a = 150;
-                gameObject.GetComponent<SpriteRenderer>().color = damColor;
-
-                this.gameObject.GetComponent<SpriteRenderer>().sprite = damSprite[3];
-
-
-                gameWinManager.DamCountCheck();
-            }
-            else if (buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount >= 0.5f)
-            {
-                this.gameObject.GetComponent<SpriteRenderer>().sprite = damSprite[2];
-            }
-            else if (buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount > 0.0f)
-            {
-                this.gameObject.GetComponent<SpriteRenderer>().sprite = damSprite[1];
-            }
-            else if (buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount <= 0.0f)  // 댐이 방해에 의해 게이지가 다 떨어졌을 경우 건설 취소
-            {
-                
-                buildNow = false;
-                buildGauge.SetActive(false);
-                this.gameObject.GetComponent<SpriteRenderer>().sprite = damSprite[0];
-            }
-            */
-
-
-
-
-            if (buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount >= 1.0f)// 게이지가 다 찼을 경우
-            {
-                
-                // 게이지 비활성화
-                buildNow = false;
-                buildComplete = true;
-                buildGauge.SetActive(false);
-                /*
-                // 댐 완성 이미지로 바꾸기, 현재는 색 바꾸는 걸로 구분, int로 현재 건설 진행도를 저장하고 현재 Amount와 진행도(int)가 일치하지 않으면 이미지 업데이트 하기
-                Color damColor = gameObject.GetComponent<SpriteRenderer>().color;
-                damColor.a = 150;
-                gameObject.GetComponent<SpriteRenderer>().color = damColor;
-                */
                 gameWinManager.DamCountCheck();
             }
             else if (buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount <= 0.0f)  // 댐이 방해에 의해 게이지가 다 떨어졌을 경우 건설 취소
@@ -247,9 +163,6 @@ public class DamManager : MonoBehaviourPunCallbacks
                 degreeOfConstruction = 0;
                 this.gameObject.GetComponent<SpriteRenderer>().sprite = damSprite[degreeOfConstruction];
             }
-                
         }
-        
-
     }
 }

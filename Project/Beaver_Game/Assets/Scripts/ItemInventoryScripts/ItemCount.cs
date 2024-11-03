@@ -7,7 +7,6 @@ using Photon.Pun;
 public class ItemCount : MonoBehaviourPunCallbacks
 {
     // 인벤토리, 창고 등에서의 아이템 수를 관리
-
     public int count;   // 아이템 수
     private TMP_Text countText; // 아이템 수 출력하는 텍스트
     
@@ -36,10 +35,5 @@ public class ItemCount : MonoBehaviourPunCallbacks
     void Start()
     {
         SetCountText();
-    }
-
-    void Update()
-    {
-        
     }
 }

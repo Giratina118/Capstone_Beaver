@@ -27,36 +27,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         // InputField의 값이 변경될 때 호출되는 리스너 추가
         inputRoomName.onValueChanged.AddListener(OnRoomNameValueChanged);
         inputMaxPlayers.onValueChanged.AddListener(OnMaxPlayerValueChanged);
-
-
-        /*
-        // 방을 나간 후 로비에 자동으로 입장하도록 JoinLobby() 호출
-        if (PhotonNetwork.IsConnectedAndReady)
-        {
-            if (!PhotonNetwork.InLobby)
-            {
-                Debug.Log("아아아");
-                PhotonNetwork.JoinLobby(); // 로비로 다시 입장
-            }
-        }
-        else
-        {
-            // 마스터 서버에 연결되어 있지 않다면 연결을 시도
-            PhotonNetwork.ConnectUsingSettings();
-        }
-
-        if (PhotonNetwork.NetworkClientState == ClientState.Disconnected)
-        {
-            PhotonNetwork.ConnectUsingSettings();
-        }
-        else if (PhotonNetwork.NetworkClientState == ClientState.ConnectedToMasterServer)
-        {
-            if (!PhotonNetwork.InLobby)
-            {
-                PhotonNetwork.JoinLobby(); // 로비로 입장
-            }
-        }
-        */
     }
 
     // 방에서 나왔을때 다시 로비 연결 업데이트
@@ -89,18 +59,20 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         CreateRoomListItem();
 
     }
+
     void SelectRoomItem(string roomName)
     {
         inputRoomName.text = roomName;
     }
+
     void DeleteRoomListItem()
     {
-
         foreach (Transform tr in rtContent)
         {
             Destroy(tr.gameObject);
         }
     }
+
     void UpdateRoomListItem(List<RoomInfo> roomList)
     {
         foreach (RoomInfo info in roomList)
@@ -118,6 +90,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             dicRoomInfo[info.Name] = info; //추가
         }
     }
+
     void CreateRoomListItem()
     {
         foreach (RoomInfo info in dicRoomInfo.Values)
@@ -132,22 +105,20 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             item.onDelegate = SelectRoomItem;
         }
     }
+
     void OnNameValueChanged(string s)
     {
         btnJoin.interactable = s.Length > 0;
         if (inputRoomName.text == "")
             btnCreate.interactable = false;
     }
+
     void OnPlayerValueChange(string s)
     {
         btnCreate.interactable = s.Length > 0;
         if (inputMaxPlayers.text == "")
             btnCreate.interactable = false;
     }
-
-
-
-
 
 
     // 방을 생성하는 메소드
@@ -194,9 +165,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         btnCreate.interactable = !string.IsNullOrEmpty(max) && !string.IsNullOrEmpty(inputRoomName.text); // 최대 인원수와 방 이름이 있을 때만 생성 버튼 활성화
     }
 
-
-
-
     // 방 생성 성공 시 호출되는 콜백 메소드
     public override void OnCreatedRoom()
     {
@@ -208,8 +176,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
         base.OnCreateRoomFailed(returnCode, message);
-        print("OnCreateRoomFailed, " + returnCode + " , " + message);
-        // 필요 시 실패 처리 (예: 사용자에게 오류 메시지 표시)
+        print("OnCreateRoomFailed, " + returnCode + " , " + message);   // 필요 시 실패 처리 (예: 사용자에게 오류 메시지 표시)
     }
 
     // 방 참가 성공 시 호출되는 콜백 메소드
@@ -218,18 +185,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         base.OnJoinedRoom();
         print("OnJoinedRoom");
         PhotonNetwork.LoadLevel("MainGameScene"); // 방에 참가하면 "MainGameScene" 로드
-
     }
 
     // 방 참가 실패 시 호출되는 콜백 메소드
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         base.OnJoinRoomFailed(returnCode, message);
-        print("OnJoinRoomFailed, " + returnCode + ", " + message);
-        // 필요 시 실패 처리 (예: 사용자에게 오류 메시지 표시)
+        print("OnJoinRoomFailed, " + returnCode + ", " + message);  // 필요 시 실패 처리 (예: 사용자에게 오류 메시지 표시)
     }
-
-
 
     public void OnClickBackToTitleButton()
     {
@@ -258,5 +221,4 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         print("OnDisconnected");
         SceneManager.LoadScene("ConnectionScene"); // 서버 연결이 끊긴 후 씬 전환
     }
-
 }
