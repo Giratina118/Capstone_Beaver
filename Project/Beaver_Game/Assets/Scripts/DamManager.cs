@@ -18,6 +18,7 @@ public class DamManager : MonoBehaviourPunCallbacks
     public GameObject gaugePrefab;          // 댐 건설 게이지 프리팹
     private GameObject buildGauge;          // 프리팹으로 생성한 댐 건설 게이지를 저장
     public Transform cnavasGaugesTransform; // 게이지의 부모 위치(UI로 하기 위함)
+    public Animator damBuildAnim;
 
     [SerializeField]
     private float gaugePlusYPos = 0.8f; // 게이지 위치(댐 중심으로부터 조금 위쪽에 생기도록)
@@ -57,6 +58,8 @@ public class DamManager : MonoBehaviourPunCallbacks
             accelerate = 0.0f;
             GetComponent<AudioSource>().Stop();
         }
+        damBuildAnim.gameObject.SetActive(turnOn);
+        damBuildAnim.SetBool("accelerate", turnOn);
     }
 
     public void DamCreate() // 창고 -> 인벤토리 순으로 자원 소비하여 댐 건설
@@ -155,6 +158,7 @@ public class DamManager : MonoBehaviourPunCallbacks
                 buildComplete = true;
                 buildGauge.SetActive(false);
                 gameWinManager.DamCountCheck();
+                GetComponent<PhotonView>().RPC("AccelerateBuild", RpcTarget.All, false);
             }
             else if (buildGauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount <= 0.0f)  // 댐이 방해에 의해 게이지가 다 떨어졌을 경우 건설 취소
             {
