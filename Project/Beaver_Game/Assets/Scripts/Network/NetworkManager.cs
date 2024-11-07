@@ -16,6 +16,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public TimerManager timerManager;
 
     public TMP_Text playerCountText;
+    public Image playerCountBG;
     public Button gameStartButton;
     public Button outRoomButton;
 
@@ -185,6 +186,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         myBeaver.transform.position = startPos[myBeaver.layer - 6].position;
         playerCountText.gameObject.SetActive(false);
+        playerCountBG.gameObject.SetActive(false);
         outRoomButton.gameObject.SetActive(false);
         cinemachineManager.SetCameraRange(1);   // 카메라 범위를 대기방에서 게임 맵으로 변경
         onGame = true;

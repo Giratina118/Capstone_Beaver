@@ -62,7 +62,7 @@ public class SpyBeaverAction : MonoBehaviourPunCallbacks
         if (collision.gameObject.tag == "Tower")
         {
             btnManager.ChangeBuildTowerComunicationButton(false);
-            nowTower.GetComponent<PhotonView>().RPC("SetTowerComunicationEffect", RpcTarget.All, false);
+            nowTower.SetTowerComunicationEffect(false);
 
             // 밟고 있던 타워 정보 지우기
             onTower = false;
@@ -81,9 +81,13 @@ public class SpyBeaverAction : MonoBehaviourPunCallbacks
 
         if (onTower)    // 타워 위에 있으면 통신
         {
-            if (nowTower.remainComunicationTime > 0.0f) // 타워에서 통신
+            if (nowTower.comunicationEffect.gameObject.activeSelf)
             {
-                nowTower.GetComponent<PhotonView>().RPC("SetTowerComunicationEffect", RpcTarget.All, false);
+                timerManager.gameObject.GetPhotonView().RPC("RadioComunicationTime", RpcTarget.MasterClient, 1.0f, nowTower.gameObject.GetPhotonView().ViewID);
+            }
+            if (nowTower.remainComunicationTime >= 0.0f) // 타워에서 통신
+            {
+                nowTower.SetTowerComunicationEffect(true);
                 timerManager.gameObject.GetPhotonView().RPC("RadioComunicationTime", RpcTarget.MasterClient, 2.0f, nowTower.gameObject.GetPhotonView().ViewID); // 시간 줄어드는 속도 빠르게
             }
         }
@@ -133,5 +137,7 @@ public class SpyBeaverAction : MonoBehaviourPunCallbacks
             spyBeaverEscape = true;
             btnManager.escapePrisonButton.interactable = true;
         }
+        if (nowTower != null && nowTower.comunicationEffect.gameObject.activeSelf && nowTower.remainComunicationTime <= 0)
+            nowTower.SetTowerComunicationEffect(false);
     }
 }

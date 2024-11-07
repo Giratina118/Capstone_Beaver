@@ -149,10 +149,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 767aefe2a3f90db44b4d8a14d07e98f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredResourceOfTowers: 0600000004000000080000000c000000
+  requiredResourceOfTowers: 00000000000000000000000002000000
   remainComunicationTime: 20
   gauge: {fileID: 0}
   gaugePlusYPos: 0.8
+  comunicationEffect: {fileID: 8357276019322935069}
 --- !u!114 &7602288936132224765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,8 +219,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7900598627615096192}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.1, y: 5, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7172720202214894275}
@@ -271,7 +272,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.11, y: 0.81}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0

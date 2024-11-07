@@ -44,9 +44,10 @@ public class TowerInfo : MonoBehaviourPunCallbacks
     public void UpdateFillAmountofGauge(float remainTime)
     {
         gauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount = 1 - remainTime / 20.0f; // 통신 게이지, 수치가 점차 올라감, 최대가 1.0, 최소 0.0
+        if (gauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount <= 0 && comunicationEffect != null)
+            comunicationEffect.gameObject.SetActive(false);
     }
 
-    [PunRPC]
     public void SetTowerComunicationEffect(bool isComunicate)
     {
         comunicationEffect.gameObject.SetActive(isComunicate);
