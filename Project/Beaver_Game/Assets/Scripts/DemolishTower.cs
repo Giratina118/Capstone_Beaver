@@ -46,15 +46,13 @@ public class DemolishTower : MonoBehaviourPunCallbacks
     public void OnClickDemolishTowerButton()    // 타워 위에 있다면 파괴
     {
         if (!this.GetComponent<PhotonView>().IsMine)
-        {
             return;
-        }
 
         if (onTower)
         {
             for (int i = 0; i < 4; i++)
             {
-                getResourceManager.GetResourceActive(i, tower.gameObject.transform);
+                //getResourceManager.GetResourceActive(i, tower.gameObject.transform);
                 for (int j = 0; j < tower.GetComponent<TowerInfo>().requiredResourceOfTowers[i] / 2; j++)
                 {
                     Vector3 rand = Random.insideUnitCircle * 1.5f;

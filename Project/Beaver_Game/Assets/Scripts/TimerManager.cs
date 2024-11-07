@@ -74,6 +74,7 @@ public class TimerManager : MonoBehaviourPunCallbacks
         {
             basicTimeSpeedBool = true;
             tower.remainComunicationTime = timeSpeedRecoverTimer;   // 해당 타워의 남은 통신 시간을 이 타이머에 등록 (타워 -> 타이머)
+            tower.SetTowerComunicationEffect(false);
         }
     }
 

@@ -81,12 +81,9 @@ public class SpyBeaverAction : MonoBehaviourPunCallbacks
 
         if (onTower)    // 타워 위에 있으면 통신
         {
-            if (nowTower.comunicationEffect.gameObject.activeSelf)
-            {
-                timerManager.gameObject.GetPhotonView().RPC("RadioComunicationTime", RpcTarget.MasterClient, 1.0f, nowTower.gameObject.GetPhotonView().ViewID);
-            }
             if (nowTower.remainComunicationTime >= 0.0f) // 타워에서 통신
             {
+                timerManager.gameObject.GetPhotonView().RPC("RadioComunicationTime", RpcTarget.MasterClient, 1.0f, nowTower.gameObject.GetPhotonView().ViewID);
                 nowTower.SetTowerComunicationEffect(true);
                 timerManager.gameObject.GetPhotonView().RPC("RadioComunicationTime", RpcTarget.MasterClient, 2.0f, nowTower.gameObject.GetPhotonView().ViewID); // 시간 줄어드는 속도 빠르게
             }
@@ -137,7 +134,7 @@ public class SpyBeaverAction : MonoBehaviourPunCallbacks
             spyBeaverEscape = true;
             btnManager.escapePrisonButton.interactable = true;
         }
-        if (nowTower != null && nowTower.comunicationEffect.gameObject.activeSelf && nowTower.remainComunicationTime <= 0)
-            nowTower.SetTowerComunicationEffect(false);
+        //if (nowTower != null && nowTower.comunicationEffect.gameObject.activeSelf && nowTower.remainComunicationTime <= 0)
+        //    nowTower.SetTowerComunicationEffect(false);
     }
 }
