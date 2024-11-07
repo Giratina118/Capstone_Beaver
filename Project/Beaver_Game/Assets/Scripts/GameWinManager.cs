@@ -13,10 +13,14 @@ public class GameWinManager : MonoBehaviour
     public GameObject towers;   // 지어진 타워를 모아둔 오브젝트(자식 수가 지어진 타워 수)
     public SpyBoolManager spyBoolManager;   // 스파이인지 여부
     public Image gameEndingImage;   // 게임 엔딩 화면
+    public Image gameEndingTextImage;   // 게임 결과 텍스트 이미지
     public Sprite[] gameEndingSprites; 
+    public Sprite[] gameEndingTextImages;   // 0: 승리, 1: 패배
     public TMP_Text gameEndingText;
     public bool doingGame = true;
 
+    public Image gameEndingTextBG;
+    public Color[] resultColors; // 0: 승리, 1: 패배
 
     public void DamCountCheck() // 댐 수 체크
     {
@@ -56,7 +60,8 @@ public class GameWinManager : MonoBehaviour
                 Debug.Log("당신의 승리");
 
                 gameEndingImage.sprite = gameEndingSprites[1];
-                gameEndingText.text = "You Win";
+                gameEndingTextImage.sprite = gameEndingTextImages[0];
+                gameEndingTextBG.color = resultColors[0];
             }
             else
             {
@@ -64,7 +69,8 @@ public class GameWinManager : MonoBehaviour
                 Debug.Log("당신의 패배");
 
                 gameEndingImage.sprite = gameEndingSprites[0];
-                gameEndingText.text = "You Lose";
+                gameEndingTextImage.sprite = gameEndingTextImages[1];
+                gameEndingTextBG.color = resultColors[1];
             }
         }
         else
@@ -75,7 +81,8 @@ public class GameWinManager : MonoBehaviour
                 Debug.Log("당신의 패배");
 
                 gameEndingImage.sprite = gameEndingSprites[1];
-                gameEndingText.text = "You Lose";
+                gameEndingTextImage.sprite = gameEndingTextImages[1];
+                gameEndingTextBG.color = resultColors[1];
             }
             else
             {
@@ -83,7 +90,8 @@ public class GameWinManager : MonoBehaviour
                 Debug.Log("당신의 승리");
 
                 gameEndingImage.sprite = gameEndingSprites[0];
-                gameEndingText.text = "You Win";
+                gameEndingTextImage.sprite = gameEndingTextImages[0];
+                gameEndingTextBG.color = resultColors[0];
             }
         }
         gameEndingImage.gameObject.SetActive(true);

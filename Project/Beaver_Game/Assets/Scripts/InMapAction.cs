@@ -50,13 +50,13 @@ public class InMapAction : MonoBehaviour
             }
             btnManager.actionButton.interactable = true;
 
-            tagName = collision.gameObject.tag; // 위치한 곳의 태그 저장
-            onTriggerObject = collision.gameObject;
-
             if (collision.gameObject.transform.tag == "Dam")    // 댐에 위치해있을 경우 해당 댐의 정보 저장
             {
+                if (tagName == "Dam")
+                    onTriggerObject.GetPhotonView().RPC("AccelerateBuild", RpcTarget.All, false);
+
                 damGameObject = collision.gameObject;
-                
+
                 if (!damGameObject.GetComponent<DamManager>().buildComplete)    // 댐 완공 전일 경우에만 상호작용
                 {
                     if (damGameObject.GetComponent<DamManager>().buildNow)  // 댐 건설 중이라면
@@ -82,6 +82,9 @@ public class InMapAction : MonoBehaviour
             {
                 ResourcePos = this.gameObject.transform;
             }
+
+            tagName = collision.gameObject.tag; // 위치한 곳의 태그 저장
+            onTriggerObject = collision.gameObject;
         }
     }
 
