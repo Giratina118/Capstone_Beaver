@@ -16,6 +16,7 @@ public class TowerInfo : MonoBehaviourPunCallbacks
 
     private Transform cnavasGaugesTransform; // 통신 게이지의 부모 위치
     private Transform towerParentTransfotm;
+    public Animator comunicationEffect;
 
 
     [PunRPC]
@@ -43,6 +44,13 @@ public class TowerInfo : MonoBehaviourPunCallbacks
     public void UpdateFillAmountofGauge(float remainTime)
     {
         gauge.transform.GetChild(2).gameObject.GetComponent<Image>().fillAmount = 1 - remainTime / 20.0f; // 통신 게이지, 수치가 점차 올라감, 최대가 1.0, 최소 0.0
+    }
+
+    [PunRPC]
+    public void SetTowerComunicationEffect(bool isComunicate)
+    {
+        comunicationEffect.gameObject.SetActive(isComunicate);
+        comunicationEffect.SetBool("isComunicate", isComunicate);
     }
 
     void Update()

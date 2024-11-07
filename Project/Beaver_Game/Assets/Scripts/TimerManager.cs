@@ -69,6 +69,7 @@ public class TimerManager : MonoBehaviourPunCallbacks
             nowTower = tower;
             basicTimeSpeedBool = false;
             timeSpeedRecoverTimer = tower.remainComunicationTime;   // 해당 타워에 남은 통신 시간 전송 (타이머 -> 타워)
+            tower.GetComponent<PhotonView>().RPC("SetTowerComunicationEffect", RpcTarget.All, false);
         }
         else    // 통신 중이 아니었다면 통신 진행
         {

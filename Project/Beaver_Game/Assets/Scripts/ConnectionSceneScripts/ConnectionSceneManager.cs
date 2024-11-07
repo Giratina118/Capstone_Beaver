@@ -13,7 +13,6 @@ public class ConnectionSceneManager : MonoBehaviour
     public Image openingImage;
     public TMP_Text openingText;
     public Sprite[] openingSprites;
-    public string[] openingStrings;
     private int currentOpeningNum = 0;
 
     public int firstPlay = 1;
@@ -60,7 +59,6 @@ public class ConnectionSceneManager : MonoBehaviour
             PlayerPrefs.SetInt(firstPlayKey, 0);
             openingScreen.gameObject.SetActive(true);
             openingImage.sprite = openingSprites[currentOpeningNum];
-            openingText.text = openingStrings[currentOpeningNum];
         }
     }
 
@@ -77,14 +75,9 @@ public class ConnectionSceneManager : MonoBehaviour
             }
 
             if (currentOpeningNum >= openingSprites.Length)
-            {
                 openingScreen.gameObject.SetActive(false);
-            }
             else
-            {
                 openingImage.sprite = openingSprites[currentOpeningNum];
-                openingText.text = openingStrings[currentOpeningNum];
-            }
         }
     }
 }
