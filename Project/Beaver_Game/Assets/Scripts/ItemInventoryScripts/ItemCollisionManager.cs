@@ -36,6 +36,9 @@ public class ItemCollisionManager : MonoBehaviour
         bool findEmptySlot = false;
         bool addInventory = false;
 
+        if (inventorySlotGroup == null)
+            return;
+
         for (int i = 0; i < inventorySlotGroup.itemSlots.Count; i++)   // 인벤토리 한 바퀴 돌기
         {
             if (inventorySlotGroup.itemSlots[i].gameObject.transform.childCount > 0)    // 빈 칸이 아니라면
